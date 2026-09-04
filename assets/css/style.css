@@ -146,19 +146,6 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -0.025em; }
 }
 .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 52px rgba(20,102,232,0.65), inset 0 1px 0 rgba(255,255,255,0.25); }
 .cta-btn:focus-visible { outline: 3px solid var(--violet-pale); outline-offset: 3px; }
-.mikro {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px 22px;
-  margin-top: 16px;
-  font-size: 13.5px;
-  color: var(--muted);
-}
-.mikro span::before { content: "✓ "; color: var(--ok); font-weight: 700; }
-.hero-trust { margin-top: 30px; font-size: 14.5px; color: var(--muted); }
-.hero-trust strong { color: var(--text); font-weight: 600; }
-
 .countdown {
   display: flex;
   justify-content: center;
@@ -319,6 +306,13 @@ section.blok .uvodna { margin-top: 14px; color: var(--muted); max-width: 58ch; }
 }
 .voditelj .bio p { margin-bottom: 14px; font-size: 15.5px; max-width: 58ch; }
 .voditelj .bio strong { color: var(--violet-pale); font-weight: 600; }
+.voditelj .bio a, .milestones a {
+  color: var(--violet-light);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(102,173,255,0.35);
+}
+.voditelj .bio a:hover, .milestones a:hover { border-bottom-color: var(--violet-light); }
+.voditelj .bio a:focus-visible, .milestones a:focus-visible { outline: 2px solid var(--violet-pale); outline-offset: 2px; }
 .milestones { margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .milestones .m {
   background: var(--surface);
@@ -510,13 +504,6 @@ footer a { color: var(--muted); }
   box-shadow: none;
 }
 .forma-kartica .ml-form-embedBody input.form-control::placeholder { color: #5A5E70; }
-.forma-kartica .polje-napomena {
-  margin-top: 7px;
-  font-size: 12.5px;
-  line-height: 1.5;
-  color: var(--muted);
-}
-.forma-kartica .polje-napomena strong { color: var(--violet-pale); font-weight: 600; }
 .forma-kartica .ml-form-embedBody input.form-control:focus-visible {
   outline: 2px solid var(--violet);
   outline-offset: 1px;
