@@ -7,27 +7,38 @@
 <meta name="description" content="Besplatan live vebinar sa Vladimirom Stankovićem. Nauči kako da dođeš do ideje, napraviš digitalni proizvod i ostvariš prvu prodaju. 14. septembar u 19h na Zoom-u, 200 mesta.">
 
 <!-- ============================================================
-     DOMEN: kada povežeš pravi domen na Vercelu, zameni
-     https://vebinar.vladsdigital.com/ svojom adresom (canonical + og:url + og:image).
+     DOMEN. canonical i og:url su namerno izostavljeni dok se ne zna
+     konacna adresa sajta. Bez njih crawler koristi bas onu adresu sa
+     koje je stranicu i povukao, pa preview radi na svakom domenu.
+     Ranije su pokazivali na nepostojeci vebinar.vladsdigital.com, zbog
+     cega se slika pri deljenju linka uopste nije prikazivala.
+
+     Kada domen bude poznat, dodaj (i po zelji prebaci slike na
+     apsolutne URL-ove, sto je preporuka Open Graph specifikacije):
+       <link rel="canonical" href="https://DOMEN/">
+       <meta property="og:url" content="https://DOMEN/">
      ============================================================ -->
-<link rel="canonical" href="https://vebinar.vladsdigital.com/">
 
 <meta property="og:type" content="website">
 <meta property="og:locale" content="sr_RS">
 <meta property="og:site_name" content="Vladimir Stanković">
 <meta property="og:title" content="Besplatan vebinar: Kako prodati prvi digitalni proizvod">
 <meta property="og:description" content="14. septembar u 19h, uživo na Zoom-u. Od ideje do prve prodaje digitalnog proizvoda. Samo 200 mesta, bez snimka.">
-<meta property="og:url" content="https://vebinar.vladsdigital.com/">
-<meta property="og:image" content="https://vebinar.vladsdigital.com/assets/img/og-image.jpg">
+<meta property="og:image" content="assets/img/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Vladimir Stanković uz naslov vebinara: Kako da prodaš svoj prvi digitalni proizvod">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Besplatan vebinar: Kako prodati prvi digitalni proizvod">
 <meta name="twitter:description" content="14. septembar u 19h, uživo na Zoom-u. Od ideje do prve prodaje digitalnog proizvoda.">
-<meta name="twitter:image" content="https://vebinar.vladsdigital.com/assets/img/og-image.jpg">
+<meta name="twitter:image" content="assets/img/og-image.jpg">
+<meta name="twitter:image:alt" content="Vladimir Stanković uz naslov vebinara: Kako da prodaš svoj prvi digitalni proizvod">
 
 <meta name="theme-color" content="#05080F">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -335,9 +346,8 @@
   "inLanguage": "sr",
   "location": {
     "@type": "VirtualLocation",
-    "url": "https://vebinar.vladsdigital.com/"
+    "url": "https://vladsdigital.com"
   },
-  "image": "https://vebinar.vladsdigital.com/assets/img/og-image.jpg",
   "performer": { "@type": "Person", "name": "Vladimir Stanković" },
   "organizer": { "@type": "Person", "name": "Vladimir Stanković", "url": "https://vladsdigital.com" },
   "offers": {
@@ -345,7 +355,6 @@
     "price": "0",
     "priceCurrency": "RSD",
     "availability": "https://schema.org/InStock",
-    "url": "https://vebinar.vladsdigital.com/",
     "validFrom": "2026-09-01T00:00:00+02:00"
   }
 }

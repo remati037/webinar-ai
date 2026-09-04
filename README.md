@@ -17,7 +17,8 @@ Bez build koraka, bez framework-a. Čist HTML, CSS i JS, spremno za Vercel.
 │       ├── vladimir-stankovic-560.webp   # ista slika za manje ekrane
 │       ├── og-image.jpg                  # slika za deljenje na mrežama (1200x630)
 │       ├── rezultat.jpeg                # screenshot u sekciji „rezultati"
-│       └── favicon.svg
+│       ├── favicon.svg / favicon-32.png
+│       └── apple-touch-icon.png          # ikona za home screen
 ├── uputstvo-mailerlite-v4.md   # sve oko forme za prijavu
 ├── vercel.json                 # cache i security headeri
 ├── robots.txt
@@ -59,10 +60,11 @@ git push -u origin main
 | Broj prijavljenih / ukupno mesta | `assets/js/main.js`, `PRIJAVLJENO` i `UKUPNO_MESTA` |
 | Boje i tipografija | `assets/css/style.css`, blok `:root` na vrhu |
 | Tekstovi, FAQ, sekcije | `index.html` |
-| Domen u SEO tagovima | `index.html`, sve pojave `https://vebinar.vladsdigital.com/` (canonical, og:url, og:image, JSON-LD) |
+| Domen u SEO tagovima | `index.html`, komentar `DOMEN` na vrhu `<head>` |
 
-> **Važno pre lansiranja:** zameni domen `vebinar.vladsdigital.com` pravim domenom
-> u `index.html`, inače će deljenje na društvenim mrežama pokazivati pogrešnu adresu.
+> **Pre lansiranja:** kad znaš konačan domen, dodaj `canonical` i `og:url` po uputstvu
+> u komentaru na vrhu `<head>`. Do tada preview pri deljenju linka radi bez njih, jer
+> crawler koristi adresu sa koje je stranicu povukao.
 
 ## Sekcija „rezultati"
 
