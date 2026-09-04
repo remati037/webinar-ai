@@ -25,7 +25,11 @@ Detalji koje je korisno znati pri kasnijim izmenama:
 - **Raspored:** Ime i Prezime dele red, Email i Telefon idu preko cele širine.
   To radi pravilo `.ml-form-fieldRow:nth-child(n+3) { grid-column: 1 / -1; }` — ako u
   MailerLite-u dodaš novo polje, proveri redosled.
-- **Telefon** je prebačen na `type="tel"` radi numeričke tastature na telefonu.
+- **Telefon mora da ostane `type="text"`.** MailerLite validacija required polja traži
+  `input[type="text"], input[type="email"], input[type="number"], select, textarea`
+  unutar `.ml-validate-required` grupe. Sa `type="tel"` ne vidi polje, misli da je prazno
+  i crveni ga bez obzira šta je upisano. Numeričku tastaturu na mobilnom daje
+  `inputmode="tel"`, koji na validaciju ne utiče.
 - **Broj telefona se automatski prevodi u internacionalni format.** MailerLite prima broj
   samo kao `+381…`, pa `assets/js/main.js` domaći zapis (`065…`, `00381…`, sa razmacima
   ili crticama) pretvara u `+381651324124` pre slanja. Brojevi koji već počinju sa `+`
