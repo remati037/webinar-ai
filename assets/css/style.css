@@ -332,9 +332,8 @@ section.blok .uvodna { margin-top: 14px; color: var(--muted); max-width: 58ch; }
 }
 .voditelj .foto {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 2 / 3;
   object-fit: cover;
-  object-position: 50% 22%;
   border-radius: 16px;
   border: 1px solid var(--line-strong);
   box-shadow: 0 0 40px rgba(20,102,232,0.2);
