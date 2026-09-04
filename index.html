@@ -70,37 +70,82 @@
 <!-- ============ FORMA ZA PRIJAVU ============ -->
 <div class="wrap" id="prijava">
   <div class="forma-kartica">
-    <h2>Prijavi se za vebinar</h2>
+    <h2 id="forma-naslov">Prijavi se za vebinar</h2>
     <span class="mesta" id="mesta-info">Ograničeno na 200 mesta</span>
 
-    <!-- ======================================================
-         MAILERLITE PLACEHOLDER. OVAJ <form> BLOK ZAMENI
-         MAILERLITE EMBED KODOM (uputstvo u README.md)
-         ====================================================== -->
-    <form id="placeholder-forma">
-      <div class="polja">
-        <div class="polje">
-          <label for="ime">Ime</label>
-          <input type="text" id="ime" name="ime" placeholder="Tvoje ime" required autocomplete="given-name">
-        </div>
-        <div class="polje">
-          <label for="prezime">Prezime</label>
-          <input type="text" id="prezime" name="prezime" placeholder="Tvoje prezime" required autocomplete="family-name">
-        </div>
-        <div class="polje puna">
-          <label for="email">Email adresa</label>
-          <input type="email" id="email" name="email" placeholder="ime@email.com" required autocomplete="email">
-        </div>
-        <div class="polje puna">
-          <label for="telefon">Broj telefona</label>
-          <input type="tel" id="telefon" name="telefon" placeholder="+381 6x xxx xxxx" required autocomplete="tel">
+    <!-- ================= MAILERLITE FORMA =================
+         Account 564683 / forma 197702876918711405.
+         Ako u MailerLite-u napravis novu formu, promeni `action` na formi,
+         id-jeve `mlb2-...` / `ml-subscribe-form-...` i ime funkcije
+         ml_webform_success_... na dnu ove stranice.
+         Izgled se kontrolise iz assets/css/style.css (sekcija MAILERLITE FORMA).
+         =================================================== -->
+    <div id="mlb2-45583611" class="ml-form-embedContainer ml-subscribe-form ml-subscribe-form-45583611">
+      <div class="ml-form-align-center">
+        <div class="ml-form-embedWrapper embedForm">
+
+          <div class="ml-form-embedBody ml-form-embedBodyDefault row-form">
+            <form class="ml-block-form" action="https://assets.mailerlite.com/jsonp/564683/forms/197702876918711405/subscribe" data-code="" method="post" target="_blank">
+              <div class="ml-form-formContent">
+                <div class="ml-form-fieldRow">
+                  <div class="ml-field-group ml-field-name ml-validate-required">
+                    <label for="ml-ime">Ime</label>
+                    <input id="ml-ime" aria-required="true" type="text" class="form-control" data-inputmask="" name="fields[name]" placeholder="Tvoje ime" autocomplete="given-name">
+                  </div>
+                </div>
+                <div class="ml-form-fieldRow">
+                  <div class="ml-field-group ml-field-last_name ml-validate-required">
+                    <label for="ml-prezime">Prezime</label>
+                    <input id="ml-prezime" aria-required="true" type="text" class="form-control" data-inputmask="" name="fields[last_name]" placeholder="Tvoje prezime" autocomplete="family-name">
+                  </div>
+                </div>
+                <div class="ml-form-fieldRow">
+                  <div class="ml-field-group ml-field-email ml-validate-email ml-validate-required">
+                    <label for="ml-email">Email adresa</label>
+                    <input id="ml-email" aria-required="true" type="email" class="form-control" data-inputmask="" name="fields[email]" placeholder="ime@email.com" autocomplete="email">
+                  </div>
+                </div>
+                <div class="ml-form-fieldRow ml-last-item">
+                  <div class="ml-field-group ml-field-phone ml-validate-required">
+                    <label for="ml-telefon">Broj telefona</label>
+                    <input id="ml-telefon" aria-required="true" type="tel" inputmode="tel" class="form-control" data-inputmask="" name="fields[phone]" placeholder="+381 6x xxx xxxx" autocomplete="tel">
+                  </div>
+                </div>
+              </div>
+
+              <input type="hidden" name="ml-submit" value="1">
+
+              <div class="ml-form-embedSubmit">
+                <button type="submit" class="primary">Rezerviši besplatno mesto</button>
+                <button disabled="disabled" style="display: none;" type="button" class="loading">
+                  <div class="ml-form-embedSubmitLoad"></div>
+                  <span class="sr-only">Šaljem prijavu…</span>
+                </button>
+              </div>
+
+              <input type="hidden" name="anticsrf" value="true">
+            </form>
+          </div>
+
+          <div class="ml-form-successBody row-success" style="display: none">
+            <div class="ml-form-successContent">
+              <div class="uspeh-ikona" aria-hidden="true">✓</div>
+              <h3>Mesto je rezervisano</h3>
+              <p>Zoom link ti stiže na email u narednih nekoliko minuta. Ako ga ne vidiš, proveri <strong>Promotions</strong> i <strong>Spam</strong> folder.</p>
+              <p class="uspeh-napomena">Vebinar je <strong>14. septembra u 19:00</strong> i snimka neće biti. Ubaci ga odmah u kalendar da ti ne promakne.</p>
+              <div class="uspeh-dugmad">
+                <a class="uspeh-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Vebinar%3A%20Kako%20da%20proda%C5%A1%20svoj%20prvi%20digitalni%20proizvod&amp;dates=20260914T170000Z%2F20260914T183000Z&amp;details=Uzivo%20na%20Zoom-u%20sa%20Vladimirom%20Stankovicem.%20Zoom%20link%20stize%20na%20email.&amp;location=Zoom" target="_blank" rel="noopener">Dodaj u Google kalendar</a>
+                <a class="uspeh-btn" href="assets/vebinar.ics" download>Apple / Outlook (.ics)</a>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
-      <button type="submit" class="cta-btn">Rezerviši besplatno mesto</button>
-    </form>
-    <!-- ================= KRAJ PLACEHOLDER FORME ================= -->
+    </div>
+    <!-- ================= KRAJ MAILERLITE FORME ================= -->
 
-    <p class="privatnost">Tvoji podaci su sigurni. Koristimo ih samo da ti pošaljemo Zoom link i podsetnik pred vebinar.</p>
+    <p class="privatnost" id="privatnost-napomena">Tvoji podaci su sigurni. Koristimo ih samo da ti pošaljemo Zoom link i podsetnik pred vebinar.</p>
   </div>
 </div>
 
@@ -320,5 +365,31 @@
 </script>
 
 <script src="assets/js/main.js" defer></script>
+
+<!-- ================= MAILERLITE SKRIPTE ================= -->
+<script>
+  // Poziva je MailerLite kada prijava prodje. Bez jQuery zavisnosti.
+  function ml_webform_success_45583611() {
+    var forma = document.querySelector(".ml-subscribe-form-45583611 .row-form");
+    var uspeh = document.querySelector(".ml-subscribe-form-45583611 .row-success");
+    if (forma) forma.style.display = "none";
+    if (uspeh) uspeh.style.display = "block";
+
+    var naslov = document.getElementById("forma-naslov");
+    if (naslov) naslov.textContent = "Vidimo se na vebinaru";
+    var mesta = document.getElementById("mesta-info");
+    if (mesta) mesta.style.display = "none";
+    var privatnost = document.getElementById("privatnost-napomena");
+    if (privatnost) privatnost.style.display = "none";
+
+    if (uspeh && uspeh.scrollIntoView) {
+      uspeh.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }
+</script>
+<script src="https://groot.mailerlite.com/js/w/webforms.min.js?v83147fa8ce2d95cb73ece7f28b469519" type="text/javascript"></script>
+<script>
+  fetch("https://assets.mailerlite.com/jsonp/564683/forms/197702876918711405/takel");
+</script>
 </body>
 </html>

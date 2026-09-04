@@ -65,13 +65,3 @@ setInterval(osveziCountdown, 1000);
   }, { threshold: 0.12 });
   elementi.forEach(function (el) { posmatrac.observe(el); });
 })();
-
-// Placeholder forma. Kada ubacis MailerLite embed, ovaj blok mozes da obrises.
-(function () {
-  var forma = document.getElementById("placeholder-forma");
-  if (!forma) return;
-  forma.addEventListener("submit", function (e) {
-    e.preventDefault();
-    alert("Ovo je placeholder forma. Ovde ide MailerLite embed (vidi README.md).");
-  });
-})();

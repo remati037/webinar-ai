@@ -11,12 +11,14 @@ Bez build koraka, bez framework-a. Čist HTML, CSS i JS, spremno za Vercel.
 ├── assets/
 │   ├── css/style.css           # svi stilovi
 │   ├── js/main.js              # countdown, brojač mesta, scroll reveal
+│   ├── vebinar.ics             # termin za dodavanje u kalendar
 │   └── img/
-│       ├── vladimir-stankovic.webp       # fotografija voditelja (800x1000)
-│       ├── vladimir-stankovic-400.webp   # ista slika za manje ekrane
+│       ├── vladimir-stankovic.webp       # fotografija voditelja (840x1260)
+│       ├── vladimir-stankovic-560.webp   # ista slika za manje ekrane
 │       ├── og-image.jpg                  # slika za deljenje na mrežama (1200x630)
 │       ├── favicon.svg
 │       └── placeholder-rezultat-1..4.svg # placeholderi za sekciju „rezultati"
+├── uputstvo-mailerlite-v4.md   # sve oko forme za prijavu
 ├── vercel.json                 # cache i security headeri
 ├── robots.txt
 └── .gitignore
@@ -53,7 +55,7 @@ git push -u origin main
 
 | Šta | Gde |
 |---|---|
-| Datum i vreme vebinara (countdown) | `assets/js/main.js`, promenljiva `VEBINAR_DATUM` |
+| Datum i vreme vebinara | `assets/js/main.js` (`VEBINAR_DATUM`), `assets/vebinar.ics` i Google Calendar link u `index.html` |
 | Broj prijavljenih / ukupno mesta | `assets/js/main.js`, `PRIJAVLJENO` i `UKUPNO_MESTA` |
 | Boje i tipografija | `assets/css/style.css`, blok `:root` na vrhu |
 | Tekstovi, FAQ, sekcije | `index.html` |
@@ -62,20 +64,24 @@ git push -u origin main
 > **Važno pre lansiranja:** zameni domen `vebinar.vladsdigital.com` pravim domenom
 > u `index.html`, inače će deljenje na društvenim mrežama pokazivati pogrešnu adresu.
 
-## Zamena slika u sekciji „rezultati"
+## Sekcija „rezultati"
+
+Sekcija je privremeno sakrivena — na `<section class="blok" hidden>` u `index.html`
+obriši atribut `hidden` da se vrati.
 
 Ubaci screenshotove u `assets/img/` (najbolje u odnosu 16:10, npr. 1280x800, `.webp` ili `.jpg`)
 i u `index.html` promeni `src` unutar `.dokazi-mreza`:
 
 ```html
-<img src="/assets/img/rezultat-1.webp" width="1280" height="800" loading="lazy" decoding="async" alt="...">
+<img src="assets/img/rezultat-1.webp" width="1280" height="800" loading="lazy" decoding="async" alt="...">
 ```
 
 Ako imaš manje od 4 slike, jednostavno obriši cele `<figure>` blokove koji ti ne trebaju —
 mreža se sama prilagodi.
 
-## Ubacivanje MailerLite forme
+## MailerLite forma
 
-U `index.html` pronađi blok između komentara
-`MAILERLITE PLACEHOLDER` i `KRAJ PLACEHOLDER FORME` i zameni ga MailerLite embed kodom.
-Posle toga možeš da obrišeš i „Placeholder forma" blok na dnu `assets/js/main.js`.
+Forma je već ubačena i povezana sa MailerLite nalogom, stilizovana u temu stranice,
+sa porukom i dugmadima za kalendar posle uspešne prijave.
+Detalji, kao i šta ostaje da se podesi u samom MailerLite panelu (grupa, automation,
+double opt-in), su u [uputstvo-mailerlite-v4.md](uputstvo-mailerlite-v4.md).

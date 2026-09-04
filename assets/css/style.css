@@ -20,6 +20,7 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
+img { max-width: 100%; height: auto; }
 html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
@@ -208,31 +209,6 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -0.025em; }
   padding: 6px 14px;
   border-radius: 100px;
 }
-.polja {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-top: 26px;
-}
-.polje { display: flex; flex-direction: column; }
-.polje.puna { grid-column: 1 / -1; }
-.polje label { font-size: 13.5px; font-weight: 600; margin-bottom: 6px; }
-.polje input {
-  font-family: inherit;
-  font-size: 15.5px;
-  padding: 14px 16px;
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  background: rgba(0,0,0,0.35);
-  color: var(--text);
-}
-.polje input::placeholder { color: #5A5E70; }
-.polje input:focus-visible {
-  outline: 2px solid var(--violet);
-  outline-offset: 1px;
-  border-color: var(--violet);
-}
-.forma-kartica .cta-btn { width: 100%; text-align: center; margin-top: 24px; }
 .privatnost { margin-top: 14px; font-size: 13px; color: var(--muted); text-align: center; }
 
 /* ---------- SEKCIJE ---------- */
@@ -332,6 +308,7 @@ section.blok .uvodna { margin-top: 14px; color: var(--muted); max-width: 58ch; }
 }
 .voditelj .foto {
   width: 100%;
+  height: auto;
   aspect-ratio: 2 / 3;
   object-fit: cover;
   border-radius: 16px;
@@ -357,6 +334,7 @@ section.blok .uvodna { margin-top: 14px; color: var(--muted); max-width: 58ch; }
 .dokazi-mreza figure { margin: 0; }
 .dokazi-mreza img {
   width: 100%;
+  height: auto;
   aspect-ratio: 16 / 10;
   object-fit: cover;
   border-radius: 12px;
@@ -465,7 +443,6 @@ footer a { color: var(--muted); }
 
 @media (max-width: 680px) {
   .hero { padding: 56px 0 68px; }
-  .polja { grid-template-columns: 1fr; }
   .voditelj { grid-template-columns: 1fr; }
   .voditelj .foto { max-width: 280px; }
   .milestones { grid-template-columns: 1fr; }
@@ -473,4 +450,184 @@ footer a { color: var(--muted); }
   .zakoga { grid-template-columns: 1fr; }
   .countdown .box { width: 72px; }
   .forma-kartica { padding: 30px 20px; }
+}
+
+/* ============================================================
+   MAILERLITE FORMA
+   MailerLite-ov sopstveni CSS je namerno izbacen iz embed koda
+   (bela pozadina, Open Sans, crno dugme) i zamenjen ovim blokom.
+   Ako u MailerLite-u dodas novo polje, ono nasledjuje ove stilove.
+   ============================================================ */
+.forma-kartica .ml-form-embedContainer,
+.forma-kartica .ml-form-align-center,
+.forma-kartica .ml-form-embedWrapper,
+.forma-kartica .ml-form-embedBody,
+.forma-kartica .ml-form-successBody {
+  width: 100%;
+  max-width: none;
+  background: transparent;
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+.forma-kartica .ml-block-form { margin: 0; }
+
+.forma-kartica .ml-form-formContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 26px;
+}
+/* ime i prezime dele red, email i telefon idu preko cele sirine */
+.forma-kartica .ml-form-fieldRow:nth-child(n+3) { grid-column: 1 / -1; }
+
+.forma-kartica .ml-field-group { display: flex; flex-direction: column; }
+.forma-kartica .ml-field-group label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.forma-kartica .ml-form-embedBody input.form-control {
+  font-family: inherit;
+  font-size: 15.5px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(0,0,0,0.35);
+  color: var(--text);
+  width: 100%;
+  box-shadow: none;
+}
+.forma-kartica .ml-form-embedBody input.form-control::placeholder { color: #5A5E70; }
+.forma-kartica .ml-form-embedBody input.form-control:focus-visible {
+  outline: 2px solid var(--violet);
+  outline-offset: 1px;
+  border-color: var(--violet);
+}
+
+/* stanje greske koje postavlja MailerLite validacija */
+.forma-kartica .ml-error input.form-control { border-color: var(--rose); }
+.forma-kartica .ml-error label { color: var(--rose); }
+
+.forma-kartica .ml-form-embedSubmit { margin: 0; }
+.forma-kartica .ml-form-embedSubmit button {
+  display: block;
+  width: 100%;
+  margin-top: 24px;
+  background: linear-gradient(180deg, #4DA3FF 0%, #1D6FE0 100%);
+  color: #fff;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 19px 42px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.18);
+  cursor: pointer;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+  box-shadow: 0 10px 40px rgba(20,102,232,0.5), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+.forma-kartica .ml-form-embedSubmit button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 52px rgba(20,102,232,0.65), inset 0 1px 0 rgba(255,255,255,0.25);
+}
+.forma-kartica .ml-form-embedSubmit button:focus-visible { outline: 3px solid var(--violet-pale); outline-offset: 3px; }
+.forma-kartica .ml-form-embedSubmit button.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+}
+.forma-kartica .ml-form-embedSubmit button.loading:hover { transform: none; }
+
+/* spiner dok traje slanje (dolazi iz MailerLite embeda) */
+.ml-form-embedSubmitLoad { display: inline-block; width: 20px; height: 20px; }
+.ml-form-embedSubmitLoad:after {
+  content: " ";
+  display: block;
+  width: 11px;
+  height: 11px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  border-color: #fff #fff #fff transparent;
+  animation: ml-form-embedSubmitLoad 1.2s linear infinite;
+}
+@keyframes ml-form-embedSubmitLoad { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+
+/* ---------- PORUKA POSLE USPESNE PRIJAVE ---------- */
+.forma-kartica .ml-form-successContent {
+  background: rgba(71,217,122,0.07);
+  border: 1px solid rgba(71,217,122,0.35);
+  border-radius: 14px;
+  padding: 30px 28px;
+  margin-top: 26px;
+  text-align: center;
+}
+.uspeh-ikona {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(71,217,122,0.14);
+  border: 1px solid rgba(71,217,122,0.5);
+  color: var(--ok);
+  font-size: 26px;
+  font-weight: 800;
+}
+.forma-kartica .ml-form-successContent h3 { font-size: 23px; font-weight: 800; }
+.forma-kartica .ml-form-successContent p {
+  margin-top: 12px;
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 46ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.forma-kartica .ml-form-successContent p strong { color: var(--text); font-weight: 600; }
+.uspeh-dugmad {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+.uspeh-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--line-strong);
+  background: rgba(46,144,255,0.1);
+  color: var(--violet-pale);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+.uspeh-btn:hover { background: rgba(46,144,255,0.2); }
+.uspeh-btn:focus-visible { outline: 3px solid var(--violet-pale); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .forma-kartica .ml-form-embedSubmit button, .uspeh-btn { transition: none; }
+}
+
+@media (max-width: 680px) {
+  .forma-kartica .ml-form-formContent { grid-template-columns: 1fr; }
+  .forma-kartica .ml-form-embedSubmit button { padding: 18px 20px; font-size: 16px; }
+  .uspeh-dugmad { flex-direction: column; }
 }
