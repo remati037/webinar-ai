@@ -510,6 +510,13 @@ footer a { color: var(--muted); }
   box-shadow: none;
 }
 .forma-kartica .ml-form-embedBody input.form-control::placeholder { color: #5A5E70; }
+.forma-kartica .polje-napomena {
+  margin-top: 7px;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.forma-kartica .polje-napomena strong { color: var(--violet-pale); font-weight: 600; }
 .forma-kartica .ml-form-embedBody input.form-control:focus-visible {
   outline: 2px solid var(--violet);
   outline-offset: 1px;

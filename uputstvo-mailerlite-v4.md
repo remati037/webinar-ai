@@ -26,6 +26,11 @@ Detalji koje je korisno znati pri kasnijim izmenama:
   To radi pravilo `.ml-form-fieldRow:nth-child(n+3) { grid-column: 1 / -1; }` — ako u
   MailerLite-u dodaš novo polje, proveri redosled.
 - **Telefon** je prebačen na `type="tel"` radi numeričke tastature na telefonu.
+- **Broj telefona se automatski prevodi u internacionalni format.** MailerLite prima broj
+  samo kao `+381…`, pa `assets/js/main.js` domaći zapis (`065…`, `00381…`, sa razmacima
+  ili crticama) pretvara u `+381651324124` pre slanja. Brojevi koji već počinju sa `+`
+  se ne diraju, pa prijave iz inostranstva prolaze normalno. Podrazumevana zemlja je
+  u promenljivoj `POZIVNI` na dnu `main.js`.
 - **Success callback** `ml_webform_success_45583611()` je napisan u čistom JS-u (bez jQuery
   zavisnosti): sakriva formu, prikazuje poruku, menja naslov kartice u „Vidimo se na vebinaru",
   sklanja bedž sa brojem mesta i skroluje do poruke.
