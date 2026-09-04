@@ -75,7 +75,7 @@ Google Calendar link u `index.html` i `VEBINAR_DATUM` u `assets/js/main.js`.
 | Šta | Status |
 |---|---|
 | Fotografija Vladimira | ✅ ubačena (`assets/img/vladimir-stankovic.webp`) |
-| Slike rezultata | ⏸ sekcija privremeno sakrivena (`hidden` atribut na `<section>`) |
+| Slika rezultata | ✅ ubačena (`assets/img/rezultat.jpeg`), sekcija je vidljiva |
 | MailerLite forma | ✅ ubačena i stilizovana |
 | Broj prijavljenih | `PRIJAVLJENO` u `assets/js/main.js` — upiši stvaran broj pa se prikazuje „Ostalo još X od 200 mesta" |
 | Domen u SEO tagovima | ⏸ još uvek `vebinar.vladsdigital.com` |

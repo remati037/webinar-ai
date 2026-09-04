@@ -16,8 +16,8 @@ Bez build koraka, bez framework-a. Čist HTML, CSS i JS, spremno za Vercel.
 │       ├── vladimir-stankovic.webp       # fotografija voditelja (840x1260)
 │       ├── vladimir-stankovic-560.webp   # ista slika za manje ekrane
 │       ├── og-image.jpg                  # slika za deljenje na mrežama (1200x630)
-│       ├── favicon.svg
-│       └── placeholder-rezultat-1..4.svg # placeholderi za sekciju „rezultati"
+│       ├── rezultat.jpeg                # screenshot u sekciji „rezultati"
+│       └── favicon.svg
 ├── uputstvo-mailerlite-v4.md   # sve oko forme za prijavu
 ├── vercel.json                 # cache i security headeri
 ├── robots.txt
@@ -66,18 +66,14 @@ git push -u origin main
 
 ## Sekcija „rezultati"
 
-Sekcija je privremeno sakrivena — na `<section class="blok" hidden>` u `index.html`
-obriši atribut `hidden` da se vrati.
+Prikazuje jedan screenshot: `assets/img/rezultat.jpeg` (1600x400).
 
-Ubaci screenshotove u `assets/img/` (najbolje u odnosu 16:10, npr. 1280x800, `.webp` ili `.jpg`)
-i u `index.html` promeni `src` unutar `.dokazi-mreza`:
+Za zamenu ubaci novu sliku u `assets/img/` i u `index.html` promeni `src` **i**
+`width`/`height` na stvarne dimenzije slike — po njima se računa odnos stranica,
+pa se slika ne deformiše i ne pomera layout dok se učitava.
 
-```html
-<img src="assets/img/rezultat-1.webp" width="1280" height="800" loading="lazy" decoding="async" alt="...">
-```
-
-Ako imaš manje od 4 slike, jednostavno obriši cele `<figure>` blokove koji ti ne trebaju —
-mreža se sama prilagodi.
+Slika se prikazuje u punoj širini, bez sečenja. Na telefonu se ne smanjuje ispod
+620px nego se okvir skroluje vodoravno, da brojevi ostanu čitljivi.
 
 ## MailerLite forma
 

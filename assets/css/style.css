@@ -330,21 +330,29 @@ section.blok .uvodna { margin-top: 14px; color: var(--muted); max-width: 58ch; }
 .milestones .m span { font-size: 13.5px; color: var(--muted); }
 
 /* ---------- DOKAZI ---------- */
-.dokazi-mreza { margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
-.dokazi-mreza figure { margin: 0; }
-.dokazi-mreza img {
+.dokaz { margin: 30px 0 0; }
+.dokaz-okvir {
+  background: #fff;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow: 0 0 60px rgba(20,102,232,0.16), 0 22px 55px rgba(0,0,0,0.5);
+}
+.dokaz-okvir img {
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: #0B1626;
   display: block;
-  transition: transform 0.2s ease, border-color 0.2s ease;
+  border-radius: 8px;
 }
-.dokazi-mreza figure:hover img { transform: translateY(-3px); border-color: var(--line-strong); }
-.dokazi-mreza figcaption { margin-top: 9px; font-size: 13.5px; color: var(--muted); }
+.dokaz figcaption {
+  margin-top: 12px;
+  font-size: 13.5px;
+  color: var(--muted);
+  text-align: center;
+}
+.dokaz figcaption strong { color: var(--violet-pale); font-weight: 600; }
+/* napomena za skrolovanje se vidi samo tamo gde je slika zaista skrolabilna */
+.dokaz-skrol { display: none; }
 
 /* ---------- ZA KOGA ---------- */
 .zakoga { margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -438,7 +446,7 @@ footer a { color: var(--muted); }
   html { scroll-behavior: auto; }
   .badge .dot { animation: none; }
   .rv { opacity: 1; transform: none; transition: none; }
-  .cta-btn, .dokazi-mreza img { transition: none; }
+  .cta-btn { transition: none; }
 }
 
 @media (max-width: 680px) {
@@ -446,7 +454,9 @@ footer a { color: var(--muted); }
   .voditelj { grid-template-columns: 1fr; }
   .voditelj .foto { max-width: 280px; }
   .milestones { grid-template-columns: 1fr; }
-  .dokazi-mreza { grid-template-columns: 1fr; }
+  .dokaz-okvir { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .dokaz-okvir img { min-width: 620px; }
+  .dokaz-skrol { display: block; margin-top: 4px; }
   .zakoga { grid-template-columns: 1fr; }
   .countdown .box { width: 72px; }
   .forma-kartica { padding: 30px 20px; }
