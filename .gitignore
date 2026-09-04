@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+._*
+
+# Vercel
+.vercel
+
+# Node (ako kasnije dodas alate)
+node_modules/
+npm-debug.log*
+.env
+.env.local
