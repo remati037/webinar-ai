@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mesto je rezervisano — tvoj referal link</title>
-<meta name="description" content="Prijava za vebinar je uspešna. Ovde je tvoj lični link za pozivanje prijatelja i tabela sa pregledom svih koji su se prijavili preko tebe.">
+<title>Mesto je rezervisano</title>
+<meta name="description" content="Prijava za vebinar je uspešna. Ovde je tvoj lični link za pozivanje prijatelja i pregled svih koji su se prijavili preko tebe.">
 
 <!-- Ova stranica je licna i ne treba da se indeksira ni deli dalje. -->
 <meta name="robots" content="noindex, nofollow">
@@ -17,7 +17,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=2">
+<link rel="stylesheet" href="assets/css/style.css?v=3">
 </head>
 <body class="stranica-hvala">
 
@@ -52,7 +52,6 @@
       <h2>Tvoj lični link</h2>
       <p class="hvala-uvod">
         Svako ko se prijavi preko ovog linka računa se kao tvoja preporuka.
-        Kada ih skupiš <strong id="cilj-broj">10</strong>, dobijaš moj kurs — besplatno.
       </p>
 
       <div class="link-red">
@@ -61,42 +60,16 @@
       </div>
       <p class="link-status" id="kopiraj-status" role="status" aria-live="polite"></p>
 
-      <div class="deli-dugmad">
-        <button type="button" class="deli-btn deli-native" id="deli-native" hidden>Podeli…</button>
-        <a class="deli-btn" id="deli-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
-        <a class="deli-btn" id="deli-viber">Viber</a>
-        <a class="deli-btn" id="deli-telegram" target="_blank" rel="noopener">Telegram</a>
-        <a class="deli-btn" id="deli-facebook" target="_blank" rel="noopener">Facebook</a>
-        <a class="deli-btn" id="deli-email">Email</a>
-      </div>
-
       <p class="hvala-napomena">
         <strong>Sačuvaj ovu stranicu u bookmarks.</strong> Adresa u pretraživaču je tvoj privatni
-        pristup tabeli — isti link ti stiže i na email, pa ga uvek možeš vratiti odatle.
+        pristup tabeli. Isti link ti stiže i na email, pa ga uvek možeš vratiti odatle.
       </p>
     </section>
 
-    <!-- ============ 4. NAPREDAK ============ -->
-    <section class="hvala-kartica hvala-napredak" id="napredak" hidden>
-      <div class="napredak-brojevi">
-        <div class="brojka">
-          <span class="brojka-vrednost" id="broj-ukupno">0</span>
-          <span class="brojka-oznaka">prijavljenih preko tebe</span>
-        </div>
-        <div class="brojka">
-          <span class="brojka-vrednost" id="broj-preostalo">10</span>
-          <span class="brojka-oznaka">još do besplatnog kursa</span>
-        </div>
-      </div>
-      <div class="traka" role="img" aria-labelledby="traka-opis">
-        <div class="traka-popuna" id="traka-popuna"></div>
-      </div>
-      <p class="traka-opis" id="traka-opis">Skupi 10 prijava i kurs je tvoj.</p>
-    </section>
-
-    <!-- ============ 5. TABELA ============ -->
+    <!-- ============ 4. TABELA ============ -->
     <section class="hvala-kartica hvala-tabela" id="tabela-blok" hidden>
       <h2>Ko se prijavio preko tebe</h2>
+      <p class="tabela-broj" id="tabela-broj" hidden></p>
       <div class="tabela-okvir">
         <table class="referal-tabela">
           <thead>
@@ -111,8 +84,8 @@
         </table>
       </div>
       <p class="prazna-tabela" id="prazna-tabela" hidden>
-        Još niko. Pošalji link iznad dvema-trima osobama kojima bi vebinar stvarno koristio —
-        to je obično dovoljno da se lista pokrene.
+        Još niko. Pošalji link iznad dvema ili trima osobama kojima bi vebinar stvarno
+        koristio. To je obično dovoljno da se lista pokrene.
       </p>
       <p class="hvala-napomena">
         Zbog privatnosti prijavljenih prikazujem samo ime sa inicijalom prezimena i skraćen email.
@@ -122,6 +95,6 @@
   </div>
 </main>
 
-<script src="assets/js/hvala.js?v=2" defer></script>
+<script src="assets/js/hvala.js?v=3" defer></script>
 </body>
 </html>

@@ -123,12 +123,6 @@ export function referalLink(req, kod) {
   return `${adresaSajta(req)}/?ref=${kod}`;
 }
 
-/** Koliko referala nosi nagradu. Menja se bez deploya, preko env-a. */
-export function cilj() {
-  const n = Number(process.env.REFERAL_CILJ);
-  return Number.isFinite(n) && n > 0 ? Math.floor(n) : 10;
-}
-
 export function ipAdresa(req) {
   const f = req.headers["x-forwarded-for"];
   if (typeof f === "string" && f) return f.split(",")[0].trim().slice(0, 45);

@@ -21,7 +21,7 @@ nekoliko Vercel serverless funkcija i Neon Postgres baza za prijave i referale.
 │   ├── css/style.css           # svi stilovi
 │   ├── js/main.js              # countdown, brojač mesta, scroll reveal
 │   ├── js/prijava.js           # validacija i slanje forme
-│   ├── js/hvala.js             # referal link, deljenje, tabela
+│   ├── js/hvala.js             # referal link i tabela prijava
 │   ├── vebinar.ics             # termin za dodavanje u kalendar
 │   └── img/
 │       ├── vladimir-stankovic.webp       # fotografija voditelja (840x1260)
@@ -76,7 +76,6 @@ git push -u origin main
 | Šta | Gde |
 |---|---|
 | Datum i vreme vebinara | `assets/js/main.js` (`VEBINAR_DATUM`), `assets/vebinar.ics` i Google Calendar link u `index.html` **i** `hvala.html` |
-| Koliko referala nosi kurs | `REFERAL_CILJ` u Vercel Environment Variables (podrazumevano 10) |
 | Broj prijavljenih / ukupno mesta | `assets/js/main.js`, `PRIJAVLJENO` i `UKUPNO_MESTA` |
 | Boje i tipografija | `assets/css/style.css`, blok `:root` na vrhu |
 | Tekstovi, FAQ, sekcije | `index.html` |
@@ -106,7 +105,8 @@ i prosleđuje kontakt MailerLite-u preko njihovog API-ja. Detalji su u
 ## Referal sistem
 
 Svako ko se prijavi dobija lični link (`/?ref=k7m2xq`) i privatnu stranicu `/hvala`
-sa tabelom ko se prijavio preko njega. Kod je gotov, ali **traži jednokratno
+sa tabelom ko se prijavio preko njega. Nagrada za određen broj referala još nije
+uvedena, pa je stranica za sada samo link i pregled prijava. Kod je gotov, ali **traži jednokratno
 podešavanje** baze, API ključa i dva polja u MailerLite-u —
 korak po korak u [uputstvo-referal.md](uputstvo-referal.md).
 

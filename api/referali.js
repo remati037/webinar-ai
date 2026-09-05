@@ -8,7 +8,7 @@
 // ============================================================
 
 import {
-  db, json, greska, ocisti, referalLink, skracenoIme, maskiranEmail, cilj,
+  db, json, greska, ocisti, referalLink, skracenoIme, maskiranEmail,
 } from "./_lib.js";
 
 export default async function handler(req, res) {
@@ -48,7 +48,6 @@ export default async function handler(req, res) {
       ref_link: referalLink(req, ja.ref_kod),
       ukupno: lista.length,
       potvrdjeno: lista.filter((r) => r.status === "potvrdjen").length,
-      cilj: cilj(),
       lista,
     });
   } catch (e) {

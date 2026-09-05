@@ -64,7 +64,6 @@ Vercel → projekat → **Settings** → **Environment Variables**:
 | `MAILERLITE_API_KEY` | ključ iz koraka 2 | sva tri | da |
 | `MAILERLITE_GROUP_ID` | broj iz koraka 3 | sva tri | da |
 | `SITE_URL` | `https://tvoj-domen.com` (bez `/` na kraju) | **samo Production** | da |
-| `REFERAL_CILJ` | koliko referala nosi kurs, npr. `10` | sva tri | ne, podrazumevano je 10 |
 | `DATABASE_URL` | — | — | Vercel ga je već dodao u koraku 1 |
 
 > **`SITE_URL` upiši samo za Production.** Iz njega se sastavlja referal link koji
@@ -113,11 +112,10 @@ DELETE FROM prijave WHERE email IN ('tvoj@email.com', 'test@email.com');
 MailerLite → **Automations** → automation koji šalje Zoom link → u telo mejla
 dodaj nešto ovako:
 
-> Usput — ako ti se vebinar čini korisnim, pozovi nekoga. Evo tvog ličnog linka:
+> Usput, ako ti se vebinar čini korisnim, pozovi nekoga. Evo tvog ličnog linka:
 >
 > `{$referal_link}`
 >
-> Kada se preko njega prijavi 10 ljudi, šaljem ti moj kurs besplatno.
 > Na istom linku uvek vidiš ko se prijavio preko tebe.
 
 Personalizaciju ubacuješ preko dugmeta **Personalization** u editoru, ne kucanjem —
@@ -200,5 +198,8 @@ vercel dev           # sajt + /api rute na http://localhost:3000
 - **Admin pregled** — ko ima najviše referala. Podaci su već u bazi, treba samo
   ruta `/api/admin` zaštićena lozinkom i stranica sa rang listom.
 - **Webhook za double opt-in** — ako ga uključiš, videti odeljak „Kolona `status`".
-- **Automatsko obaveštenje na 10 referala** — trigger koji ti javi ili odmah
-  pošalje kurs kada neko pređe cilj.
+- **Nagrada za određen broj referala** — nije uvedena. Kada se odlučiš šta nosi
+  koliko referala, vraća se brojač napretka na `/hvala` i obaveštenje kada neko
+  pređe prag. Podaci za to su već u bazi.
+- **Dugmad za deljenje** (WhatsApp, Viber, Telegram, Facebook, email) su bila
+  napravljena pa uklonjena na zahtev. Vraćaju se lako iz istorije commita.

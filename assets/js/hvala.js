@@ -22,13 +22,8 @@
     linkPolje: document.getElementById("link-polje"),
     kopiraj: document.getElementById("kopiraj"),
     kopirajStatus: document.getElementById("kopiraj-status"),
-    napredak: document.getElementById("napredak"),
-    ciljBroj: document.getElementById("cilj-broj"),
-    brojUkupno: document.getElementById("broj-ukupno"),
-    brojPreostalo: document.getElementById("broj-preostalo"),
-    trakaPopuna: document.getElementById("traka-popuna"),
-    trakaOpis: document.getElementById("traka-opis"),
     tabelaBlok: document.getElementById("tabela-blok"),
+    tabelaBroj: document.getElementById("tabela-broj"),
     tabelaTelo: document.getElementById("tabela-telo"),
     praznaTabela: document.getElementById("prazna-tabela"),
   };
@@ -61,25 +56,16 @@
       el.potvrdaIme.textContent = ", " + p.ime;
     }
 
-    // referal link i dugmad za deljenje
+    // referal link
     el.linkPolje.value = p.ref_link;
-    el.ciljBroj.textContent = p.cilj;
-    postaviDeljenje(p.ref_link);
     el.referal.hidden = false;
-
-    // napredak
-    var preostalo = Math.max(0, p.cilj - p.ukupno);
-    el.brojUkupno.textContent = p.ukupno;
-    el.brojPreostalo.textContent = preostalo;
-    el.trakaPopuna.style.width = Math.min(100, (p.ukupno / p.cilj) * 100) + "%";
-    el.trakaOpis.textContent = preostalo === 0
-      ? "Cilj je ispunjen — javljam ti se oko kursa na email."
-      : "Još " + preostalo + " " + rec(preostalo, "prijava", "prijave", "prijava") + " do besplatnog kursa.";
-    if (preostalo === 0) el.napredak.classList.add("cilj-ispunjen");
-    el.napredak.hidden = false;
 
     // tabela
     if (p.lista.length) {
+      el.tabelaBroj.textContent = "Do sada " + p.ukupno + " " +
+        rec(p.ukupno, "prijava", "prijave", "prijava") + " preko tvog linka.";
+      el.tabelaBroj.hidden = false;
+
       var delovi = p.lista.map(function (r) {
         return "<tr>" +
           "<td data-naslov=\"Ime\">" + bezbedno(r.ime) + "</td>" +
@@ -113,7 +99,7 @@
     kopirajTekst(tekst).then(function (uspelo) {
       el.kopirajStatus.textContent = uspelo
         ? "Link je kopiran. Nalepi ga gde želiš."
-        : "Ne mogu da kopiram sam — označi link iznad i kopiraj ručno.";
+        : "Ne mogu da kopiram sam. Označi link iznad i kopiraj ručno.";
       el.kopiraj.textContent = uspelo ? "Kopirano ✓" : "Kopiraj";
       if (uspelo) {
         setTimeout(function () { el.kopiraj.textContent = "Kopiraj"; }, 2500);
@@ -143,32 +129,6 @@
     }
   }
 
-  // ---------- deljenje ----------
-
-  function postaviDeljenje(link) {
-    var poruka = "Prijavio sam se na besplatan vebinar „Kako da prodaš svoj prvi digitalni proizvod\" " +
-                 "sa Vladimirom Stankovićem, 14. septembra u 19h. Ako te zanima, evo linka:";
-    var pun = poruka + " " + link;
-
-    document.getElementById("deli-whatsapp").href = "https://wa.me/?text=" + encodeURIComponent(pun);
-    document.getElementById("deli-viber").href = "viber://forward?text=" + encodeURIComponent(pun);
-    document.getElementById("deli-telegram").href =
-      "https://t.me/share/url?url=" + encodeURIComponent(link) + "&text=" + encodeURIComponent(poruka);
-    document.getElementById("deli-facebook").href =
-      "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(link);
-    document.getElementById("deli-email").href =
-      "mailto:?subject=" + encodeURIComponent("Besplatan vebinar 14. septembra") +
-      "&body=" + encodeURIComponent(pun);
-
-    var native = document.getElementById("deli-native");
-    if (navigator.share) {
-      native.hidden = false;
-      native.addEventListener("click", function () {
-        navigator.share({ title: "Besplatan vebinar", text: poruka, url: link }).catch(function () {});
-      });
-    }
-  }
-
   // ---------- pomocne ----------
 
   function bezbedno(v) {
@@ -179,7 +139,7 @@
 
   function datum(iso) {
     var d = new Date(iso);
-    if (isNaN(d)) return "—";
+    if (isNaN(d)) return "";
     return d.toLocaleDateString("sr-Latn-RS", { day: "numeric", month: "numeric", year: "numeric" });
   }
 

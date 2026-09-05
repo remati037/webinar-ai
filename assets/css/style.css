@@ -780,84 +780,11 @@ footer a { color: var(--muted); }
 .link-kopiraj:focus-visible { outline: 3px solid var(--violet-pale); outline-offset: 3px; }
 .link-status { min-height: 20px; margin-top: 8px; font-size: 13.5px; color: var(--ok); }
 
-.deli-dugmad {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-  margin-top: 18px;
-}
-.deli-btn {
-  display: inline-block;
-  padding: 10px 18px;
-  border-radius: 100px;
-  border: 1px solid var(--line);
-  background: var(--surface-2);
-  color: var(--text);
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 700;
-  text-decoration: none;
-  cursor: pointer;
-  transition: border-color 0.15s ease, background-color 0.15s ease;
-}
-.deli-btn:hover { border-color: var(--line-strong); background: rgba(46,144,255,0.12); }
-.deli-btn:focus-visible { outline: 3px solid var(--violet-pale); outline-offset: 2px; }
-.deli-native {
-  border-color: var(--line-strong);
-  background: rgba(46,144,255,0.14);
-  color: var(--violet-pale);
-}
-
 .hvala-napomena { margin-top: 18px; font-size: 13px; color: var(--muted); }
 .hvala-napomena strong { color: var(--text); font-weight: 700; }
 
-/* ---------- napredak ka nagradi ---------- */
-.napredak-brojevi {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-.brojka {
-  background: rgba(0,0,0,0.25);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  padding: 18px 20px;
-}
-.brojka-vrednost {
-  display: block;
-  font-size: 38px;
-  font-weight: 900;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  color: var(--violet-pale);
-}
-.brojka-oznaka {
-  display: block;
-  margin-top: 6px;
-  font-size: 13px;
-  color: var(--muted);
-}
-.traka {
-  height: 10px;
-  margin-top: 20px;
-  border-radius: 100px;
-  background: rgba(0,0,0,0.45);
-  border: 1px solid var(--line);
-  overflow: hidden;
-}
-.traka-popuna {
-  height: 100%;
-  width: 0;
-  border-radius: 100px;
-  background: linear-gradient(90deg, var(--violet) 0%, var(--violet-light) 100%);
-  transition: width 0.5s ease;
-}
-.traka-opis { margin-top: 10px; font-size: 13.5px; color: var(--muted); }
-.cilj-ispunjen .brojka-vrednost,
-.cilj-ispunjen .traka-opis { color: var(--ok); }
-.cilj-ispunjen .traka-popuna { background: linear-gradient(90deg, #2FA85C 0%, var(--ok) 100%); }
-
 /* ---------- tabela dovedenih ---------- */
+.tabela-broj { margin-top: 10px; font-size: 14.5px; color: var(--muted); }
 .tabela-okvir { margin-top: 20px; overflow-x: auto; }
 .referal-tabela {
   width: 100%;
@@ -904,14 +831,13 @@ footer a { color: var(--muted); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .link-kopiraj, .deli-btn, .traka-popuna { transition: none; }
+  .link-kopiraj { transition: none; }
 }
 
 @media (max-width: 640px) {
   .hvala-kartica { padding: 26px 20px; }
   .hvala-kartica h1 { font-size: 25px; }
   .link-red { flex-direction: column; }
-  .napredak-brojevi { grid-template-columns: 1fr; }
 
   /* tabela se na telefonu razlaze u kartice, da se ne skroluje vodoravno */
   .referal-tabela thead { display: none; }
