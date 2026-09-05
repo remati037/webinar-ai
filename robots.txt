@@ -1,2 +1,6 @@
 User-agent: *
 Allow: /
+
+# Licne stranice prijavljenih (referal link i tabela) se ne indeksiraju.
+Disallow: /hvala
+Disallow: /api/

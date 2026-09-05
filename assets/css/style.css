@@ -457,10 +457,10 @@ footer a { color: var(--muted); }
 }
 
 /* ============================================================
-   MAILERLITE FORMA
-   MailerLite-ov sopstveni CSS je namerno izbacen iz embed koda
-   (bela pozadina, Open Sans, crno dugme) i zamenjen ovim blokom.
-   Ako u MailerLite-u dodas novo polje, ono nasledjuje ove stilove.
+   FORMA ZA PRIJAVU
+   Struktura klasa je nasledjena iz starog MailerLite embeda (ml-*),
+   ali sada je forma nasa: salje je assets/js/prijava.js na /api/prijava.
+   Ako dodas novo polje sa istim klasama, nasledjuje ove stilove.
    ============================================================ */
 .forma-kartica .ml-form-embedContainer,
 .forma-kartica .ml-form-align-center,
@@ -510,9 +510,43 @@ footer a { color: var(--muted); }
   border-color: var(--violet);
 }
 
-/* stanje greske koje postavlja MailerLite validacija */
+/* stanje greske koje postavlja assets/js/prijava.js */
 .forma-kartica .ml-error input.form-control { border-color: var(--rose); }
 .forma-kartica .ml-error label { color: var(--rose); }
+
+/* poruka o gresci ispod polja */
+.forma-greska {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border: 1px solid rgba(244,63,94,0.4);
+  border-radius: 10px;
+  background: rgba(244,63,94,0.08);
+  color: var(--text);
+  font-size: 14px;
+}
+
+/* zamka za botove - skriveno od ljudi, ali i dalje u DOM-u */
+.polje-zamka {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* znak da je covek dosao preko tudjeg referal linka */
+.preporuka-znak {
+  display: inline-block;
+  margin-top: 10px;
+  margin-left: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ok);
+  background: rgba(71,217,122,0.08);
+  border: 1px solid rgba(71,217,122,0.35);
+  padding: 6px 14px;
+  border-radius: 100px;
+}
 
 .forma-kartica .ml-form-embedSubmit { margin: 0; }
 .forma-kartica .ml-form-embedSubmit button {
@@ -634,4 +668,283 @@ footer a { color: var(--muted); }
   .forma-kartica .ml-form-formContent { grid-template-columns: 1fr; }
   .forma-kartica .ml-form-embedSubmit button { padding: 18px 20px; font-size: 16px; }
   .uspeh-dugmad { flex-direction: column; }
+}
+
+/* ============================================================
+   STRANICA /hvala - licni referal link i tabela
+   Koristi iste tokene iz :root kao landing, plus .uspeh-* klase
+   iz bloka "PORUKA POSLE USPESNE PRIJAVE" iznad.
+   ============================================================ */
+
+.topbar-nazad {
+  color: var(--violet-pale);
+  text-decoration: none;
+  font-weight: 700;
+}
+.topbar-nazad:hover { text-decoration: underline; }
+.topbar-nazad:focus-visible { outline: 3px solid var(--violet-pale); outline-offset: 3px; }
+
+.hvala-omot {
+  position: relative;
+  padding: 54px 0 90px;
+  overflow: hidden;
+}
+.hvala-omot::before {
+  content: "";
+  position: absolute;
+  inset: -20% -10% auto;
+  height: 560px;
+  background: radial-gradient(46% 60% at 50% 0%, rgba(20,102,232,0.32), transparent 70%);
+  pointer-events: none;
+}
+.hvala-omot > .wrap {
+  position: relative;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.hvala-kartica {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 32px 30px;
+}
+.hvala-kartica h1 { font-size: 30px; font-weight: 900; }
+.hvala-kartica h2 { font-size: 23px; font-weight: 800; }
+
+/* ---------- potvrda prijave ---------- */
+.hvala-potvrda {
+  text-align: center;
+  background: linear-gradient(180deg, rgba(71,217,122,0.08) 0%, rgba(255,255,255,0.03) 60%);
+  border-color: rgba(71,217,122,0.35);
+}
+.hvala-potvrda p {
+  margin-top: 12px;
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 48ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.hvala-potvrda p strong { color: var(--text); font-weight: 600; }
+
+/* ---------- ucitavanje i greska ---------- */
+.hvala-stanje { text-align: center; color: var(--muted); }
+.hvala-stanje.stanje-greska {
+  border-color: rgba(244,63,94,0.35);
+  background: rgba(244,63,94,0.06);
+  color: var(--text);
+}
+.hvala-stanje .uspeh-btn { margin-top: 18px; }
+
+/* ---------- referal link ---------- */
+.hvala-oznaka {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--violet-pale);
+}
+.hvala-uvod { margin-top: 12px; font-size: 15.5px; color: var(--muted); }
+.hvala-uvod strong { color: var(--violet-pale); font-weight: 800; }
+
+.link-red {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+.link-red input {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: inherit;
+  font-size: 15px;
+  padding: 14px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: rgba(0,0,0,0.4);
+  color: var(--text);
+}
+.link-red input:focus-visible { outline: 2px solid var(--violet); outline-offset: 1px; }
+.link-kopiraj {
+  flex: 0 0 auto;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 800;
+  padding: 14px 24px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: linear-gradient(180deg, #4DA3FF 0%, #1D6FE0 100%);
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.14s ease;
+}
+.link-kopiraj:hover { transform: translateY(-1px); }
+.link-kopiraj:focus-visible { outline: 3px solid var(--violet-pale); outline-offset: 3px; }
+.link-status { min-height: 20px; margin-top: 8px; font-size: 13.5px; color: var(--ok); }
+
+.deli-dugmad {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-top: 18px;
+}
+.deli-btn {
+  display: inline-block;
+  padding: 10px 18px;
+  border-radius: 100px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.deli-btn:hover { border-color: var(--line-strong); background: rgba(46,144,255,0.12); }
+.deli-btn:focus-visible { outline: 3px solid var(--violet-pale); outline-offset: 2px; }
+.deli-native {
+  border-color: var(--line-strong);
+  background: rgba(46,144,255,0.14);
+  color: var(--violet-pale);
+}
+
+.hvala-napomena { margin-top: 18px; font-size: 13px; color: var(--muted); }
+.hvala-napomena strong { color: var(--text); font-weight: 700; }
+
+/* ---------- napredak ka nagradi ---------- */
+.napredak-brojevi {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.brojka {
+  background: rgba(0,0,0,0.25);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+.brojka-vrednost {
+  display: block;
+  font-size: 38px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--violet-pale);
+}
+.brojka-oznaka {
+  display: block;
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.traka {
+  height: 10px;
+  margin-top: 20px;
+  border-radius: 100px;
+  background: rgba(0,0,0,0.45);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.traka-popuna {
+  height: 100%;
+  width: 0;
+  border-radius: 100px;
+  background: linear-gradient(90deg, var(--violet) 0%, var(--violet-light) 100%);
+  transition: width 0.5s ease;
+}
+.traka-opis { margin-top: 10px; font-size: 13.5px; color: var(--muted); }
+.cilj-ispunjen .brojka-vrednost,
+.cilj-ispunjen .traka-opis { color: var(--ok); }
+.cilj-ispunjen .traka-popuna { background: linear-gradient(90deg, #2FA85C 0%, var(--ok) 100%); }
+
+/* ---------- tabela dovedenih ---------- */
+.tabela-okvir { margin-top: 20px; overflow-x: auto; }
+.referal-tabela {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14.5px;
+}
+.referal-tabela th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0 14px 10px 0;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.referal-tabela td {
+  padding: 13px 14px 13px 0;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+.referal-tabela tr:last-child td { border-bottom: 0; }
+
+.znak {
+  display: inline-block;
+  padding: 4px 11px;
+  border-radius: 100px;
+  font-size: 12.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.znak-ok { background: rgba(71,217,122,0.12); border: 1px solid rgba(71,217,122,0.4); color: var(--ok); }
+.znak-ceka { background: rgba(151,163,182,0.1); border: 1px solid var(--line); color: var(--muted); }
+
+.prazna-tabela {
+  margin-top: 20px;
+  padding: 22px;
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+  font-size: 14.5px;
+  color: var(--muted);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .link-kopiraj, .deli-btn, .traka-popuna { transition: none; }
+}
+
+@media (max-width: 640px) {
+  .hvala-kartica { padding: 26px 20px; }
+  .hvala-kartica h1 { font-size: 25px; }
+  .link-red { flex-direction: column; }
+  .napredak-brojevi { grid-template-columns: 1fr; }
+
+  /* tabela se na telefonu razlaze u kartice, da se ne skroluje vodoravno */
+  .referal-tabela thead { display: none; }
+  .referal-tabela, .referal-tabela tbody, .referal-tabela tr, .referal-tabela td { display: block; width: 100%; }
+  .referal-tabela tr {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    background: rgba(0,0,0,0.2);
+  }
+  .referal-tabela td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 5px 0;
+    border: 0;
+    text-align: right;
+  }
+  .referal-tabela td::before {
+    content: attr(data-naslov);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-align: left;
+  }
 }

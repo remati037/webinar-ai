@@ -1,81 +1,82 @@
-# MailerLite forma — stanje i održavanje
+# MailerLite — stanje i održavanje
 
-Forma je **ubačena i povezana** sa MailerLite nalogom `564683`, forma `197702876918711405`.
-Ovaj dokument opisuje šta je već odrađeno u kodu i šta ostaje da se podesi u MailerLite panelu.
+Kontakti i dalje idu u MailerLite nalog `564683`, ali **više ne preko embed forme**.
+Od uvođenja referal sistema forma se šalje na našu rutu `/api/prijava`, koja upisuje
+prijavu u bazu i tek onda prosleđuje kontakt MailerLite-u preko njihovog zvaničnog API-ja.
+
+Podešavanje ključa, grupe i custom polja je u [uputstvo-referal.md](uputstvo-referal.md).
+Ovaj dokument pokriva samo ono što se tiče MailerLite-a.
 
 ---
 
-## Šta je odrađeno u kodu
+## Šta je gde u kodu
 
 | Šta | Gde |
 |---|---|
-| Embed forme (Ime, Prezime, Email, Telefon) | `index.html`, blok `MAILERLITE FORMA` |
-| Stilizacija u temu stranice | `assets/css/style.css`, sekcija `MAILERLITE FORMA` |
-| Poruka posle uspešne prijave + dugmad za kalendar | `index.html`, blok `ml-form-successBody` |
+| Markup forme (Ime, Prezime, Email, Telefon) | `index.html`, blok `FORMA ZA PRIJAVU` |
+| Validacija i slanje forme | `assets/js/prijava.js` |
+| Poziv MailerLite API-ja | `api/_mailerlite.js` |
+| Stilizacija forme | `assets/css/style.css`, sekcija `FORMA ZA PRIJAVU` |
+| Poruka posle prijave + dugmad za kalendar | `hvala.html` |
 | Fajl za kalendar | `assets/vebinar.ics` |
-| MailerLite skripte | dno `index.html` |
 
 Detalji koje je korisno znati pri kasnijim izmenama:
 
-- **MailerLite-ov CSS je namerno izbačen.** Originalni embed nosi ~600 linija svog CSS-a
-  (bela pozadina, Open Sans, crno dugme) koji se bije sa tamnom temom. Zadržana je samo
-  njihova struktura klasa (`ml-form-fieldRow`, `ml-field-group`, `ml-validate-required`…)
-  jer se na nju oslanja njihov JavaScript za validaciju i slanje.
-- **Polja su dobila prave `<label>` elemente**, a ne samo placeholder tekst.
-- **Raspored:** Ime i Prezime dele red, Email i Telefon idu preko cele širine.
-  To radi pravilo `.ml-form-fieldRow:nth-child(n+3) { grid-column: 1 / -1; }` — ako u
-  MailerLite-u dodaš novo polje, proveri redosled.
-- **Telefon mora da ostane `type="text"`.** MailerLite validacija required polja traži
-  `input[type="text"], input[type="email"], input[type="number"], select, textarea`
-  unutar `.ml-validate-required` grupe. Sa `type="tel"` ne vidi polje, misli da je prazno
-  i crveni ga bez obzira šta je upisano. Numeričku tastaturu na mobilnom daje
-  `inputmode="tel"`, koji na validaciju ne utiče.
-- **Broj telefona se automatski prevodi u internacionalni format.** MailerLite prima broj
-  samo kao `+381…`, pa `assets/js/main.js` domaći zapis (`065…`, `00381…`, sa razmacima
-  ili crticama) pretvara u `+381651324124` pre slanja. Brojevi koji već počinju sa `+`
-  se ne diraju, pa prijave iz inostranstva prolaze normalno. Podrazumevana zemlja je
-  u promenljivoj `POZIVNI` na dnu `main.js`.
-- **Success callback** `ml_webform_success_45583611()` je napisan u čistom JS-u (bez jQuery
-  zavisnosti): sakriva formu, prikazuje poruku, menja naslov kartice u „Vidimo se na vebinaru",
-  sklanja bedž sa brojem mesta i skroluje do poruke.
+- **Klase koje počinju sa `ml-` su ostale**, iako MailerLite-ovog JavaScripta više nema.
+  Na njih se oslanja CSS. Ako menjaš markup, menjaj i CSS blok `FORMA ZA PRIJAVU`.
+- **MailerLite-ov CSS nikad nije ni bio uključen** — original nosi ~600 linija svog
+  stila (bela pozadina, Open Sans, crno dugme) koji se bije sa tamnom temom.
+- **Telefon je sada `type="tel"`.** Ranije je morao da bude `type="text"` zbog
+  MailerLite validacije; sa njihovom skriptom je otišlo i to ograničenje.
+- **Broj telefona se prevodi u internacionalni format** (`065…` → `+381651324124`),
+  jer MailerLite prima samo takav zapis. Prevod radi `assets/js/prijava.js` da čovek
+  odmah vidi šta šalje, a `api/_lib.js` ga radi ponovo na serveru — klijentu se ne veruje.
+  Podrazumevana zemlja je u promenljivoj `POZIVNI`, na oba mesta.
+- **Greške se prikazuju u samoj formi** (`#prijava-greska`), a polje koje je problem
+  dobija klasu `ml-error`.
+- **Ako se dodaje novo polje**, treba ga dodati na četiri mesta: markup u `index.html`,
+  čitanje vrednosti u `prijava.js`, validacija u `api/prijava.js` i prosleđivanje u
+  `api/_mailerlite.js`.
 
-### Ako napraviš novu formu u MailerLite-u
+### Ako menjaš MailerLite nalog
 
-Promeni na četiri mesta u `index.html`:
-
-1. `action` atribut na `<form>` (novi URL sa `.../jsonp/NALOG/forms/ID/subscribe`)
-2. `id="mlb2-XXXX"` i klasu `ml-subscribe-form-XXXX`
-3. ime funkcije `ml_webform_success_XXXX`
-4. `fetch(".../takel")` URL na dnu
+Nema više ID-jeva forme razbacanih po `index.html`. Menja se samo `MAILERLITE_API_KEY`
+i `MAILERLITE_GROUP_ID` u Vercel Environment Variables, pa **Redeploy**.
 
 ---
 
 ## Šta ostaje da se podesi u MailerLite panelu
 
-1. **Grupa** — proveri da forma upisuje pretplatnike u grupu „Vebinar 14.9."
-2. **Automation** — trigger „when subscriber joins group" →
-   - odmah: email sa Zoom linkom
+1. **Grupa** — `MAILERLITE_GROUP_ID` mora da pokazuje na grupu „Vebinar 14.9."
+2. **Custom polja** `referal_kod` i `referal_link` — bez njih referal link ne može
+   da uđe u mejl. Uputstvo je u [uputstvo-referal.md](uputstvo-referal.md), korak 4.
+3. **Automation** — trigger „when subscriber joins group" →
+   - odmah: email sa Zoom linkom **i ličnim referal linkom** (`{$referal_link}`)
    - dan pre vebinara: podsetnik
    - 1h pre: podsetnik
    - 5 min pre: „počinjemo"
-3. **Double opt-in** — ako je uključen, korisnik mora prvo da potvrdi email pre nego što
-   dobije Zoom link. Za vebinar je obično **bolje isključiti** ga (Forms → Settings), inače
-   deo ljudi nikad ne potvrdi i ostane bez linka.
-4. **Test prijava** — prijavi se svojom adresom i proveri ceo lanac: poruka na stranici →
-   email sa linkom → upis u grupu.
+4. **Double opt-in** — trenutno je isključen i sistem računa da jeste: svaka prijava
+   se odmah vodi kao potvrđena. Ako ga uključiš, referali će se i dalje brojati odmah
+   dok se ne doda webhook — videti odeljak „Kolona `status`" u uputstvu za referale.
+5. **Test prijava** — proveri ceo lanac: forma → `/hvala` sa referal linkom →
+   email sa Zoom linkom → upis u grupu.
 
 ---
 
-## Posle prijave (već implementirano na stranici)
+## Posle prijave
 
-Korisnik dobija zelenu karticu sa porukom da mu Zoom link stiže na email, napomenom da
-snimka neće biti i dva dugmeta:
+Prijava više ne prikazuje poruku u samoj formi nego vodi na **`/hvala?k=TOKEN&novo=1`**,
+gde čovek dobija:
 
+- potvrdu da je mesto rezervisano i da Zoom link stiže na email
 - **Dodaj u Google kalendar** — otvara Google Calendar sa popunjenim terminom
 - **Apple / Outlook (.ics)** — preuzima `assets/vebinar.ics`
+- svoj lični referal link sa dugmadima za deljenje
+- tabelu ko se prijavio preko njega
 
-Ako se termin vebinara pomeri, promeni ga na tri mesta: `assets/vebinar.ics`,
-Google Calendar link u `index.html` i `VEBINAR_DATUM` u `assets/js/main.js`.
+Ako se termin vebinara pomeri, promeni ga na četiri mesta: `assets/vebinar.ics`,
+Google Calendar link u `index.html` **i** u `hvala.html`, i `VEBINAR_DATUM` u
+`assets/js/main.js`.
 
 ---
 
@@ -85,6 +86,7 @@ Google Calendar link u `index.html` i `VEBINAR_DATUM` u `assets/js/main.js`.
 |---|---|
 | Fotografija Vladimira | ✅ ubačena (`assets/img/vladimir-stankovic.webp`) |
 | Slika rezultata | ✅ ubačena (`assets/img/rezultat.jpeg`), sekcija je vidljiva |
-| MailerLite forma | ✅ ubačena i stilizovana |
+| Forma za prijavu | ✅ povezana sa bazom i MailerLite API-jem |
+| Referal sistem | ⏸ kod je gotov, čeka podešavanje po `uputstvo-referal.md` |
 | Broj prijavljenih | `PRIJAVLJENO` u `assets/js/main.js` — upiši stvaran broj pa se prikazuje „Ostalo još X od 200 mesta" |
 | Domen u SEO tagovima | ⏸ još uvek `vebinar.vladsdigital.com` |

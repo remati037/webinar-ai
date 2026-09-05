@@ -1,16 +1,27 @@
 # Vebinar landing page
 
-Statična landing stranica za besplatan vebinar „Kako da prodaš svoj prvi digitalni proizvod".
-Bez build koraka, bez framework-a. Čist HTML, CSS i JS, spremno za Vercel.
+Landing stranica za besplatan vebinar „Kako da prodaš svoj prvi digitalni proizvod",
+sa referal sistemom. Bez build koraka i bez framework-a: čist HTML, CSS i JS, plus
+nekoliko Vercel serverless funkcija i Neon Postgres baza za prijave i referale.
 
 ## Struktura
 
 ```
 .
-├── index.html                  # cela stranica (sadržaj)
+├── index.html                  # landing stranica
+├── hvala.html                  # licna stranica: referal link + tabela prijava
+├── api/
+│   ├── prijava.js              # POST: upis u bazu + slanje u MailerLite
+│   ├── referali.js             # GET: podaci za licnu tabelu
+│   ├── status.js               # GET: provera da li je okruzenje podeseno
+│   ├── _lib.js                 # baza, validacija, maskiranje podataka
+│   └── _mailerlite.js          # MailerLite API klijent
+├── db/schema.sql               # sema baze, pokrece se jednom u Neon-u
 ├── assets/
 │   ├── css/style.css           # svi stilovi
 │   ├── js/main.js              # countdown, brojač mesta, scroll reveal
+│   ├── js/prijava.js           # validacija i slanje forme
+│   ├── js/hvala.js             # referal link, deljenje, tabela
 │   ├── vebinar.ics             # termin za dodavanje u kalendar
 │   └── img/
 │       ├── vladimir-stankovic.webp       # fotografija voditelja (840x1260)
@@ -19,7 +30,9 @@ Bez build koraka, bez framework-a. Čist HTML, CSS i JS, spremno za Vercel.
 │       ├── rezultat.jpeg                # screenshot u sekciji „rezultati"
 │       ├── favicon.svg / favicon-32.png
 │       └── apple-touch-icon.png          # ikona za home screen
-├── uputstvo-mailerlite-v4.md   # sve oko forme za prijavu
+├── uputstvo-referal.md         # podesavanje baze, kljuceva i referal sistema
+├── uputstvo-mailerlite-v4.md   # sve oko forme za prijavu i MailerLite-a
+├── package.json                # jedina zavisnost: Neon drajver za /api funkcije
 ├── vercel.json                 # cache i security headeri
 ├── robots.txt
 └── .gitignore
@@ -32,8 +45,13 @@ python3 -m http.server 8000
 # pa otvori http://localhost:8000
 ```
 
-(Otvaranje `index.html` duplim klikom takođe radi, ali putanje koje počinju sa `/`
-rade ispravno samo preko servera, pa koristi komandu iznad.)
+Ovo servira samo statiku — dovoljno za rad na izgledu, ali **forma neće raditi** jer
+`/api` rute nisu pokrenute. Za pun rad lokalno:
+
+```bash
+npm install
+npx vercel dev     # sajt + /api rute na http://localhost:3000
+```
 
 ## Push na GitHub
 
@@ -47,7 +65,8 @@ git push -u origin main
 
 1. Na [vercel.com](https://vercel.com) → **Add New… → Project** → izaberi ovaj GitHub repo.
 2. **Framework Preset: Other.** Build Command i Output Directory ostavi prazne —
-   ovo je statična stranica i servira se direktno iz root-a.
+   stranice se serviraju direktno iz root-a, a Vercel sam prepoznaje `/api` folder
+   kao serverless funkcije i instalira zavisnosti iz `package.json`.
 3. **Deploy.** Svaki sledeći `git push` na `main` automatski pravi novi deploy.
 4. Domen: **Project → Settings → Domains** → dodaj svoj domen (npr. `vebinar.vladsdigital.com`)
    i kod registrara podesi CNAME koji ti Vercel prikaže.
@@ -56,7 +75,8 @@ git push -u origin main
 
 | Šta | Gde |
 |---|---|
-| Datum i vreme vebinara | `assets/js/main.js` (`VEBINAR_DATUM`), `assets/vebinar.ics` i Google Calendar link u `index.html` |
+| Datum i vreme vebinara | `assets/js/main.js` (`VEBINAR_DATUM`), `assets/vebinar.ics` i Google Calendar link u `index.html` **i** `hvala.html` |
+| Koliko referala nosi kurs | `REFERAL_CILJ` u Vercel Environment Variables (podrazumevano 10) |
 | Broj prijavljenih / ukupno mesta | `assets/js/main.js`, `PRIJAVLJENO` i `UKUPNO_MESTA` |
 | Boje i tipografija | `assets/css/style.css`, blok `:root` na vrhu |
 | Tekstovi, FAQ, sekcije | `index.html` |
@@ -77,9 +97,17 @@ pa se slika ne deformiše i ne pomera layout dok se učitava.
 Slika se prikazuje u punoj širini, bez sečenja. Na telefonu se ne smanjuje ispod
 620px nego se okvir skroluje vodoravno, da brojevi ostanu čitljivi.
 
-## MailerLite forma
+## Forma i MailerLite
 
-Forma je već ubačena i povezana sa MailerLite nalogom, stilizovana u temu stranice,
-sa porukom i dugmadima za kalendar posle uspešne prijave.
-Detalji, kao i šta ostaje da se podesi u samom MailerLite panelu (grupa, automation,
-double opt-in), su u [uputstvo-mailerlite-v4.md](uputstvo-mailerlite-v4.md).
+Forma se šalje na `/api/prijava`, koja upisuje prijavu u bazu, dodeljuje referal kod
+i prosleđuje kontakt MailerLite-u preko njihovog API-ja. Detalji su u
+[uputstvo-mailerlite-v4.md](uputstvo-mailerlite-v4.md).
+
+## Referal sistem
+
+Svako ko se prijavi dobija lični link (`/?ref=k7m2xq`) i privatnu stranicu `/hvala`
+sa tabelom ko se prijavio preko njega. Kod je gotov, ali **traži jednokratno
+podešavanje** baze, API ključa i dva polja u MailerLite-u —
+korak po korak u [uputstvo-referal.md](uputstvo-referal.md).
+
+Posle podešavanja, `https://tvoj-domen.com/api/status` pokazuje da li je sve na mestu.

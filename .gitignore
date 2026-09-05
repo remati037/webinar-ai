@@ -5,7 +5,7 @@
 # Vercel
 .vercel
 
-# Node (ako kasnije dodas alate)
+# Node
 node_modules/
 npm-debug.log*
 .env

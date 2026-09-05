@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mesto je rezervisano — tvoj referal link</title>
+<meta name="description" content="Prijava za vebinar je uspešna. Ovde je tvoj lični link za pozivanje prijatelja i tabela sa pregledom svih koji su se prijavili preko tebe.">
+
+<!-- Ova stranica je licna i ne treba da se indeksira ni deli dalje. -->
+<meta name="robots" content="noindex, nofollow">
+
+<meta name="theme-color" content="#05080F">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="stranica-hvala">
+
+<div class="topbar">
+  <a class="topbar-nazad" href="/">← Nazad na stranicu vebinara</a>
+</div>
+
+<main class="hvala-omot">
+  <div class="wrap">
+
+    <!-- ============ 1. POTVRDA PRIJAVE (samo odmah posle prijave) ============ -->
+    <section class="hvala-kartica hvala-potvrda" id="potvrda" hidden>
+      <div class="uspeh-ikona" aria-hidden="true">✓</div>
+      <h1>Mesto je rezervisano<span id="potvrda-ime"></span></h1>
+      <p>Zoom link ti šaljem na email u narednih nekoliko minuta. Ako ga ne vidiš, proveri <strong>Promotions</strong> i <strong>Spam</strong> folder.</p>
+      <p class="uspeh-napomena">Vebinar je <strong>14. septembra u 19:00</strong> i snimka neće biti. Ubaci ga odmah u kalendar da ti ne promakne.</p>
+      <div class="uspeh-dugmad">
+        <a class="uspeh-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Vebinar%3A%20Kako%20da%20proda%C5%A1%20svoj%20prvi%20digitalni%20proizvod&amp;dates=20260914T170000Z%2F20260914T183000Z&amp;details=Uzivo%20na%20Zoom-u%20sa%20Vladimirom%20Stankovicem.%20Zoom%20link%20stize%20na%20email.&amp;location=Zoom" target="_blank" rel="noopener">Dodaj u Google kalendar</a>
+        <a class="uspeh-btn" href="assets/vebinar.ics" download>Apple / Outlook (.ics)</a>
+      </div>
+    </section>
+
+    <!-- ============ 2. UCITAVANJE / GRESKA ============ -->
+    <section class="hvala-kartica hvala-stanje" id="stanje">
+      <p id="stanje-tekst">Učitavam tvoje podatke…</p>
+      <a class="uspeh-btn" id="stanje-akcija" href="/" hidden>Prijavi se za vebinar</a>
+    </section>
+
+    <!-- ============ 3. REFERAL LINK ============ -->
+    <section class="hvala-kartica hvala-link" id="referal" hidden>
+      <span class="hvala-oznaka">Pozovi prijatelje</span>
+      <h2>Tvoj lični link</h2>
+      <p class="hvala-uvod">
+        Svako ko se prijavi preko ovog linka računa se kao tvoja preporuka.
+        Kada ih skupiš <strong id="cilj-broj">10</strong>, dobijaš moj kurs — besplatno.
+      </p>
+
+      <div class="link-red">
+        <input type="text" id="link-polje" readonly aria-label="Tvoj referal link">
+        <button type="button" class="link-kopiraj" id="kopiraj">Kopiraj</button>
+      </div>
+      <p class="link-status" id="kopiraj-status" role="status" aria-live="polite"></p>
+
+      <div class="deli-dugmad">
+        <button type="button" class="deli-btn deli-native" id="deli-native" hidden>Podeli…</button>
+        <a class="deli-btn" id="deli-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="deli-btn" id="deli-viber">Viber</a>
+        <a class="deli-btn" id="deli-telegram" target="_blank" rel="noopener">Telegram</a>
+        <a class="deli-btn" id="deli-facebook" target="_blank" rel="noopener">Facebook</a>
+        <a class="deli-btn" id="deli-email">Email</a>
+      </div>
+
+      <p class="hvala-napomena">
+        <strong>Sačuvaj ovu stranicu u bookmarks.</strong> Adresa u pretraživaču je tvoj privatni
+        pristup tabeli — isti link ti stiže i na email, pa ga uvek možeš vratiti odatle.
+      </p>
+    </section>
+
+    <!-- ============ 4. NAPREDAK ============ -->
+    <section class="hvala-kartica hvala-napredak" id="napredak" hidden>
+      <div class="napredak-brojevi">
+        <div class="brojka">
+          <span class="brojka-vrednost" id="broj-ukupno">0</span>
+          <span class="brojka-oznaka">prijavljenih preko tebe</span>
+        </div>
+        <div class="brojka">
+          <span class="brojka-vrednost" id="broj-preostalo">10</span>
+          <span class="brojka-oznaka">još do besplatnog kursa</span>
+        </div>
+      </div>
+      <div class="traka" role="img" aria-labelledby="traka-opis">
+        <div class="traka-popuna" id="traka-popuna"></div>
+      </div>
+      <p class="traka-opis" id="traka-opis">Skupi 10 prijava i kurs je tvoj.</p>
+    </section>
+
+    <!-- ============ 5. TABELA ============ -->
+    <section class="hvala-kartica hvala-tabela" id="tabela-blok" hidden>
+      <h2>Ko se prijavio preko tebe</h2>
+      <div class="tabela-okvir">
+        <table class="referal-tabela">
+          <thead>
+            <tr>
+              <th scope="col">Ime</th>
+              <th scope="col">Email</th>
+              <th scope="col">Prijavljen</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-telo"></tbody>
+        </table>
+      </div>
+      <p class="prazna-tabela" id="prazna-tabela" hidden>
+        Još niko. Pošalji link iznad dvema-trima osobama kojima bi vebinar stvarno koristio —
+        to je obično dovoljno da se lista pokrene.
+      </p>
+      <p class="hvala-napomena">
+        Zbog privatnosti prijavljenih prikazujem samo ime sa inicijalom prezimena i skraćen email.
+      </p>
+    </section>
+
+  </div>
+</main>
+
+<script src="assets/js/hvala.js" defer></script>
+</body>
+</html>
