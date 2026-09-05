@@ -525,14 +525,8 @@ footer a { color: var(--muted); }
   font-size: 14px;
 }
 
-/* zamka za botove - skriveno od ljudi, ali i dalje u DOM-u */
-.polje-zamka {
-  position: absolute;
-  left: -9999px;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
+/* Zamka za botove se sakriva inline u index.html, ne odavde.
+   Razlog je u komentaru uz samo polje: ovaj fajl se kesira 7 dana. */
 
 /* znak da je covek dosao preko tudjeg referal linka */
 .preporuka-znak {

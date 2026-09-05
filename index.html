@@ -43,7 +43,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/style.css?v=2">
 </head>
 <body>
 
@@ -125,8 +125,14 @@
               <input type="hidden" name="ref" id="prijava-ref" value="">
               <!-- Zamka za botove: covek ovo polje nikad ne vidi ni ne popuni.
                    Ime je namerno besmisleno da ga automatsko popunjavanje
-                   pretrazivaca i menadzeri lozinki ne prepoznaju kao pravo polje. -->
-              <div class="polje-zamka" aria-hidden="true">
+                   pretrazivaca i menadzeri lozinki ne prepoznaju kao pravo polje.
+
+                   Sakrivanje je NAMERNO inline, a ne preko klase u style.css:
+                   CSS se kesira 7 dana, pa bi posetiocima sa starom verzijom
+                   fajla ovo polje bilo vidljivo usred forme. Inline stil radi
+                   bez obzira na kes. Off-screen umesto display:none, jer
+                   ozbiljniji botovi preskacu polja sa display:none. -->
+              <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
                 <label for="prijava-zamka">Ostavi ovo polje prazno</label>
                 <input type="text" id="prijava-zamka" name="zamka" tabindex="-1" autocomplete="off">
               </div>
@@ -354,9 +360,9 @@
 }
 </script>
 
-<script src="assets/js/main.js" defer></script>
+<script src="assets/js/main.js?v=2" defer></script>
 
-<script src="assets/js/prijava.js" defer></script>
+<script src="assets/js/prijava.js?v=2" defer></script>
 
 </body>
 </html>
