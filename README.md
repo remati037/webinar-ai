@@ -17,6 +17,8 @@ nekoliko Vercel serverless funkcija i Neon Postgres baza za prijave i referale.
 │   ├── _lib.js                 # baza, validacija, maskiranje podataka
 │   └── _mailerlite.js          # MailerLite API klijent
 ├── db/schema.sql               # sema baze, pokrece se jednom u Neon-u
+├── skripte/
+│   └── dopuni-referal-polja.mjs  # salje referal polja u MailerLite za stare prijave
 ├── assets/
 │   ├── css/style.css           # svi stilovi
 │   ├── js/main.js              # countdown, brojač mesta, scroll reveal

@@ -50,9 +50,31 @@ MailerLite → **Subscribers** → **Fields** → **Create field**, tri puta:
 
 > MailerLite obično sam pravi `ime_polja` iz naziva. Proveri da su baš
 > `referal_kod`, `referal_link` i `referal_tabela`, bez velikih slova i bez crtica.
+> Ime se vidi u koloni **Tag** na spisku polja.
 >
 > Ako polja ne postoje, sajt i dalje radi: prijava prolazi, čovek upada u grupu
 > i vidi svoj referal link na `/hvala`. Samo mu linkovi neće stići u mejlu.
+
+### Ako polje dodaješ naknadno
+
+Backend popunjava polja **u trenutku prijave**. Ko se prijavio pre nego što si
+polje napravio, ima ga prazno, pa mu dugme u mejlu ne vodi nikuda.
+
+Za takve postoji skripta koja prođe kroz sve prijave iz baze i pošalje polja ponovo:
+
+```bash
+vercel env pull .env.local      # jednom, da povučeš ključeve
+npm install
+
+# prvo pogledaj šta bi uradila, ništa se ne šalje
+node --env-file=.env.local skripte/dopuni-referal-polja.mjs
+
+# pa stvarno pošalji
+node --env-file=.env.local skripte/dopuni-referal-polja.mjs --posalji
+```
+
+Skripta je bezbedna za ponovno pokretanje: MailerLite upisuje po email adresi,
+pa se postojeći kontakti samo osvežavaju. Ne pravi nove prijave i ne dira bazu.
 
 ---
 
