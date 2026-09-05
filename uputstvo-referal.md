@@ -109,7 +109,7 @@ DELETE FROM prijave WHERE email IN ('tvoj@email.com', 'test@email.com');
 
 ## 8. Ubaci referal link u welcome mejl
 
-MailerLite → **Automations** → automation koji šalje Zoom link → u telo mejla
+MailerLite → **Automations** → mejl koji stiže odmah po prijavi → u telo mejla
 dodaj nešto ovako:
 
 > Usput, ako ti se vebinar čini korisnim, pozovi nekoga. Evo tvog ličnog linka:

@@ -51,10 +51,14 @@ i `MAILERLITE_GROUP_ID` u Vercel Environment Variables, pa **Redeploy**.
 2. **Custom polja** `referal_kod` i `referal_link` — bez njih referal link ne može
    da uđe u mejl. Uputstvo je u [uputstvo-referal.md](uputstvo-referal.md), korak 4.
 3. **Automation** — trigger „when subscriber joins group" →
-   - odmah: email sa Zoom linkom **i ličnim referal linkom** (`{$referal_link}`)
+   - odmah: potvrda prijave **sa ličnim referal linkom** (`{$referal_link}`)
+   - par dana pre vebinara: email sa Zoom linkom
    - dan pre vebinara: podsetnik
    - 1h pre: podsetnik
    - 5 min pre: „počinjemo"
+
+   > Stranica `/hvala` i opt-in mejl ljudima kažu da Zoom link stiže **par dana
+   > pred vebinar**. Ako promeniš raspored, promeni i taj tekst na oba mesta.
 4. **Double opt-in** — trenutno je isključen i sistem računa da jeste: svaka prijava
    se odmah vodi kao potvrđena. Ako ga uključiš, referali će se i dalje brojati odmah
    dok se ne doda webhook — videti odeljak „Kolona `status`" u uputstvu za referale.
@@ -73,7 +77,7 @@ i `MAILERLITE_GROUP_ID` u Vercel Environment Variables, pa **Redeploy**.
 Prijava više ne prikazuje poruku u samoj formi nego vodi na **`/hvala?k=TOKEN&novo=1`**,
 gde čovek dobija:
 
-- potvrdu da je mesto rezervisano i da Zoom link stiže na email
+- potvrdu da je mesto rezervisano i da Zoom link stiže par dana pred vebinar
 - **Dodaj u Google kalendar** — otvara Google Calendar sa popunjenim terminom
 - **Apple / Outlook (.ics)** — preuzima `assets/vebinar.ics`
 - svoj lični referal link sa dugmadima za deljenje
