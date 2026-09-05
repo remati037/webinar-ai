@@ -48,10 +48,12 @@ i `MAILERLITE_GROUP_ID` u Vercel Environment Variables, pa **Redeploy**.
 ## Šta ostaje da se podesi u MailerLite panelu
 
 1. **Grupa** — `MAILERLITE_GROUP_ID` mora da pokazuje na grupu „Vebinar 14.9."
-2. **Custom polja** `referal_kod` i `referal_link` — bez njih referal link ne može
-   da uđe u mejl. Uputstvo je u [uputstvo-referal.md](uputstvo-referal.md), korak 4.
+2. **Custom polja** `referal_kod`, `referal_link` i `referal_tabela`. Bez njih
+   referal linkovi ne mogu da uđu u mejl. Uputstvo je u
+   [uputstvo-referal.md](uputstvo-referal.md), korak 4.
 3. **Automation** — trigger „when subscriber joins group" →
-   - odmah: potvrda prijave **sa ličnim referal linkom** (`{$referal_link}`)
+   - odmah: potvrda prijave sa ličnim referal linkom.
+     Gotov HTML: [mejlovi/dobrodoslica.html](mejlovi/dobrodoslica.html)
    - par dana pre vebinara: email sa Zoom linkom
    - dan pre vebinara: podsetnik
    - 1h pre: podsetnik

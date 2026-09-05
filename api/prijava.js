@@ -8,7 +8,7 @@
 import { upisiPretplatnika } from "./_mailerlite.js";
 import {
   db, json, greska, jedinstvenKod, noviToken, ocisti, validanEmail,
-  normalizujTelefon, referalLink, ipAdresa,
+  normalizujTelefon, referalLink, tabelaLink, ipAdresa,
 } from "./_lib.js";
 
 // Gruba zastita od bota koji bi pumpao referale sa jedne masine.
@@ -82,6 +82,7 @@ export default async function handler(req, res) {
       RETURNING id, ime, prezime, ref_kod, token`;
 
     const link = referalLink(req, red.ref_kod);
+    const tabela = tabelaLink(req, red.token);
 
     // ---------- MailerLite ----------
     const ml = await upisiPretplatnika({
@@ -91,6 +92,7 @@ export default async function handler(req, res) {
       telefon,
       refKod: red.ref_kod,
       refLink: link,
+      tabelaUrl: tabela,
     });
 
     await sql`

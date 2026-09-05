@@ -119,8 +119,14 @@ export function adresaSajta(req) {
   return `${protokol}://${host}`;
 }
 
+/** Link koji covek deli drugima. */
 export function referalLink(req, kod) {
   return `${adresaSajta(req)}/?ref=${kod}`;
+}
+
+/** Link ka njegovoj licnoj tabeli prijava. Ide mu i u welcome mejl. */
+export function tabelaLink(req, token) {
+  return `${adresaSajta(req)}/hvala?k=${encodeURIComponent(token)}`;
 }
 
 export function ipAdresa(req) {

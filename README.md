@@ -30,6 +30,9 @@ nekoliko Vercel serverless funkcija i Neon Postgres baza za prijave i referale.
 │       ├── rezultat.jpeg                # screenshot u sekciji „rezultati"
 │       ├── favicon.svg / favicon-32.png
 │       └── apple-touch-icon.png          # ikona za home screen
+├── mejlovi/
+│   ├── dobrodoslica.html       # welcome mejl: potvrda prijave + referal link
+│   └── potvrda-prijave.html    # opt-in mejl (neaktivan, double opt-in je iskljucen)
 ├── uputstvo-referal.md         # podesavanje baze, kljuceva i referal sistema
 ├── uputstvo-mailerlite-v4.md   # sve oko forme za prijavu i MailerLite-a
 ├── package.json                # jedina zavisnost: Neon drajver za /api funkcije

@@ -11,7 +11,7 @@ const API = "https://connect.mailerlite.com/api/subscribers";
  * Vraca { ok, greska } - nikad ne baca, da jedna greska kod njih
  * ne obori celu prijavu pre nego sto stignemo da je obradimo.
  */
-export async function upisiPretplatnika({ email, ime, prezime, telefon, refKod, refLink }) {
+export async function upisiPretplatnika({ email, ime, prezime, telefon, refKod, refLink, tabelaUrl }) {
   const kljuc = process.env.MAILERLITE_API_KEY;
   if (!kljuc) return { ok: false, greska: "MAILERLITE_API_KEY nije podesen" };
 
@@ -23,16 +23,24 @@ export async function upisiPretplatnika({ email, ime, prezime, telefon, refKod, 
     phone: telefon || undefined,
   };
 
-  // referal_kod i referal_link su custom polja koja se prave u MailerLite panelu.
-  // Ako jos ne postoje, njihov API vrati 422 - tada saljemo ponovo bez njih,
-  // da covek bar dobije Zoom link dok se polja ne naprave.
-  const saCustom = { ...osnovnaPolja, referal_kod: refKod, referal_link: refLink };
+  // referal_kod, referal_link i referal_tabela su custom polja koja se prave
+  // rukom u MailerLite panelu. Ako jos ne postoje, njihov API vrati 422 - tada
+  // saljemo ponovo bez njih, da covek bar upadne u grupu i dobije mejlove.
+  const saCustom = {
+    ...osnovnaPolja,
+    referal_kod: refKod,
+    referal_link: refLink,
+    referal_tabela: tabelaUrl,
+  };
 
   let odgovor = await posalji(kljuc, email, saCustom, grupa);
   if (odgovor.status === 422) {
     const ponovo = await posalji(kljuc, email, osnovnaPolja, grupa);
     if (ponovo.ok) {
-      return { ok: true, greska: "custom polja referal_kod/referal_link ne postoje u MailerLite-u" };
+      return {
+        ok: true,
+        greska: "custom polja referal_kod/referal_link/referal_tabela ne postoje u MailerLite-u",
+      };
     }
     odgovor = ponovo;
   }

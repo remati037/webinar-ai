@@ -36,22 +36,23 @@ MailerLite-u. Ukupno oko 15 minuta klikanja. Idi redom.
 
 ---
 
-## 4. Napravi dva custom polja u MailerLite-u
+## 4. Napravi tri custom polja u MailerLite-u
 
 Bez ovih polja mejl ne može da nosi lični referal link.
 
-MailerLite → **Subscribers** → **Fields** → **Create field**, dva puta:
+MailerLite → **Subscribers** → **Fields** → **Create field**, tri puta:
 
-| Naziv polja | Tip  | Ime u kodu (mora tačno ovako) |
-|---|---|---|
-| Referal kod  | Text | `referal_kod`  |
-| Referal link | Text | `referal_link` |
+| Naziv polja | Tip  | Ime u kodu (mora tačno ovako) | Šta sadrži |
+|---|---|---|---|
+| Referal kod    | Text | `referal_kod`    | `k7m2xq` |
+| Referal link   | Text | `referal_link`   | link koji čovek deli drugima |
+| Referal tabela | Text | `referal_tabela` | link ka njegovoj ličnoj tabeli prijava |
 
-> MailerLite obično sam pravi `ime_polja` iz naziva. Proveri da je baš
-> `referal_kod` i `referal_link`, bez velikih slova i bez crtica.
+> MailerLite obično sam pravi `ime_polja` iz naziva. Proveri da su baš
+> `referal_kod`, `referal_link` i `referal_tabela`, bez velikih slova i bez crtica.
 >
-> Ako polja ne postoje, sajt i dalje radi — prijava prolazi, čovek dobija Zoom link
-> i vidi svoj referal link na `/hvala`. Samo mu link neće stići u mejlu.
+> Ako polja ne postoje, sajt i dalje radi: prijava prolazi, čovek upada u grupu
+> i vidi svoj referal link na `/hvala`. Samo mu linkovi neće stići u mejlu.
 
 ---
 
@@ -107,25 +108,74 @@ DELETE FROM prijave WHERE email IN ('tvoj@email.com', 'test@email.com');
 
 ---
 
-## 8. Ubaci referal link u welcome mejl
+## 8. Napravi welcome mejl sa referal linkom
 
-MailerLite → **Automations** → mejl koji stiže odmah po prijavi → u telo mejla
-dodaj nešto ovako:
+Ovo je mejl koji stiže odmah posle prijave. Nosi potvrdu, termin, dugmad za
+kalendar i lični referal link. Gotov HTML je u
+[mejlovi/dobrodoslica.html](mejlovi/dobrodoslica.html).
 
-> Usput, ako ti se vebinar čini korisnim, pozovi nekoga. Evo tvog ličnog linka:
->
-> `{$referal_link}`
->
-> Na istom linku uvek vidiš ko se prijavio preko tebe.
+### 8.1 Napravi automation
 
-Personalizaciju ubacuješ preko dugmeta **Personalization** u editoru, ne kucanjem —
-tako si siguran da je tačan naziv polja.
+1. MailerLite → **Automations** → **Create automation**, nazovi ga `Vebinar prijava`.
+2. Trigger: **When subscriber joins a group** → izaberi grupu „Vebinar 14.9."
+3. Dodaj korak **Email**.
 
-> **Redosled je bitan.** Automation šalje mejl čim čovek uđe u grupu, a referal
-> polje se upisuje u istom trenutku. Ako u testu vidiš prazan link, stavi u
-> automation kratko čekanje (npr. 1 minut) pre slanja mejla.
+> Bez čekanja pre prvog mejla. Referal polja i upis u grupu idu u istom API
+> pozivu, pa su popunjena u trenutku kad se automation okine.
 
----
+### 8.2 Podesi zaglavlje mejla
+
+| Polje | Vrednost |
+|---|---|
+| Subject | `Mesto je rezervisano. Evo tvog linka za pozivanje prijatelja` |
+| From name | Vladimir Stanković |
+| From email | tvoja adresa na verifikovanom domenu |
+
+### 8.3 Ubaci sadržaj
+
+1. U editoru izaberi **prazan template** (blank), ne gotov dizajn.
+2. Prevuci **HTML** blok na stranu.
+3. Otvori [mejlovi/dobrodoslica.html](mejlovi/dobrodoslica.html), kopiraj **ceo sadržaj**
+   i nalepi u taj blok.
+4. **Zameni `TVOJ-DOMEN.com`** svojim domenom. Pojavljuje se jednom, u linku za
+   `.ics` fajl. U email-u linkovi moraju biti apsolutni, pa relativna putanja neće raditi.
+5. Ako u editoru postoji podrazumevani footer sa adresom pošiljaoca, ostavi ga.
+   Zakonski je obavezan, a `{$unsubscribe}` je već u samom HTML-u.
+
+### 8.4 Proveri da su promenljive prepoznate
+
+U mejlu se koriste tri:
+
+| Promenljiva | Šta upisuje |
+|---|---|
+| `{$name}` | ime |
+| `{$referal_link}` | link koji čovek šalje drugima |
+| `{$referal_tabela}` | link ka njegovoj ličnoj tabeli prijava |
+
+Klikni **Preview** i pogledaj da li su se pretvorile u prave vrednosti.
+Ako u pregledu vidiš doslovno `{$referal_link}`, ime polja u MailerLite-u
+se ne poklapa sa korakom 4.
+
+> Poslednja dva su za svakog čoveka različita. Nemoj ih otkucavati rukom niti
+> menjati u tekst linka, jer se onda svima šalje isti link.
+
+### 8.5 Pošalji test
+
+**Preview and test** → **Send test email** sebi. Proveri:
+
+- da li se `{$name}` popunilo
+- da li referal link vodi na `tvoj-domen.com/?ref=NEKI-KOD`
+- da li dugme **Pogledaj svoje prijave** otvara tvoju `/hvala` stranicu sa tabelom
+- da li **Apple / Outlook** dugme preuzima `.ics` fajl
+- kako izgleda na telefonu
+
+> Test mejl iz MailerLite-a ponekad ne popunjava custom polja. Ako ti u testu
+> linkovi budu prazni, uradi pravu prijavu sa svoje adrese i proveri taj mejl.
+
+### 8.6 Uključi automation
+
+Gore desno **Start automation**. Od tog trenutka mejl kreće svakome ko se prijavi.
+Ljudi koji su se prijavili pre uključivanja ga neće dobiti automatski.
 
 ## Šta gde stoji
 
