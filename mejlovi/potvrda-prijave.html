@@ -1,0 +1,131 @@
+<!-- ============================================================
+     OPT-IN MEJL ZA POTVRDU PRIJAVE
+
+     PAZNJA: ovaj mejl se trenutno NE SALJE. Double opt-in je iskljucen,
+     a api/_mailerlite.js salje kontakt sa status: "active", pa MailerLite
+     preskace potvrdu. Sablon stoji ovde za slucaj da se opt-in ukljuci.
+
+     Da bi profunkcionisao, treba troje:
+       1. Account settings > Subscribe settings > ukljuciti
+          "Double opt-in for API and integrations"
+       2. u api/_mailerlite.js promeniti status u "unconfirmed"
+       3. dodati MailerLite webhook koji red u bazi prebacuje iz
+          'prijavljen' u 'potvrdjen' (videti uputstvo-referal.md)
+     Racunaj i da automatizacije ne rade dok je kontakt nepotvrdjen,
+     pa Zoom link ceka na klik potvrde.
+
+     Lepi se u MailerLite: Forms > tvoja forma > Double opt-in > Edit.
+     Izmena opt-in mejla je dostupna samo na placenim planovima.
+
+     Ide u DVA HTML bloka, a IZMEDJU njih se ubacuje MailerLite-ovo
+     dugme za potvrdu. Razlog: link za potvrdu ne postoji kao merge tag,
+     nego samo kao njihov sopstveni button element.
+
+     Podesavanja za to dugme, da se uklopi u temu:
+       tekst        Potvrdi prijavu
+       pozadina     #2E90FF
+       boja teksta  #FFFFFF
+       font         bold, 16px
+       radius       12px
+       padding      16px gore/dole, 34px levo/desno
+       poravnanje   centar
+
+     Naslov mejla (subject):
+       Potvrdi prijavu za vebinar (jedan klik)
+     ============================================================ -->
+
+
+<!-- ======================= BLOK 1 (iznad dugmeta) ======================= -->
+
+<!-- Tekst koji se vidi u pregledu inboxa, pre otvaranja mejla. -->
+<div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#05080F;">
+  Još jedan klik i mesto na vebinaru je rezervisano.
+</div>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#05080F" style="background-color:#05080F;margin:0;padding:0;">
+  <tr>
+    <td align="center" style="padding:36px 16px 0;">
+
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;">
+        <tr>
+          <td bgcolor="#0B121F" style="background-color:#0B121F;border:1px solid #1E2A3D;border-radius:18px;padding:40px 36px 28px;">
+
+            <p style="margin:0 0 18px;font-family:Arial,Helvetica,sans-serif;font-size:12px;font-weight:bold;letter-spacing:1.4px;text-transform:uppercase;color:#66ADFF;">
+              Vebinar &bull; 14. septembar u 19h
+            </p>
+
+            <h1 style="margin:0 0 18px;font-family:Arial,Helvetica,sans-serif;font-size:28px;line-height:1.2;font-weight:bold;color:#FAFAFA;">
+              Još jedan klik i mesto je tvoje
+            </h1>
+
+            <p style="margin:0 0 16px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.65;color:#C3CCDA;">
+              Zdravo {$name|default('')},
+            </p>
+
+            <p style="margin:0 0 16px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.65;color:#C3CCDA;">
+              Hvala što si se prijavio/la na besplatan vebinar
+              <strong style="color:#FAFAFA;">„Kako da prodaš svoj prvi digitalni proizvod"</strong>.
+              Ostalo je samo da potvrdiš svoju adresu, da znam da je prava i da ti Zoom link stigne.
+            </p>
+
+          </td>
+        </tr>
+      </table>
+
+    </td>
+  </tr>
+</table>
+
+
+<!-- ===== OVDE IDE MAILERLITE-OVO DUGME ZA POTVRDU (vidi podesavanja gore) ===== -->
+
+
+<!-- ======================= BLOK 2 (ispod dugmeta) ======================= -->
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#05080F" style="background-color:#05080F;margin:0;padding:0;">
+  <tr>
+    <td align="center" style="padding:0 16px 36px;">
+
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;">
+        <tr>
+          <td bgcolor="#0B121F" style="background-color:#0B121F;border:1px solid #1E2A3D;border-radius:18px;padding:8px 36px 34px;">
+
+            <p style="margin:0 0 22px;font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.65;color:#C3CCDA;">
+              Čim potvrdiš, šaljem ti Zoom link i tvoj lični link za pozivanje prijatelja.
+              Kada se preko njega prijavi 10 ljudi, moj kurs je tvoj — besplatno.
+            </p>
+
+            <!-- podsetnik na termin -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td bgcolor="#0A1626" style="background-color:#0A1626;border:1px solid #23405F;border-radius:12px;padding:18px 22px;">
+                  <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#C3CCDA;">
+                    <strong style="color:#FAFAFA;">Termin:</strong> 14. septembar u 19:00, uživo na Zoom-u.<br>
+                    Snimka neće biti, pa ubaci termin u kalendar čim dobiješ link.
+                  </p>
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin:26px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13.5px;line-height:1.6;color:#8B97A9;">
+              Ako se nisi prijavljivao/la na vebinar, slobodno ignoriši ovaj mejl —
+              bez potvrde te ne upisujem nigde.
+            </p>
+
+            <p style="margin:22px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#C3CCDA;">
+              Vidimo se,<br>
+              <strong style="color:#FAFAFA;">Vladimir Stanković</strong>
+            </p>
+
+          </td>
+        </tr>
+      </table>
+
+      <p style="margin:22px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.6;color:#6E7A8C;text-align:center;">
+        Dobio/la si ovaj mejl jer si se prijavio/la na vebinar.<br>
+        <a href="{$unsubscribe}" style="color:#8B97A9;text-decoration:underline;">Odjavi se</a>
+      </p>
+
+    </td>
+  </tr>
+</table>

@@ -58,6 +58,11 @@ i `MAILERLITE_GROUP_ID` u Vercel Environment Variables, pa **Redeploy**.
 4. **Double opt-in** — trenutno je isključen i sistem računa da jeste: svaka prijava
    se odmah vodi kao potvrđena. Ako ga uključiš, referali će se i dalje brojati odmah
    dok se ne doda webhook — videti odeljak „Kolona `status`" u uputstvu za referale.
+   Gotov šablon opt-in mejla, sa spiskom svega što uz njega mora da se promeni,
+   stoji u [mejlovi/potvrda-prijave.html](mejlovi/potvrda-prijave.html).
+
+   > Sam `status: "active"` koji šaljemo iz `api/_mailerlite.js` preskače potvrdu,
+   > pa uključivanje toggle-a u MailerLite panelu bez izmene koda ništa ne menja.
 5. **Test prijava** — proveri ceo lanac: forma → `/hvala` sa referal linkom →
    email sa Zoom linkom → upis u grupu.
 
