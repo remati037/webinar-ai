@@ -57,20 +57,21 @@ MailerLite → **Subscribers** → **Fields** → **Create field**, dva puta:
 
 ## 5. Upiši promenljive na Vercelu
 
-Vercel → projekat → **Settings** → **Environment Variables**. Dodaj za sva tri
-okruženja (Production, Preview, Development):
+Vercel → projekat → **Settings** → **Environment Variables**:
 
-| Ime | Vrednost | Obavezno |
-|---|---|---|
-| `MAILERLITE_API_KEY` | ključ iz koraka 2 | da |
-| `MAILERLITE_GROUP_ID` | broj iz koraka 3 | da |
-| `SITE_URL` | `https://tvoj-domen.com` (bez `/` na kraju) | da |
-| `REFERAL_CILJ` | koliko referala nosi kurs, npr. `10` | ne, podrazumevano je 10 |
-| `DATABASE_URL` | — | Vercel ga je već dodao u koraku 1 |
+| Ime | Vrednost | Okruženja | Obavezno |
+|---|---|---|---|
+| `MAILERLITE_API_KEY` | ključ iz koraka 2 | sva tri | da |
+| `MAILERLITE_GROUP_ID` | broj iz koraka 3 | sva tri | da |
+| `SITE_URL` | `https://tvoj-domen.com` (bez `/` na kraju) | **samo Production** | da |
+| `REFERAL_CILJ` | koliko referala nosi kurs, npr. `10` | sva tri | ne, podrazumevano je 10 |
+| `DATABASE_URL` | — | — | Vercel ga je već dodao u koraku 1 |
 
-> `SITE_URL` je važan: iz njega se sastavlja referal link koji ljudi dele.
-> Ako ga ne upišeš, sistem uzima adresu sa koje je zahtev stigao — što na
-> preview deployovima daje pogrešne linkove tipa `vebinar-abc123.vercel.app`.
+> **`SITE_URL` upiši samo za Production.** Iz njega se sastavlja referal link koji
+> ljudi dele, pa na produkciji mora da bude tvoj pravi domen. Ako ga ostaviš prazan
+> za Preview i Development, sistem uzima adresu sa koje je zahtev stigao — što je
+> baš ono što treba na preview deployu, jer tamo linkovi pokazuju na sam preview
+> a ne na produkciju.
 
 Posle dodavanja promenljivih uradi **Redeploy** (Deployments → … → Redeploy).
 Vercel ih ne ubacuje u već postojeći deploy.
