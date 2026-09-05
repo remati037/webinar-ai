@@ -133,44 +133,68 @@ kalendar i lični referal link. Gotov HTML je u
 
 ### 8.3 Ubaci sadržaj
 
+Mejl ide u **dva HTML bloka**, a između njih dolazi MailerLite-ovo dugme.
+Razlog je u 8.4, pročitaj ga pre nego što kreneš.
+
 1. U editoru izaberi **prazan template** (blank), ne gotov dizajn.
-2. Prevuci **HTML** blok na stranu.
-3. Otvori [mejlovi/dobrodoslica.html](mejlovi/dobrodoslica.html), kopiraj **ceo sadržaj**
-   i nalepi u taj blok.
-4. **Zameni `TVOJ-DOMEN.com`** svojim domenom. Pojavljuje se jednom, u linku za
-   `.ics` fajl. U email-u linkovi moraju biti apsolutni, pa relativna putanja neće raditi.
-5. Ako u editoru postoji podrazumevani footer sa adresom pošiljaoca, ostavi ga.
-   Zakonski je obavezan, a `{$unsubscribe}` je već u samom HTML-u.
+2. Otvori [mejlovi/dobrodoslica.html](mejlovi/dobrodoslica.html).
+3. Prevuci **HTML** blok i nalepi u njega deo označen `BLOK 1`.
+4. Ispod njega prevuci **Button** blok i podesi:
 
-### 8.4 Proveri da su promenljive prepoznate
+   | Podešavanje | Vrednost |
+   |---|---|
+   | Tekst | `Pogledaj svoje prijave` |
+   | Link | custom polje **Referal tabela** |
+   | Pozadina | `#2E90FF` |
+   | Boja teksta | `#FFFFFF` |
+   | Font | bold, 16px |
+   | Zaobljenje | 12px |
+   | Padding | 16px gore/dole, 32px levo/desno |
+   | Poravnanje | levo |
 
-U mejlu se koriste tri:
+   Link se bira iz padajućeg menija za promenljive, **ne kuca se rukom**.
+   Ako otkucaš adresu, svi dobijaju isti link i vide tuđe prijave.
 
-| Promenljiva | Šta upisuje |
-|---|---|
-| `{$name}` | ime |
-| `{$referal_link}` | link koji čovek šalje drugima |
-| `{$referal_tabela}` | link ka njegovoj ličnoj tabeli prijava |
+5. Ispod dugmeta prevuci još jedan **HTML** blok i nalepi deo označen `BLOK 2`.
+6. **Zameni `TVOJ-DOMEN.com`** svojim domenom. Pojavljuje se jednom, u linku za
+   `.ics` fajl. U mejlu linkovi moraju biti apsolutni, relativna putanja ne radi.
+7. Ako editor ima podrazumevani footer sa adresom pošiljaoca, ostavi ga.
+   Zakonski je obavezan.
 
-Klikni **Preview** i pogledaj da li su se pretvorile u prave vrednosti.
-Ako u pregledu vidiš doslovno `{$referal_link}`, ime polja u MailerLite-u
-se ne poklapa sa korakom 4.
+### 8.4 Zašto dugme ne sme da bude u HTML bloku
 
-> Poslednja dva su za svakog čoveka različita. Nemoj ih otkucavati rukom niti
-> menjati u tekst linka, jer se onda svima šalje isti link.
+MailerLite prepakuje svaki `href` u svoju adresu za praćenje klikova
+(`...clicks.mlsend.com/tf/c/...`). U sirovom HTML bloku to uradi **pre** nego što
+razreši promenljivu, pa dugme završi na praznom tracking linku koji otvara
+njihov preview umesto tvoje stranice.
+
+Njihov **Button** blok to radi ispravno, jer se promenljiva razrešava pri slanju.
+Zato svaki link koji se razlikuje od čoveka do čoveka mora da ide kroz njihov
+element. Isto važi i za dugme za potvrdu u opt-in mejlu.
+
+Iz istog razloga je referal link u BLOKU 1 **običan tekst, a ne link**. On se
+kopira i šalje dalje. Da je klikabilan, praćenje klikova bi ga pretvorilo u
+tracking adresu, pa bi ljudi prijateljima slali link koji vodi na tuđ nalog.
+
+> Ako baš hoćeš sve u jednom HTML bloku, alternativa je da isključiš praćenje
+> klikova za ovaj mejl. Onda `href` ostaje netaknut, ali gubiš statistiku klikova.
+> Preporučujem Button blok.
 
 ### 8.5 Pošalji test
 
 **Preview and test** → **Send test email** sebi. Proveri:
 
 - da li se `{$name}` popunilo
-- da li referal link vodi na `tvoj-domen.com/?ref=NEKI-KOD`
+- da li referal link u okviru izgleda kao `tvoj-domen.com/?ref=NEKI-KOD`
 - da li dugme **Pogledaj svoje prijave** otvara tvoju `/hvala` stranicu sa tabelom
+- da li rezervni link ispod dugmeta pokazuje istu adresu
 - da li **Apple / Outlook** dugme preuzima `.ics` fajl
 - kako izgleda na telefonu
 
-> Test mejl iz MailerLite-a ponekad ne popunjava custom polja. Ako ti u testu
-> linkovi budu prazni, uradi pravu prijavu sa svoje adrese i proveri taj mejl.
+> **Test mejl nije dokaz.** MailerLite u testu često ne popunjava custom polja,
+> pa dugme može da vodi na prazan tracking link iako je sve ispravno podešeno.
+> Pravu proveru radi tako što se prijaviš sa svoje adrese kroz formu na sajtu
+> i klikneš dugme u mejlu koji ti tada stigne.
 
 ### 8.6 Uključi automation
 

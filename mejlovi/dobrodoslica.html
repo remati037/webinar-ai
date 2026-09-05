@@ -1,19 +1,41 @@
 <!-- ============================================================
      WELCOME MEJL: potvrda prijave + licni referal link
-     Stize odmah posle prijave. Uputstvo za podesavanje je u
-     uputstvo-referal.md, korak 8.
+     Stize odmah posle prijave. Uputstvo je u uputstvo-referal.md, korak 8.
 
-     PRE LEPLJENJA zameni sva pojavljivanja TVOJ-DOMEN.com svojim
-     domenom (dva mesta: .ics dugme i potpis nije potreban, samo .ics).
+     IDE U DVA HTML BLOKA, a IZMEDJU njih se ubacuje MailerLite-ovo
+     dugme sa linkom na custom polje referal_tabela.
 
-     Koristi tri custom polja iz MailerLite-a:
+     Zasto: link ka licnoj tabeli je razlicit za svakog coveka. MailerLite
+     prepakuje sve href-ove zbog pracenja klikova, i u sirovom HTML bloku
+     to uradi PRE nego sto razresi promenljivu, pa dugme zavrsi na praznom
+     tracking linku. Njihov sopstveni button element to radi kako treba.
+     Isti razlog zbog kog dugme za potvrdu u opt-in mejlu mora biti njihovo.
+
+     Podesavanja za to dugme, da se uklopi:
+       tekst        Pogledaj svoje prijave
+       link         custom polje referal_tabela (ne kucaj URL rukom)
+       pozadina     #2E90FF
+       boja teksta  #FFFFFF
+       font         bold, 16px
+       radius       12px
+       padding      16px gore/dole, 32px levo/desno
+       poravnanje   levo
+
+     PRE LEPLJENJA zameni TVOJ-DOMEN.com svojim domenom (jedno mesto,
+     link za .ics fajl).
+
+     Koristi tri promenljive:
        {$name}            ime
-       {$referal_link}    link koji covek deli drugima
-       {$referal_tabela}  link ka njegovoj licnoj tabeli prijava
+       {$referal_link}    link koji covek deli drugima (prikazan kao tekst)
+       {$referal_tabela}  link ka licnoj tabeli (u MailerLite dugmetu i
+                          kao rezervni tekstualni link u BLOKU 2)
 
      Sve je na tabelama i inline stilovima, bez flexboxa, grida i
      eksternih fontova, da se isto prikaze i u Outlooku.
      ============================================================ -->
+
+
+<!-- ======================= BLOK 1 (iznad dugmeta) ======================= -->
 
 <!-- Tekst koji se vidi u pregledu inboxa, pre otvaranja mejla. -->
 <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#05080F;">
@@ -113,9 +135,10 @@
             <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
               <tr>
                 <td bgcolor="#050A14" style="background-color:#050A14;border:1px solid #23405F;border-radius:12px;padding:18px 20px;">
-                  <a href="{$referal_link}" style="font-family:Consolas,Monaco,'Courier New',monospace;font-size:15px;line-height:1.5;color:#A8D0FF;text-decoration:none;word-break:break-all;">
-                    {$referal_link}
-                  </a>
+                  <!-- Namerno obican tekst, a ne <a>. Ovaj link se kopira i salje
+                       dalje, ne klikce. Kao <a> bi ga pracenje klikova pretvorilo
+                       u tracking adresu, pa bi covek prijateljima slao tudji link. -->
+                  <span style="font-family:Consolas,Monaco,'Courier New',monospace;font-size:15px;line-height:1.5;color:#A8D0FF;word-break:break-all;">{$referal_link}</span>
                 </td>
               </tr>
             </table>
@@ -124,26 +147,38 @@
               Ko se sve prijavio preko tebe možeš da vidiš na svojoj stranici:
             </p>
 
-            <!-- dugme ka licnoj tabeli -->
-            <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;">
-              <tr>
-                <td bgcolor="#2E90FF" style="background-color:#2E90FF;border-radius:12px;">
-                  <a href="{$referal_tabela}"
-                     style="display:inline-block;padding:16px 32px;font-family:Arial,Helvetica,sans-serif;font-size:16px;font-weight:bold;color:#FFFFFF;text-decoration:none;">
-                    Pogledaj svoje prijave
-                  </a>
-                </td>
-              </tr>
-            </table>
-
-            <p style="margin:20px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13.5px;line-height:1.6;color:#8B97A9;">
-              Sačuvaj ovaj mejl. Gornje dugme je tvoj jedini pristup toj stranici.
-            </p>
-
           </td>
         </tr>
 
-        <tr><td style="height:18px;line-height:18px;font-size:0;">&nbsp;</td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+
+
+<!-- ===== OVDE IDE MAILERLITE-OVO DUGME (vidi podesavanja u zaglavlju) ===== -->
+
+
+<!-- ======================= BLOK 2 (ispod dugmeta) ======================= -->
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#05080F" style="background-color:#05080F;margin:0;padding:0;">
+  <tr>
+    <td align="center" style="padding:0 16px 36px;">
+      <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:100%;max-width:600px;">
+
+        <tr>
+          <td style="padding:18px 36px 0;">
+            <p style="margin:0;font-family:Arial,Helvetica,sans-serif;font-size:13.5px;line-height:1.6;color:#8B97A9;">
+              Ako dugme ne otvori stranicu, iskopiraj ovaj link:<br>
+              <span style="font-family:Consolas,Monaco,'Courier New',monospace;font-size:13px;color:#A8D0FF;word-break:break-all;">{$referal_tabela}</span>
+            </p>
+            <p style="margin:16px 0 0;font-family:Arial,Helvetica,sans-serif;font-size:13.5px;line-height:1.6;color:#8B97A9;">
+              Sačuvaj ovaj mejl. Taj link je tvoj jedini pristup toj stranici.
+            </p>
+          </td>
+        </tr>
+
+        <tr><td style="height:26px;line-height:26px;font-size:0;">&nbsp;</td></tr>
 
         <!-- ============ POTPIS ============ -->
         <tr>
