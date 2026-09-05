@@ -6,8 +6,9 @@
 // panelu, ima ga prazno, pa mu dugme u mejlu ne vodi nikuda.
 // Ova skripta prodje kroz sve prijave iz baze i posalje im polja ponovo.
 //
-// Pokretanje iz korena projekta:
-//   vercel env pull .env.local              # jednom, da povuces kljuceve
+// Pokretanje iz korena projekta. Trazi .env.local sa cetiri promenljive
+// (DATABASE_URL, MAILERLITE_API_KEY, MAILERLITE_GROUP_ID, SITE_URL) koje se
+// prepisu iz Vercel panela ili povuku sa "npx vercel env pull .env.local":
 //   node --env-file=.env.local skripte/dopuni-referal-polja.mjs
 //
 // Podrazumevano samo ISPISUJE sta bi uradila. Za stvarno slanje dodaj --posalji:
@@ -27,7 +28,12 @@ const { DATABASE_URL, MAILERLITE_API_KEY, MAILERLITE_GROUP_ID, SITE_URL } = proc
 
 for (const [ime, v] of Object.entries({ DATABASE_URL, MAILERLITE_API_KEY, SITE_URL })) {
   if (!v) {
-    console.error(`Nedostaje ${ime}. Povuci promenljive sa "vercel env pull .env.local".`);
+    console.error(
+      `Nedostaje ${ime}.\n` +
+      `Upisi ga u .env.local u korenu projekta, ili povuci sve odjednom sa\n` +
+      `  npx vercel env pull .env.local\n` +
+      `Detalji su u uputstvo-referal.md, korak 4.`
+    );
     process.exit(1);
   }
 }

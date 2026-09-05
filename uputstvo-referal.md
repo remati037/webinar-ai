@@ -62,8 +62,34 @@ polje napravio, ima ga prazno, pa mu dugme u mejlu ne vodi nikuda.
 
 Za takve postoji skripta koja prođe kroz sve prijave iz baze i pošalje polja ponovo:
 
+Skripti trebaju tri ključa, koje čita iz fajla `.env.local` u korenu projekta.
+Taj fajl je u `.gitignore`, pa ne odlazi na GitHub.
+
+**Najbrže, bez ijedne instalacije:** napravi ga rukom i prepiši vrednosti iz
+Vercel panela (**Settings → Environment Variables**, klikni oko pored vrednosti
+da je otkriješ).
+
 ```bash
-vercel env pull .env.local      # jednom, da povučeš ključeve
+cat > .env.local <<'KRAJ'
+DATABASE_URL=postgres://...            # iz Vercel Storage, cela adresa
+MAILERLITE_API_KEY=...                 # isti ključ kao na Vercelu
+MAILERLITE_GROUP_ID=123456789
+SITE_URL=https://tvoj-domen.com
+KRAJ
+```
+
+**Ili preko Vercel CLI-ja**, ako ti je lakše da ne prepisuješ rukom.
+`npx` ga povuče u hodu, ne treba globalna instalacija:
+
+```bash
+npx vercel login        # otvara pretraživač
+npx vercel link         # poveži folder sa Vercel projektom
+npx vercel env pull .env.local
+```
+
+Kad `.env.local` postoji, pokreni skriptu:
+
+```bash
 npm install
 
 # prvo pogledaj šta bi uradila, ništa se ne šalje
@@ -277,11 +303,13 @@ double opt-in treba samo da se doda MailerLite webhook koji red prebacuje iz
 Za pun rad lokalno:
 
 ```bash
-npm install -g vercel
-vercel link          # poveži folder sa Vercel projektom
-vercel env pull      # povuče promenljive u .env.local
-vercel dev           # sajt + /api rute na http://localhost:3000
+npx vercel login
+npx vercel link                  # poveži folder sa Vercel projektom
+npx vercel env pull .env.local   # povuče promenljive
+npx vercel dev                   # sajt + /api rute na http://localhost:3000
 ```
+
+> `npx` povlači Vercel CLI u hodu, pa ne moraš ništa da instaliraš globalno.
 
 > Za lokalno testiranje napravi u Neon-u zaseban **branch** baze i njegov
 > connection string stavi u `.env.local`. Tako ti probne prijave ne ulaze
