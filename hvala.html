@@ -18,8 +18,30 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css?v=3">
+
+<!-- ============================================================
+     META PIXEL. ID 539402290072454. Ovde stoji samo PageView.
+     Lead salje assets/js/hvala.js, jer mu treba licni kljuc iz URL-a
+     da bi izracunao eventID i tako sprecio duplo brojanje.
+     ============================================================ -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '539402290072454');
+fbq('track', 'PageView');
+</script>
 </head>
 <body class="stranica-hvala">
+
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=539402290072454&ev=Lead&noscript=1"
+alt=""></noscript>
 
 <div class="topbar">
   <a class="topbar-nazad" href="/">← Nazad na stranicu vebinara</a>
@@ -95,6 +117,6 @@
   </div>
 </main>
 
-<script src="assets/js/hvala.js?v=3" defer></script>
+<script src="assets/js/hvala.js?v=4" defer></script>
 </body>
 </html>

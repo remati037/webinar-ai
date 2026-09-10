@@ -35,6 +35,8 @@
     return;
   }
 
+  posaljiLead(kljuc);
+
   fetch("/api/referali?k=" + encodeURIComponent(kljuc), { headers: { Accept: "application/json" } })
     .then(function (r) {
       return r.json().then(function (telo) {
@@ -127,6 +129,52 @@
     } catch (e) {
       return false;
     }
+  }
+
+  // ---------- Meta Lead ----------
+
+  // Lead ide samo kada u URL-u postoji licni kljuc, jer bez njega
+  // posetilac nije stigao sa prijave. Dve zastite od duplog brojanja:
+  // localStorage hvata povratke u istom pretrazivacu, a eventID spaja
+  // isti Lead i sa drugog uredjaja. Meta spaja po eventID-u 48 sati.
+  //
+  // Kljuc je tajni pristup tabeli, pa se ne salje Meti. eventID je
+  // njegov SHA-256 otisak, isti za istu osobu, a iz njega se ne moze
+  // vratiti kljuc.
+  function posaljiLead(kljuc) {
+    if (typeof window.fbq !== "function") return;
+
+    var zapamceno = "meta_lead_poslat";
+    try {
+      if (localStorage.getItem(zapamceno)) return;
+    } catch (e) {}
+
+    otisak(kljuc).then(function (id) {
+      try { localStorage.setItem(zapamceno, "1"); } catch (e) {}
+      if (id) {
+        window.fbq("track", "Lead", {}, { eventID: "lead_" + id });
+      } else {
+        window.fbq("track", "Lead");
+      }
+    });
+  }
+
+  // Vraca prvih 32 hex znaka SHA-256 otiska, ili null ako pretrazivac
+  // nema Web Crypto (stranica preko obicnog http, stariji in-app
+  // browseri). Tada Lead ide bez eventID-ja, jer je bolje imati
+  // konverziju bez dedupliciranja nego je izgubiti.
+  function otisak(tekst) {
+    var subtle = window.crypto && window.crypto.subtle;
+    if (!subtle || typeof window.TextEncoder !== "function") {
+      return Promise.resolve(null);
+    }
+    return subtle.digest("SHA-256", new TextEncoder().encode(tekst))
+      .then(function (bafer) {
+        return Array.prototype.map.call(new Uint8Array(bafer), function (b) {
+          return ("0" + b.toString(16)).slice(-2);
+        }).join("").slice(0, 32);
+      })
+      .catch(function () { return null; });
   }
 
   // ---------- pomocne ----------
