@@ -10,6 +10,7 @@ nekoliko Vercel serverless funkcija i Neon Postgres baza za prijave i referale.
 .
 ├── index.html                  # landing stranica
 ├── hvala.html                  # licna stranica: referal link + tabela prijava
+├── snimak.html                 # /snimak: snimak vebinara + ponuda za InfoCash Akcelerator
 ├── api/
 │   ├── prijava.js              # POST: upis u bazu + slanje u MailerLite
 │   ├── referali.js             # GET: podaci za licnu tabelu
@@ -24,6 +25,7 @@ nekoliko Vercel serverless funkcija i Neon Postgres baza za prijave i referale.
 │   ├── js/main.js              # countdown, brojač mesta, scroll reveal
 │   ├── js/prijava.js           # validacija i slanje forme
 │   ├── js/hvala.js             # referal link i tabela prijava
+│   ├── js/snimak.js            # rok ponude i Meta InitiateCheckout
 │   ├── vebinar.ics             # termin za dodavanje u kalendar
 │   └── img/
 │       ├── vladimir-stankovic.webp       # fotografija voditelja (840x1260)
@@ -84,6 +86,8 @@ git push -u origin main
 | Broj prijavljenih / ukupno mesta | `assets/js/main.js`, `PRIJAVLJENO` i `UKUPNO_MESTA` |
 | Boje i tipografija | `assets/css/style.css`, blok `:root` na vrhu |
 | Tekstovi, FAQ, sekcije | `index.html` |
+| Rok ponude na /snimak | `snimak.html`, `ROK_PONUDE` u `<head>`. Posle roka se ponuda sklanja i ostaje samo snimak. Tekst „do petka u 23:59" je u istom fajlu |
+| Snimak, cene, checkout link | `snimak.html` |
 | Domen u SEO tagovima | `index.html`, komentar `DOMEN` na vrhu `<head>` |
 
 > **Pre lansiranja:** kad znaš konačan domen, dodaj `canonical` i `og:url` po uputstvu
