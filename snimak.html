@@ -22,7 +22,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="assets/img/infocash-og.jpg">
 
-<meta name="theme-color" content="#05080F">
+<meta name="theme-color" content="#0A0908">
 <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
@@ -32,7 +32,7 @@
      Posle ovog trenutka sve sa data-ponuda se sklanja i ostaje samo
      snimak. Ako menjas rok, promeni i tekst "do petka u 23:59" ispod.
 
-     Skrivanje je NAMERNO inline u <head>, a ne u style.css i snimak.js:
+     Skrivanje je NAMERNO inline u <head>, a ne u snimak.css i snimak.js:
      stilovi se kesiraju 7 dana, a ovako se ponuda ne pojavi ni na
      trenutak dok se stranica ucitava.
      ============================================================ -->
@@ -47,8 +47,9 @@ if (new Date() >= window.ROK_PONUDE) document.documentElement.classList.add("pon
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=7">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://www.youtube.com">
+<link rel="stylesheet" href="assets/css/snimak.css?v=1">
 
 <!-- ============================================================
      META PIXEL. ID 539402290072454. Ovde stoji PageView.
@@ -73,29 +74,80 @@ fbq('track', 'PageView');
 src="https://www.facebook.com/tr?id=539402290072454&ev=PageView&noscript=1"
 alt=""></noscript>
 
-<div class="topbar">SNIMAK VEBINARA<span data-ponuda> · <strong>VIP KOKTEL ZA PRVIH 20</strong> · CENA VAŽI DO PETKA U 23:59</span></div>
+<div class="topbar">Snimak vebinara<span data-ponuda> · <strong>VIP koktel za prvih 20</strong> · cena važi do petka u 23:59</span></div>
 
 <!-- ============ SNIMAK ============ -->
-<header class="hero snimak-hero">
+<header class="hero">
   <div class="wrap">
-    <span class="badge">SNIMAK VEBINARA</span>
+    <span class="badge"><span class="dot"></span>Snimak vebinara</span>
     <h1>Od ideje do <span class="zlato">prvog kupca</span></h1>
     <p class="pod" data-ponuda>Ceo vebinar, od prvog bloka do pitanja iz mejlova. Uzmi papir i olovku. Ponuda o kojoj pričam na kraju je <strong>odmah ispod snimka</strong> i važi do petka u 23:59.</p>
     <p class="pod" data-posle-roka>Ceo vebinar, od prvog bloka do pitanja iz mejlova. Uzmi papir i olovku.</p>
 
-    <!-- Player se ucitava tek na klik, vidi assets/js/snimak.js.
-         Za drugi snimak promeni ID u data-video, href i src slike. -->
-    <div class="video-okvir">
-      <a class="video-pokreni" href="https://youtu.be/OpbPkUxGuLc" target="_blank" rel="noopener"
-         data-video="OpbPkUxGuLc" aria-label="Pusti snimak vebinara: Od ideje do prvog kupca">
-        <img src="https://i.ytimg.com/vi/OpbPkUxGuLc/maxresdefault.jpg" width="1280" height="720"
-             fetchpriority="high" decoding="async" alt="">
-        <span class="video-dugme" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l11.1-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14z"/></svg>
-        </span>
-      </a>
+    <!-- ========================================================
+         PLAYER. Snimak se gleda samo ovde: YouTube radi u pozadini,
+         a klikovi do njega ne stizu (assets/js/snimak.js).
+         Za drugi snimak promeni ID u data-video i u src slike.
+         ======================================================== -->
+    <div class="video-okvir" data-video="OpbPkUxGuLc" data-stanje="poster" tabindex="-1">
+      <div class="video-scena">
+        <div class="video-yt"><div data-video-mesto></div></div>
+        <div class="video-stit" aria-hidden="true"></div>
+        <div class="video-pauza" aria-hidden="true">
+          <span class="video-dugme"><svg viewBox="0 0 24 24"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l11.1-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14z"/></svg></span>
+        </div>
+        <span class="video-spiner" aria-hidden="true"></span>
+
+        <button type="button" class="video-poster" data-video-pusti aria-label="Pusti snimak vebinara: Od ideje do prvog kupca">
+          <img src="https://i.ytimg.com/vi/OpbPkUxGuLc/maxresdefault.jpg" width="1280" height="720"
+               fetchpriority="high" decoding="async" alt="">
+          <span class="video-dugme" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l11.1-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14z"/></svg>
+          </span>
+        </button>
+
+        <div class="video-kraj">
+          <p class="video-kraj-naslov">To je ceo <span class="zlato">snimak</span></p>
+          <div class="video-kraj-dugmad">
+            <button type="button" class="cta-btn sekundarno" data-video-ponovo>Pogledaj ponovo</button>
+            <a href="#ponuda" class="cta-btn" data-ponuda>Pogledaj ponudu</a>
+          </div>
+        </div>
+
+        <p class="video-poruka" data-video-poruka role="status" hidden></p>
+        <noscript><p class="video-poruka">Za gledanje snimka uključi JavaScript u pregledaču.</p></noscript>
+
+        <div class="video-kontrole">
+          <input class="video-traka" type="range" min="0" max="1000" step="1" value="0"
+                 aria-label="Pozicija u snimku" data-video-traka>
+          <div class="video-red">
+            <button type="button" class="video-btn" data-video-igra aria-label="Pusti">
+              <svg class="ikona-igra" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l11.1-6.86a1 1 0 0 0 0-1.7L9.52 4.29A1 1 0 0 0 8 5.14z"/></svg>
+              <svg class="ikona-pauza" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 4h4v16h-4zM13.5 4h4v16h-4z"/></svg>
+            </button>
+            <button type="button" class="video-btn video-skok" data-video-nazad aria-label="10 sekundi nazad">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 6.5v11L3.5 12zM20 6.5v11L12.5 12z"/></svg>
+            </button>
+            <button type="button" class="video-btn video-skok" data-video-napred aria-label="10 sekundi napred">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 6.5v11l7.5-5.5zM4 6.5v11l7.5-5.5z"/></svg>
+            </button>
+            <button type="button" class="video-btn" data-video-zvuk aria-label="Isključi zvuk">
+              <svg class="ikona-zvuk" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <svg class="ikona-utisano" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9v6h4l5 4V5L7 9H3z"/><path d="M16 9.5l5 5M21 9.5l-5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+            <input class="video-traka video-jacina" type="range" min="0" max="100" step="1" value="100"
+                   aria-label="Jačina zvuka" data-video-jacina>
+            <span class="video-vreme"><b data-video-sada>0:00</b> / <span data-video-ukupno>0:00</span></span>
+            <span class="video-razmak"></span>
+            <button type="button" class="video-btn" data-video-brzina aria-label="Brzina reprodukcije 1x">1x</button>
+            <button type="button" class="video-btn" data-video-ekran aria-label="Ceo ekran">
+              <svg class="ikona-ceo" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg class="ikona-izadji" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
-    <p class="video-rezerva">Video ne kreće? <a href="https://youtu.be/OpbPkUxGuLc" target="_blank" rel="noopener">Pogledaj snimak na YouTube-u</a></p>
 
     <div data-ponuda>
       <a href="#ponuda" class="cta-btn">Pogledaj ponudu</a>
@@ -118,7 +170,7 @@ alt=""></noscript>
     <figure class="ponuda-cover rv">
       <img src="assets/img/infocash-cover-1200.webp"
            srcset="assets/img/infocash-cover-1200.webp 1200w, assets/img/infocash-cover-1920.webp 1920w"
-           sizes="(max-width: 920px) 100vw, 872px"
+           sizes="(max-width: 960px) 100vw, 912px"
            width="1920" height="1074" loading="lazy" decoding="async"
            alt="InfoCash Akcelerator, od ideje do prve prodaje, sa Vladimirom Stankovićem">
     </figure>
@@ -150,32 +202,32 @@ alt=""></noscript>
     <h2 class="rv">Šest modula, <span class="naglasak">šest rešenih problema</span></h2>
     <div class="moduli">
       <div class="modul rv">
-        <span class="modul-broj">Modul 01</span>
+        <span class="modul-broj"><span class="sr-only">Modul </span>01</span>
         <h3>Ideja i niša</h3>
         <p><strong>Rešava:</strong> nemam ideju ili ih imam previše</p>
       </div>
       <div class="modul rv">
-        <span class="modul-broj">Modul 02</span>
+        <span class="modul-broj"><span class="sr-only">Modul </span>02</span>
         <h3>Validacija</h3>
         <p><strong>Rešava:</strong> praviš mesecima bez dokaza da se prodaje</p>
       </div>
       <div class="modul rv">
-        <span class="modul-broj">Modul 03</span>
+        <span class="modul-broj"><span class="sr-only">Modul </span>03</span>
         <h3>Izrada uz AI</h3>
         <p><strong>Rešava:</strong> ne znam odakle da počnem sa sadržajem</p>
       </div>
       <div class="modul rv">
-        <span class="modul-broj">Modul 04</span>
+        <span class="modul-broj"><span class="sr-only">Modul </span>04</span>
         <h3>Ponuda i cena</h3>
         <p><strong>Rešava:</strong> proizvod stoji i ne prodaje se</p>
       </div>
       <div class="modul rv">
-        <span class="modul-broj">Modul 05</span>
+        <span class="modul-broj"><span class="sr-only">Modul </span>05</span>
         <h3>Prodajni sistem</h3>
         <p><strong>Rešava:</strong> nemam publiku ni listu</p>
       </div>
       <div class="modul rv">
-        <span class="modul-broj">Modul 06</span>
+        <span class="modul-broj"><span class="sr-only">Modul </span>06</span>
         <h3>Prvih 10 kupaca</h3>
         <p><strong>Rešava:</strong> lansiranje bez plana i bez roka</p>
       </div>
@@ -186,7 +238,7 @@ alt=""></noscript>
 <!-- ============ ŠTA DOBIJAŠ ============ -->
 <section class="blok" data-ponuda>
   <div class="wrap">
-    <h2 class="rv">Šta sve dobijaš</h2>
+    <h2 class="rv">Šta sve <span class="naglasak">dobijaš</span></h2>
     <div class="vrednost rv">
       <div class="vrednost-red">
         <span><b>InfoCash Akcelerator program</b></span>
@@ -237,7 +289,7 @@ alt=""></noscript>
 <!-- ============ CENE ============ -->
 <section class="blok" id="cene" data-ponuda>
   <div class="wrap">
-    <h2 class="rv">Dva načina plaćanja</h2>
+    <h2 class="rv">Dva načina <span class="naglasak">plaćanja</span></h2>
     <p class="uvodna rv">Cena i bonus važe do petka u 23:59. Posle toga ponuda se sklanja sa ove stranice.</p>
 
     <div class="rok rv" data-rok>
@@ -292,7 +344,7 @@ alt=""></noscript>
 <!-- ============ IZGOVORI ============ -->
 <section class="blok" data-ponuda>
   <div class="wrap">
-    <h2 class="rv">Pet izgovora</h2>
+    <h2 class="rv">Pet <span class="naglasak">izgovora</span></h2>
     <div class="faq">
       <details class="rv">
         <summary>Nemam vremena</summary>
@@ -339,7 +391,7 @@ alt=""></noscript>
 </footer>
 
 <script src="assets/js/main.js?v=2" defer></script>
-<script src="assets/js/snimak.js?v=3" defer></script>
+<script src="assets/js/snimak.js?v=4" defer></script>
 
 </body>
 </html>

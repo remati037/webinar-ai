@@ -21,11 +21,12 @@ nekoliko Vercel serverless funkcija i Neon Postgres baza za prijave i referale.
 ├── skripte/
 │   └── dopuni-referal-polja.mjs  # salje referal polja u MailerLite za stare prijave
 ├── assets/
-│   ├── css/style.css           # svi stilovi
+│   ├── css/style.css           # stilovi za index i hvala
+│   ├── css/snimak.css          # stilovi za /snimak (u stilu InfoCash covera)
 │   ├── js/main.js              # countdown, brojač mesta, scroll reveal
 │   ├── js/prijava.js           # validacija i slanje forme
 │   ├── js/hvala.js             # referal link i tabela prijava
-│   ├── js/snimak.js            # rok ponude i Meta InitiateCheckout
+│   ├── js/snimak.js            # video player bez izlaza na YouTube, rok ponude, Meta InitiateCheckout
 │   ├── vebinar.ics             # termin za dodavanje u kalendar
 │   └── img/
 │       ├── vladimir-stankovic.webp       # fotografija voditelja (840x1260)
