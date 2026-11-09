@@ -1,6 +1,9 @@
 User-agent: *
 Allow: /
-
-# Licne stranice prijavljenih (referal link i tabela) se ne indeksiraju.
-Disallow: /hvala
 Disallow: /api/
+
+# /hvala (licne stranice prijavljenih) i /snimak se ne indeksiraju.
+# Namerno NISU u Disallow: pretrazivac mora da ih otvori da bi video
+# noindex (X-Robots-Tag u vercel.json). Disallow bi ga u tome sprecio.
+
+Sitemap: https://webinar.aiprofit.rs/sitemap.xml

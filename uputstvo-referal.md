@@ -1,5 +1,24 @@
 # Referal sistem — podešavanje
 
+## Novi vebinar (radi se pred svaki)
+
+Prijave, referal kodovi i tabele su vezani za jedan vebinar (`VEBINAR` u
+[api/_lib.js](api/_lib.js), trenutno `2026-11-16`). Ljudi sa prošlog vebinara
+mogu ponovo da se prijave i dobijaju nov kod i praznu tabelu.
+
+1. **Samo prvi put:** pokreni [db/migracija-vebinar.sql](db/migracija-vebinar.sql)
+   u Neon SQL Editor-u, **pre deploya**. Bez toga prijave padaju.
+2. Napravi novu grupu u MailerLite-u (npr. „Webinar 16.11.2026.") i njen ID
+   upiši u Vercel → Settings → Environment Variables → `MAILERLITE_GROUP_ID`.
+3. Automatizaciju „pridružio se grupi" u MailerLite-u prebaci na novu grupu i
+   zalepi nove mejlove iz [mejlovi/](mejlovi/).
+4. Deploy, pa otvori `/api/status`. Treba da piše `"ok": true` i `"kolona_vebinar": true`.
+5. Za sledeći vebinar: promeni datum u `VEBINAR`, `VEBINAR_DATUM` u
+   [assets/js/main.js](assets/js/main.js) i ključeve sa datumom u
+   [assets/js/prijava.js](assets/js/prijava.js) i [assets/js/hvala.js](assets/js/hvala.js).
+
+---
+
 Sve je već napisano u kodu. Ostaje da se naprave baza, ključ i dva polja u
 MailerLite-u. Ukupno oko 15 minuta klikanja. Idi redom.
 

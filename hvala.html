@@ -3,21 +3,22 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mesto je rezervisano</title>
-<meta name="description" content="Prijava za vebinar je uspešna. Ovde je tvoj lični link za pozivanje prijatelja i pregled svih koji su se prijavili preko tebe.">
+<title>Mesto je rezervisano · Radionica 16.11.</title>
+<meta name="description" content="Prijava za radionicu je uspešna. Ovde je tvoj lični link za pozivanje prijatelja i pregled svih koji su se prijavili preko tebe.">
 
 <!-- Ova stranica je licna i ne treba da se indeksira ni deli dalje. -->
 <meta name="robots" content="noindex, nofollow">
 
-<meta name="theme-color" content="#05080F">
-<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-<link rel="icon" href="assets/img/favicon-32.png" sizes="32x32" type="image/png">
-<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<meta name="theme-color" content="#0A0908">
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=3">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Geist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css?v=5">
 
 <!-- ============================================================
      META PIXEL. ID 539402290072454. Ovde stoji samo PageView.
@@ -44,7 +45,7 @@ src="https://www.facebook.com/tr?id=539402290072454&ev=Lead&noscript=1"
 alt=""></noscript>
 
 <div class="topbar">
-  <a class="topbar-nazad" href="/">← Nazad na stranicu vebinara</a>
+  <a class="topbar-nazad" href="/">← Nazad na stranicu radionice</a>
 </div>
 
 <main class="hvala-omot">
@@ -54,11 +55,11 @@ alt=""></noscript>
     <section class="hvala-kartica hvala-potvrda" id="potvrda" hidden>
       <div class="uspeh-ikona" aria-hidden="true">✓</div>
       <h1>Mesto je rezervisano<span id="potvrda-ime"></span></h1>
-      <p>Zoom link i podsetnik šaljem na email par dana pred vebinar. Kada stignu, pogledaj i <strong>Promotions</strong> i <strong>Spam</strong> folder ako ih ne vidiš u prijemnom sandučetu.</p>
-      <p class="uspeh-napomena">Vebinar je <strong>14. septembra u 19:00</strong> i snimka neće biti. Ubaci ga odmah u kalendar da ti ne promakne.</p>
+      <p>Zoom link i podsetnik šaljem na email pred radionicu. Ako ih ne vidiš u prijemnom sandučetu, pogledaj <strong>Promotions</strong> i <strong>Spam</strong> folder.</p>
+      <p class="uspeh-napomena">Radionica je u <strong>ponedeljak, 16. novembra u 19:00</strong> i snimka neće biti. Ubaci je odmah u kalendar da ti ne promakne.</p>
       <div class="uspeh-dugmad">
-        <a class="uspeh-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Vebinar%3A%20Kako%20da%20proda%C5%A1%20svoj%20prvi%20digitalni%20proizvod&amp;dates=20260914T170000Z%2F20260914T183000Z&amp;details=Uzivo%20na%20Zoom-u%20sa%20Vladimirom%20Stankovicem.%20Zoom%20link%20stize%20na%20email.&amp;location=Zoom" target="_blank" rel="noopener">Dodaj u Google kalendar</a>
-        <a class="uspeh-btn" href="assets/vebinar.ics" download>Apple / Outlook (.ics)</a>
+        <a class="uspeh-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Radionica%3A%20Na%C4%91i%20ni%C5%A1u%20za%20svoj%20prvi%20digitalni%20proizvod&amp;dates=20261116T180000Z%2F20261116T193000Z&amp;details=Uzivo%20na%20Zoom-u%20sa%20Vladimirom%20Stankovicem.%20Ponesi%20laptop%20i%20otvoren%20AI%20alat.%20Zoom%20link%20stize%20na%20email.&amp;location=Zoom" target="_blank" rel="noopener">Dodaj u Google kalendar</a>
+        <a class="uspeh-btn" href="assets/vebinar.ics?v=2" download>Apple / Outlook (.ics)</a>
       </div>
     </section>
 
@@ -73,7 +74,8 @@ alt=""></noscript>
       <span class="hvala-oznaka">Pozovi prijatelje</span>
       <h2>Tvoj lični link</h2>
       <p class="hvala-uvod">
-        Svako ko se prijavi preko ovog linka računa se kao tvoja preporuka.
+        Znaš nekoga ko ima znanje, a nema proizvod? Pošalji mu link. Svako ko se prijavi
+        preko njega računa se kao tvoja preporuka i vidiš ga u tabeli ispod.
       </p>
 
       <div class="link-red">
@@ -81,6 +83,14 @@ alt=""></noscript>
         <button type="button" class="link-kopiraj" id="kopiraj">Kopiraj</button>
       </div>
       <p class="link-status" id="kopiraj-status" role="status" aria-live="polite"></p>
+
+      <!-- Dugmad za deljenje. Linkove i tekst poruke popunjava hvala.js. -->
+      <div class="podeli" id="podeli">
+        <a class="podeli-btn podeli-wa" id="podeli-wa" href="#" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="podeli-btn podeli-viber" id="podeli-viber" href="#">Viber</a>
+        <a class="podeli-btn podeli-fb" id="podeli-fb" href="#" target="_blank" rel="noopener">Facebook</a>
+        <button type="button" class="podeli-btn podeli-vise" id="podeli-vise" hidden>Još opcija</button>
+      </div>
 
       <p class="hvala-napomena">
         <strong>Sačuvaj ovu stranicu u bookmarks.</strong> Adresa u pretraživaču je tvoj privatni
@@ -106,8 +116,8 @@ alt=""></noscript>
         </table>
       </div>
       <p class="prazna-tabela" id="prazna-tabela" hidden>
-        Još niko. Pošalji link iznad dvema ili trima osobama kojima bi vebinar stvarno
-        koristio. To je obično dovoljno da se lista pokrene.
+        Još niko. Pošalji link iznad dvema ili trima osobama kojima bi radionica stvarno
+        koristila. To je obično dovoljno da se lista pokrene.
       </p>
       <p class="hvala-napomena">
         Zbog privatnosti prijavljenih prikazujem samo ime sa inicijalom prezimena i skraćen email.
@@ -117,6 +127,6 @@ alt=""></noscript>
   </div>
 </main>
 
-<script src="assets/js/hvala.js?v=4" defer></script>
+<script src="assets/js/hvala.js?v=5" defer></script>
 </body>
 </html>

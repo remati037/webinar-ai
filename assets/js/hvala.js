@@ -21,6 +21,10 @@
     referal: document.getElementById("referal"),
     linkPolje: document.getElementById("link-polje"),
     kopiraj: document.getElementById("kopiraj"),
+    podeliWa: document.getElementById("podeli-wa"),
+    podeliViber: document.getElementById("podeli-viber"),
+    podeliFb: document.getElementById("podeli-fb"),
+    podeliVise: document.getElementById("podeli-vise"),
     kopirajStatus: document.getElementById("kopiraj-status"),
     tabelaBlok: document.getElementById("tabela-blok"),
     tabelaBroj: document.getElementById("tabela-broj"),
@@ -60,6 +64,7 @@
 
     // referal link
     el.linkPolje.value = p.ref_link;
+    pripremiDeljenje(p.ref_link);
     el.referal.hidden = false;
 
     // tabela
@@ -90,6 +95,27 @@
     el.stanjeTekst.textContent = poruka;
     el.stanje.classList.add("stanje-greska");
     if (ponudiPrijavu) el.stanjeAkcija.hidden = false;
+  }
+
+  // ---------- deljenje ----------
+
+  var PORUKA = "Vlada Stanković u ponedeljak 16.11. u 19h drži besplatnu radionicu " +
+    "na Zoom-u: uživo bira nišu za digitalni proizvod i uz AI proverava da li za nju " +
+    "postoje kupci. Mislim da bi ti koristilo, prijavi se ovde:";
+
+  function pripremiDeljenje(link) {
+    var tekst = PORUKA + " " + link;
+    el.podeliWa.href = "https://wa.me/?text=" + encodeURIComponent(tekst);
+    el.podeliViber.href = "viber://forward?text=" + encodeURIComponent(tekst);
+    el.podeliFb.href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(link);
+
+    // Na telefonu sistemski meni za deljenje pokriva Instagram, Telegram, SMS...
+    if (navigator.share) {
+      el.podeliVise.hidden = false;
+      el.podeliVise.addEventListener("click", function () {
+        navigator.share({ text: PORUKA, url: link }).catch(function () {});
+      });
+    }
   }
 
   // ---------- kopiranje ----------
@@ -144,7 +170,9 @@
   function posaljiLead(kljuc) {
     if (typeof window.fbq !== "function") return;
 
-    var zapamceno = "meta_lead_poslat";
+    // Kljuc nosi datum radionice. Ko je vec bio Lead za septembarski
+    // vebinar, sa istog uredjaja mora ponovo da se broji za ovaj.
+    var zapamceno = "meta_lead_poslat_2026-11-16";
     try {
       if (localStorage.getItem(zapamceno)) return;
     } catch (e) {}

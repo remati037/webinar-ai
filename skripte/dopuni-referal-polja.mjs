@@ -16,6 +16,7 @@
 // ============================================================
 
 import { neon } from "@neondatabase/serverless";
+import { VEBINAR } from "../api/_lib.js";
 
 const POSALJI = process.argv.includes("--posalji");
 const API = "https://connect.mailerlite.com/api/subscribers";
@@ -41,11 +42,15 @@ for (const [ime, v] of Object.entries({ DATABASE_URL, MAILERLITE_API_KEY, SITE_U
 const domen = SITE_URL.replace(/\/+$/, "");
 const sql = neon(DATABASE_URL);
 
+// Samo prijave za trenutni vebinar, da ljudima sa proslog ne pregazimo
+// polja u MailerLite-u starim linkovima (ili obrnuto).
 const prijave = await sql`
   SELECT email, ime, prezime, telefon, ref_kod, token
   FROM prijave
+  WHERE vebinar = ${VEBINAR}
   ORDER BY kreirano ASC`;
 
+console.log(`Vebinar: ${VEBINAR}`);
 console.log(`Prijava u bazi: ${prijave.length}`);
 console.log(`Sajt: ${domen}`);
 console.log(POSALJI ? "Rezim: STVARNO SLANJE\n" : "Rezim: samo prikaz, nista se ne salje (dodaj --posalji)\n");

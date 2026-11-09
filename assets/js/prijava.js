@@ -11,7 +11,8 @@
   "use strict";
 
   var POZIVNI = "+381";        // podrazumevana zemlja za brojeve koji pocinju sa 0
-  var KLJUC_REF = "vebinar_ref";
+  // Kljuc nosi datum radionice, da kod sa proslog vebinara ne bi presao na ovaj.
+  var KLJUC_REF = "vebinar_ref_2026-11-16";
 
   var forma = document.getElementById("prijava-forma");
   if (!forma) return;
@@ -118,7 +119,6 @@
 
     var podaci = {
       ime: vrednost("ml-ime"),
-      prezime: vrednost("ml-prezime"),
       email: vrednost("ml-email"),
       telefon: vrednost("ml-telefon"),
       ref: refPolje.value,

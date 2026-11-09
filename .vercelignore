@@ -1,0 +1,7 @@
+# Radni fajlovi koji ne treba da budu javno dostupni na sajtu.
+.claude/
+README.md
+uputstvo-*.md
+db/
+skripte/
+mejlovi/

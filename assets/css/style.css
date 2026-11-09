@@ -1,21 +1,23 @@
 /* ============================================================
-   Vebinar landing – stilovi
+   Stilovi za hvala.html (landing koristi landing.css).
+   Prebaceno na narandzastu paletu InfoCash-a za radionicu 16.11.
+   Imena promenljivih (--violet...) su ostala zbog postojecih pravila.
    Boje i tipografija se menjaju na jednom mestu: :root ispod.
    ============================================================ */
 
 :root {
-  --bg: #05080F;
-  --surface: rgba(255,255,255,0.035);
-  --surface-2: rgba(255,255,255,0.06);
-  --line: rgba(255,255,255,0.09);
-  --line-strong: rgba(46,144,255,0.4);
-  --text: #FAFAFA;
-  --muted: #97A3B6;
-  --violet: #2E90FF;
-  --violet-light: #66ADFF;
-  --violet-pale: #A8D0FF;
-  --glow: #1466E8;
-  --rose: #F43F5E;
+  --bg: #0A0908;
+  --surface: rgba(255,238,220,0.035);
+  --surface-2: rgba(255,238,220,0.07);
+  --line: rgba(255,238,220,0.1);
+  --line-strong: rgba(242,106,31,0.4);
+  --text: #F2EBE1;
+  --muted: #A89E93;
+  --violet: #F26A1F;
+  --violet-light: #FF8B45;
+  --violet-pale: #FFB487;
+  --glow: #A83C0C;
+  --rose: #FF5A4E;
   --ok: #47D97A;
 }
 
@@ -43,7 +45,7 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -0.025em; }
 
 /* ---------- TOP BAR ---------- */
 .topbar {
-  background: linear-gradient(90deg, rgba(20,102,232,0) 0%, rgba(20,102,232,0.28) 50%, rgba(20,102,232,0) 100%);
+  background: linear-gradient(90deg, rgba(168,60,12,0) 0%, rgba(168,60,12,0.28) 50%, rgba(168,60,12,0) 100%);
   border-bottom: 1px solid var(--line);
   text-align: center;
   padding: 10px 16px;
@@ -66,9 +68,9 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -0.025em; }
   inset: -20% -10% auto;
   height: 620px;
   background:
-    radial-gradient(46% 60% at 50% 8%, rgba(20,102,232,0.4), transparent 70%),
-    radial-gradient(30% 42% at 22% 30%, rgba(120,190,255,0.12), transparent 70%),
-    radial-gradient(30% 42% at 78% 26%, rgba(46,144,255,0.16), transparent 70%);
+    radial-gradient(46% 60% at 50% 8%, rgba(168,60,12,0.4), transparent 70%),
+    radial-gradient(30% 42% at 22% 30%, rgba(255,180,135,0.12), transparent 70%),
+    radial-gradient(30% 42% at 78% 26%, rgba(242,106,31,0.16), transparent 70%);
   pointer-events: none;
 }
 .hero > .wrap { position: relative; }
@@ -76,7 +78,7 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -0.025em; }
   display: inline-flex;
   align-items: center;
   gap: 9px;
-  background: rgba(46,144,255,0.1);
+  background: rgba(242,106,31,0.1);
   border: 1px solid var(--line-strong);
   color: var(--violet-pale);
   font-size: 13.5px;
@@ -85,7 +87,7 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -0.025em; }
   padding: 9px 18px;
   border-radius: 100px;
   margin-bottom: 30px;
-  box-shadow: 0 0 24px rgba(20,102,232,0.25);
+  box-shadow: 0 0 24px rgba(168,60,12,0.25);
 }
 .badge .dot {
   width: 8px; height: 8px;
@@ -128,8 +130,8 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -0.025em; }
 
 .cta-btn {
   display: inline-block;
-  background: linear-gradient(180deg, #4DA3FF 0%, #1D6FE0 100%);
-  color: #fff;
+  background: linear-gradient(180deg, #FF8B45 0%, #F26A1F 100%);
+  color: #140A04;
   font-family: inherit;
   font-size: 17px;
   font-weight: 800;
@@ -142,9 +144,9 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -0.025em; }
   cursor: pointer;
   margin-top: 36px;
   transition: transform 0.14s ease, box-shadow 0.14s ease;
-  box-shadow: 0 10px 40px rgba(20,102,232,0.5), inset 0 1px 0 rgba(255,255,255,0.25);
+  box-shadow: 0 10px 40px rgba(168,60,12,0.5), inset 0 1px 0 rgba(255,255,255,0.25);
 }
-.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 52px rgba(20,102,232,0.65), inset 0 1px 0 rgba(255,255,255,0.25); }
+.cta-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 52px rgba(168,60,12,0.65), inset 0 1px 0 rgba(255,255,255,0.25); }
 .cta-btn:focus-visible { outline: 3px solid var(--violet-pale); outline-offset: 3px; }
 .countdown {
   display: flex;
@@ -209,8 +211,8 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -0.025em; }
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 50% 52% at 50% 42%, transparent 35%, rgba(5,8,15,0.6) 100%),
-    linear-gradient(180deg, rgba(46,144,255,0.14) 0%, rgba(20,102,232,0.06) 50%, rgba(5,8,15,0) 100%);
+    radial-gradient(ellipse 50% 52% at 50% 42%, transparent 35%, rgba(10,9,8,0.6) 100%),
+    linear-gradient(180deg, rgba(242,106,31,0.14) 0%, rgba(168,60,12,0.06) 50%, rgba(10,9,8,0) 100%);
 }
 
 @media (min-width: 901px) {
@@ -221,12 +223,12 @@ h1, h2, h3 { line-height: 1.12; letter-spacing: -0.025em; }
 /* ---------- FORMA ---------- */
 .forma-kartica {
   position: relative;
-  background: linear-gradient(180deg, rgba(46,144,255,0.09) 0%, rgba(255,255,255,0.03) 45%);
+  background: linear-gradient(180deg, rgba(242,106,31,0.09) 0%, rgba(255,255,255,0.03) 45%);
   border: 1px solid var(--line-strong);
   border-radius: 18px;
   padding: 38px 36px;
   margin-top: -50px;
-  box-shadow: 0 0 60px rgba(20,102,232,0.18), 0 24px 60px rgba(0,0,0,0.55);
+  box-shadow: 0 0 60px rgba(168,60,12,0.18), 0 24px 60px rgba(0,0,0,0.55);
 }
 .forma-kartica h2 { font-size: 26px; font-weight: 800; }
 .mesta {
@@ -280,12 +282,12 @@ section.blok .uvodna { margin-top: 14px; color: var(--muted); max-width: 58ch; }
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(46,144,255,0.7), transparent);
+  background: linear-gradient(90deg, transparent, rgba(242,106,31,0.7), transparent);
 }
 .nauci-broj {
   flex: 0 0 44px;
   height: 44px;
-  background: linear-gradient(180deg, rgba(46,144,255,0.25), rgba(46,144,255,0.08));
+  background: linear-gradient(180deg, rgba(242,106,31,0.25), rgba(242,106,31,0.08));
   border: 1px solid var(--line-strong);
   color: var(--violet-pale);
   border-radius: 12px;
@@ -294,7 +296,7 @@ section.blok .uvodna { margin-top: 14px; color: var(--muted); max-width: 58ch; }
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 18px rgba(20,102,232,0.2);
+  box-shadow: 0 0 18px rgba(168,60,12,0.2);
 }
 .nauci-red h3 { font-size: 19px; font-weight: 700; }
 .nauci-red p { margin-top: 7px; font-size: 15px; color: var(--muted); max-width: 58ch; }
@@ -302,12 +304,12 @@ section.blok .uvodna { margin-top: 14px; color: var(--muted); max-width: 58ch; }
 .bonus-kartica {
   margin-top: 30px;
   background:
-    radial-gradient(80% 120% at 50% -20%, rgba(20,102,232,0.28), transparent 65%),
+    radial-gradient(80% 120% at 50% -20%, rgba(168,60,12,0.28), transparent 65%),
     var(--surface);
   border: 1px solid var(--line-strong);
   border-radius: 16px;
   padding: 30px 32px;
-  box-shadow: 0 0 50px rgba(20,102,232,0.15);
+  box-shadow: 0 0 50px rgba(168,60,12,0.15);
 }
 .bonus-kartica h3 { font-size: 20px; font-weight: 800; }
 .bonus-kartica h3 span { color: var(--violet-pale); }
@@ -344,16 +346,16 @@ section.blok .uvodna { margin-top: 14px; color: var(--muted); max-width: 58ch; }
   object-fit: cover;
   border-radius: 16px;
   border: 1px solid var(--line-strong);
-  box-shadow: 0 0 40px rgba(20,102,232,0.2);
+  box-shadow: 0 0 40px rgba(168,60,12,0.2);
   display: block;
-  background: #0B1626;
+  background: #13100D;
 }
 .voditelj .bio p { margin-bottom: 14px; font-size: 15.5px; max-width: 58ch; }
 .voditelj .bio strong { color: var(--violet-pale); font-weight: 600; }
 .voditelj .bio a, .milestones a {
   color: var(--violet-light);
   text-decoration: none;
-  border-bottom: 1px solid rgba(102,173,255,0.35);
+  border-bottom: 1px solid rgba(255,139,69,0.35);
 }
 .voditelj .bio a:hover, .milestones a:hover { border-bottom-color: var(--violet-light); }
 .voditelj .bio a:focus-visible, .milestones a:focus-visible { outline: 2px solid var(--violet-pale); outline-offset: 2px; }
@@ -374,7 +376,7 @@ section.blok .uvodna { margin-top: 14px; color: var(--muted); max-width: 58ch; }
   border: 1px solid var(--line-strong);
   border-radius: 16px;
   padding: 10px;
-  box-shadow: 0 0 60px rgba(20,102,232,0.16), 0 22px 55px rgba(0,0,0,0.5);
+  box-shadow: 0 0 60px rgba(168,60,12,0.16), 0 22px 55px rgba(0,0,0,0.5);
 }
 .dokaz-okvir img {
   width: 100%;
@@ -455,7 +457,7 @@ section.blok .uvodna { margin-top: 14px; color: var(--muted); max-width: 58ch; }
   position: absolute;
   inset: auto -10% -40%;
   height: 500px;
-  background: radial-gradient(50% 70% at 50% 100%, rgba(20,102,232,0.4), transparent 70%);
+  background: radial-gradient(50% 70% at 50% 100%, rgba(168,60,12,0.4), transparent 70%);
   pointer-events: none;
 }
 .finale > .wrap { position: relative; }
@@ -548,7 +550,7 @@ footer a { color: var(--muted); }
   width: 100%;
   box-shadow: none;
 }
-.forma-kartica .ml-form-embedBody input.form-control::placeholder { color: #5A5E70; }
+.forma-kartica .ml-form-embedBody input.form-control::placeholder { color: #5E564E; }
 .forma-kartica .ml-form-embedBody input.form-control:focus-visible {
   outline: 2px solid var(--violet);
   outline-offset: 1px;
@@ -592,8 +594,8 @@ footer a { color: var(--muted); }
   display: block;
   width: 100%;
   margin-top: 24px;
-  background: linear-gradient(180deg, #4DA3FF 0%, #1D6FE0 100%);
-  color: #fff;
+  background: linear-gradient(180deg, #FF8B45 0%, #F26A1F 100%);
+  color: #140A04;
   font-family: inherit;
   font-size: 17px;
   font-weight: 800;
@@ -604,11 +606,11 @@ footer a { color: var(--muted); }
   border: 1px solid rgba(255,255,255,0.18);
   cursor: pointer;
   transition: transform 0.14s ease, box-shadow 0.14s ease;
-  box-shadow: 0 10px 40px rgba(20,102,232,0.5), inset 0 1px 0 rgba(255,255,255,0.25);
+  box-shadow: 0 10px 40px rgba(168,60,12,0.5), inset 0 1px 0 rgba(255,255,255,0.25);
 }
 .forma-kartica .ml-form-embedSubmit button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 14px 52px rgba(20,102,232,0.65), inset 0 1px 0 rgba(255,255,255,0.25);
+  box-shadow: 0 14px 52px rgba(168,60,12,0.65), inset 0 1px 0 rgba(255,255,255,0.25);
 }
 .forma-kartica .ml-form-embedSubmit button:focus-visible { outline: 3px solid var(--violet-pale); outline-offset: 3px; }
 .forma-kartica .ml-form-embedSubmit button.loading {
@@ -689,14 +691,14 @@ footer a { color: var(--muted); }
   padding: 12px 20px;
   border-radius: 10px;
   border: 1px solid var(--line-strong);
-  background: rgba(46,144,255,0.1);
+  background: rgba(242,106,31,0.1);
   color: var(--violet-pale);
   font-size: 14px;
   font-weight: 700;
   text-decoration: none;
   transition: background-color 0.15s ease;
 }
-.uspeh-btn:hover { background: rgba(46,144,255,0.2); }
+.uspeh-btn:hover { background: rgba(242,106,31,0.2); }
 .uspeh-btn:focus-visible { outline: 3px solid var(--violet-pale); outline-offset: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -733,7 +735,7 @@ footer a { color: var(--muted); }
   position: absolute;
   inset: -20% -10% auto;
   height: 560px;
-  background: radial-gradient(46% 60% at 50% 0%, rgba(20,102,232,0.32), transparent 70%);
+  background: radial-gradient(46% 60% at 50% 0%, rgba(168,60,12,0.32), transparent 70%);
   pointer-events: none;
 }
 .hvala-omot > .wrap {
@@ -816,8 +818,8 @@ footer a { color: var(--muted); }
   padding: 14px 24px;
   border-radius: 10px;
   border: 1px solid rgba(255,255,255,0.18);
-  background: linear-gradient(180deg, #4DA3FF 0%, #1D6FE0 100%);
-  color: #fff;
+  background: linear-gradient(180deg, #FF8B45 0%, #F26A1F 100%);
+  color: #140A04;
   cursor: pointer;
   transition: transform 0.14s ease;
 }
@@ -863,7 +865,7 @@ footer a { color: var(--muted); }
   white-space: nowrap;
 }
 .znak-ok { background: rgba(71,217,122,0.12); border: 1px solid rgba(71,217,122,0.4); color: var(--ok); }
-.znak-ceka { background: rgba(151,163,182,0.1); border: 1px solid var(--line); color: var(--muted); }
+.znak-ceka { background: rgba(168,158,147,0.1); border: 1px solid var(--line); color: var(--muted); }
 
 .prazna-tabela {
   margin-top: 20px;
@@ -913,3 +915,43 @@ footer a { color: var(--muted); }
     text-align: left;
   }
 }
+
+
+/* ============================================================
+   HVALA, radionica 16.11: Anton naslovi i dugmad za deljenje
+   ============================================================ */
+.stranica-hvala .topbar { background: #F26A1F; border-bottom: 0; }
+.stranica-hvala .topbar-nazad { color: #140A04; }
+.hvala-kartica h1, .hvala-kartica h2 {
+  font-family: 'Anton', Impact, 'Arial Narrow', sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+}
+.hvala-kartica h1 { font-size: 36px; }
+.hvala-kartica h2 { font-size: 28px; }
+
+.podeli { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+.podeli-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.14s ease, transform 0.14s ease;
+}
+.podeli-btn:hover { border-color: var(--line-strong); transform: translateY(-1px); }
+.podeli-btn:focus-visible { outline: 3px solid var(--violet-pale); outline-offset: 2px; }
+.podeli-wa { border-color: rgba(37, 211, 102, 0.45); }
+.podeli-viber { border-color: rgba(115, 96, 242, 0.5); }
+.podeli-fb { border-color: rgba(24, 119, 242, 0.5); }
+
+.podeli-btn[hidden] { display: none; }

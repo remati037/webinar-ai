@@ -6,6 +6,16 @@
 import { neon } from "@neondatabase/serverless";
 import { randomBytes } from "node:crypto";
 
+// ---------- koji vebinar ----------
+
+/**
+ * Oznaka vebinara za koji se trenutno primaju prijave. Svaka prijava,
+ * referal kod i tabela vezani su za jedan vebinar, pa se ljudi i
+ * preporuke sa proslog vebinara ne mesaju sa novim.
+ * Za sledeci vebinar promeni datum ovde (ili postavi VEBINAR_ID na Vercelu).
+ */
+export const VEBINAR = process.env.VEBINAR_ID || "2026-11-16";
+
 // ---------- baza ----------
 
 let _sql = null;

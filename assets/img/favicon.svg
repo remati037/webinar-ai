@@ -1,5 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#05080F"/>
-  <rect x="1" y="1" width="62" height="62" rx="13" fill="none" stroke="#2E90FF" stroke-opacity="0.5" stroke-width="2"/>
-  <path d="M16 20 L32 46 L48 20" fill="none" stroke="#66ADFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <defs>
+    <radialGradient id="s" cx="78%" cy="18%" r="80%">
+      <stop offset="0" stop-color="#3A1A08"/>
+      <stop offset="1" stop-color="#0A0908"/>
+    </radialGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#s)"/>
+  <rect x="1" y="1" width="62" height="62" rx="13" fill="none" stroke="#F26A1F" stroke-opacity="0.55" stroke-width="2"/>
+  <path d="M16 19 L32 46 L48 19" fill="none" stroke="#F26A1F" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

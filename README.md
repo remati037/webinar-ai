@@ -31,7 +31,7 @@ nekoliko Vercel serverless funkcija i Neon Postgres baza za prijave i referale.
 │   └── img/
 │       ├── vladimir-stankovic.webp       # fotografija voditelja (840x1260)
 │       ├── vladimir-stankovic-560.webp   # ista slika za manje ekrane
-│       ├── og-image.jpg                  # slika za deljenje na mrežama (1200x630)
+│       ├── og-radionica.jpg              # slika za deljenje na mrežama (1200x630)
 │       ├── rezultat.jpeg                # screenshot u sekciji „rezultati"
 │       ├── favicon.svg / favicon-32.png
 │       └── apple-touch-icon.png          # ikona za home screen

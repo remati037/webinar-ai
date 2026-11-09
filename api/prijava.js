@@ -7,7 +7,7 @@
 
 import { upisiPretplatnika } from "./_mailerlite.js";
 import {
-  db, json, greska, jedinstvenKod, noviToken, ocisti, validanEmail,
+  VEBINAR, db, json, greska, jedinstvenKod, noviToken, ocisti, validanEmail,
   normalizujTelefon, referalLink, tabelaLink, ipAdresa,
 } from "./_lib.js";
 
@@ -56,10 +56,13 @@ export default async function handler(req, res) {
     }
 
     // ---------- ko ga je pozvao ----------
+    // Broje se samo kodovi sa ovog vebinara. Kod sa proslog vebinara
+    // se tiho ignorise, a prijava prolazi normalno.
     let refOdId = null;
     if (refKodPozivaoca) {
       const [pozivalac] = await sql`
-        SELECT id, email FROM prijave WHERE ref_kod = ${refKodPozivaoca}`;
+        SELECT id, email FROM prijave
+        WHERE ref_kod = ${refKodPozivaoca} AND vebinar = ${VEBINAR}`;
       // Niko ne moze da preporuci sam sebe.
       if (pozivalac && pozivalac.email !== email) refOdId = pozivalac.id;
     }
@@ -68,14 +71,15 @@ export default async function handler(req, res) {
     const kod = await jedinstvenKod(sql);
     const token = noviToken();
 
-    // Ponovna prijava istog emaila samo osvezava podatke: kod, token i
-    // originalni pozivalac ostaju isti, pa se referal ne broji dvaput.
+    // Ponovna prijava istog emaila za ISTI vebinar samo osvezava podatke:
+    // kod, token i originalni pozivalac ostaju isti, pa se referal ne broji
+    // dvaput. Prijava za novi vebinar je nov red sa novim kodom i tabelom.
     const [red] = await sql`
-      INSERT INTO prijave (email, ime, prezime, telefon, ref_kod, token, ref_od_id, ip)
-      VALUES (${email}, ${ime}, ${prezime || null}, ${telefon}, ${kod}, ${token}, ${refOdId}, ${ip || null})
-      ON CONFLICT (email) DO UPDATE SET
+      INSERT INTO prijave (vebinar, email, ime, prezime, telefon, ref_kod, token, ref_od_id, ip)
+      VALUES (${VEBINAR}, ${email}, ${ime}, ${prezime || null}, ${telefon}, ${kod}, ${token}, ${refOdId}, ${ip || null})
+      ON CONFLICT (vebinar, email) DO UPDATE SET
         ime       = EXCLUDED.ime,
-        prezime   = EXCLUDED.prezime,
+        prezime   = COALESCE(EXCLUDED.prezime, prijave.prezime),
         telefon   = EXCLUDED.telefon,
         ref_od_id = COALESCE(prijave.ref_od_id, EXCLUDED.ref_od_id),
         azurirano = NOW()

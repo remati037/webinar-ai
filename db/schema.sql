@@ -7,9 +7,12 @@
 CREATE TABLE IF NOT EXISTS prijave (
   id                 BIGSERIAL PRIMARY KEY,
 
+  -- za koji vebinar je prijava, npr. '2026-11-16' (VEBINAR u api/_lib.js)
+  vebinar            TEXT NOT NULL,
+
   -- podaci sa forme. Email se uvek upisuje malim slovima (normalizuje ga backend),
-  -- pa obicno UNIQUE ogranicenje ispod hvata i "Pera@Gmail.com" i "pera@gmail.com".
-  email              TEXT NOT NULL UNIQUE,
+  -- pa jedinstveni indeks (vebinar, email) ispod hvata i "Pera@Gmail.com" i "pera@gmail.com".
+  email              TEXT NOT NULL,
   ime                TEXT NOT NULL,
   prezime            TEXT,
   telefon            TEXT,
@@ -32,6 +35,9 @@ CREATE TABLE IF NOT EXISTS prijave (
   azurirano          TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+-- Postojeca baza iz septembra: ne pokreci ovo, nego db/migracija-vebinar.sql.
+CREATE UNIQUE INDEX IF NOT EXISTS prijave_vebinar_email_uniq ON prijave (vebinar, email);
+CREATE INDEX IF NOT EXISTS prijave_vebinar_idx ON prijave (vebinar, kreirano);
 CREATE UNIQUE INDEX IF NOT EXISTS prijave_ref_kod_uniq ON prijave (ref_kod);
 CREATE UNIQUE INDEX IF NOT EXISTS prijave_token_uniq   ON prijave (token);
 
