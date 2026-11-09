@@ -53,7 +53,7 @@ Grupa: **Webinar 16.11.2026.** (ID `203700115470288528`, postavljen kao
 | Mejl | Kako se šalje | Kada | Fajl |
 |---|---|---|---|
 | Welcome + referal link | **Automatizacija**, trigger „joins group" → Webinar 16.11.2026. | odmah | [dobrodoslica.html](mejlovi/dobrodoslica.html) (2 HTML bloka + MailerLite dugme) |
-| Sutra u 19h + Zoom link | **Kampanja** na grupu | ned 15.11. u 19:00 | [podsetnik-1-dan-pre.html](mejlovi/podsetnik-1-dan-pre.html) |
+| Sutra u 19h + link za ulazak | **Kampanja** na grupu | ned 15.11. u 19:00 | [podsetnik-1-dan-pre.html](mejlovi/podsetnik-1-dan-pre.html) |
 | Danas u 19h | **Kampanja** na grupu | pon 16.11. u 10:00 | [podsetnik-2-danas.html](mejlovi/podsetnik-2-danas.html) |
 | Za sat vremena | **Kampanja** na grupu | pon 16.11. u 18:00 | [podsetnik-3-sat-pre.html](mejlovi/podsetnik-3-sat-pre.html) |
 | Počinjemo | **Kampanja** na grupu | pon 16.11. u 18:58 | [podsetnik-4-pocinjemo.html](mejlovi/podsetnik-4-pocinjemo.html) |
@@ -64,7 +64,7 @@ podsetnike na vreme. U automatizaciji bi „čekaj do datuma" kasnim prijavama
 poslao sve odjednom.
 
 Svaki podsetnik je JEDAN Custom HTML blok. Pre zakazivanja u svakom zameni
-`ZOOM-LINK-OVDE` pravim Zoom linkom (dva mesta po mejlu). Subject je upisan u
+`LINK-ZA-ULAZAK-OVDE` linkom za ulazak sa WebinarJam-a (dva mesta po mejlu). Subject je upisan u
 komentaru na vrhu fajla.
 
 ---

@@ -9,8 +9,8 @@ DTSTAMP:20261109T120000Z
 DTSTART:20261116T180000Z
 DTEND:20261116T193000Z
 SUMMARY:Radionica: Nađi nišu za svoj prvi digitalni proizvod
-DESCRIPTION:Uživo na Zoom-u sa Vladimirom Stankovićem. Ponesi laptop i otvoren AI alat. Zoom link stiže na email.
-LOCATION:Zoom
+DESCRIPTION:Uživo online na WebinarJam-u sa Vladimirom Stankovićem. Ponesi laptop i otvoren AI alat. Link za ulazak stiže na email.
+LOCATION:WebinarJam (online)
 STATUS:CONFIRMED
 BEGIN:VALARM
 TRIGGER:-PT1H

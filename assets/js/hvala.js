@@ -100,7 +100,7 @@
   // ---------- deljenje ----------
 
   var PORUKA = "Vlada Stanković u ponedeljak 16.11. u 19h drži besplatnu radionicu " +
-    "na Zoom-u: uživo bira nišu za digitalni proizvod i uz AI proverava da li za nju " +
+    "online: uživo bira nišu za digitalni proizvod i uz AI proverava da li za nju " +
     "postoje kupci. Mislim da bi ti koristilo, prijavi se ovde:";
 
   function pripremiDeljenje(link) {
