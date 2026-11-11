@@ -5,15 +5,8 @@
 // (Vercel > Settings > Environment Variables).
 // ============================================================
 
-import { VEBINAR, db, json, greska, ocisti } from "./_lib.js";
+import { VEBINAR, db, json, greska, ocisti, proveriKljuc } from "./_lib.js";
 import { VARIJANTE, OPIS_VARIJANTE } from "./_ab.js";
-import { timingSafeEqual } from "node:crypto";
-
-function istiKljuc(a, b) {
-  const x = Buffer.from(String(a));
-  const y = Buffer.from(String(b));
-  return x.length === y.length && timingSafeEqual(x, y);
-}
 
 export default async function handler(req, res) {
   if (req.method !== "GET") {
@@ -21,9 +14,7 @@ export default async function handler(req, res) {
     return greska(res, 405, "Dozvoljen je samo GET.");
   }
 
-  const tajna = process.env.AB_KLJUC;
-  if (!tajna) return greska(res, 503, "AB_KLJUC nije podesen na Vercelu.");
-  if (!istiKljuc(ocisti(req.headers["x-ab-kljuc"], 200), tajna)) return greska(res, 401, "Pogresan kljuc.");
+  if (!proveriKljuc(req, res)) return;
 
   const vebinar = ocisti(req.query.vebinar, 20) || VEBINAR;
 

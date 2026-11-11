@@ -4,7 +4,7 @@
 // ============================================================
 
 import { neon } from "@neondatabase/serverless";
-import { randomBytes } from "node:crypto";
+import { randomBytes, timingSafeEqual } from "node:crypto";
 
 // ---------- koji vebinar ----------
 
@@ -137,6 +137,34 @@ export function referalLink(req, kod) {
 /** Link ka njegovoj licnoj tabeli prijava. Ide mu i u welcome mejl. */
 export function tabelaLink(req, token) {
   return `${adresaSajta(req)}/hvala?k=${encodeURIComponent(token)}`;
+}
+
+/** Gruba podela po User-Agent-u: 'mobilni', 'tablet' ili 'racunar'. */
+export function vrstaUredjaja(ua) {
+  const s = String(ua || "");
+  if (!s) return null;
+  if (/ipad|tablet|(android(?!.*mobile))/i.test(s)) return "tablet";
+  if (/mobi|iphone|ipod|android/i.test(s)) return "mobilni";
+  return "racunar";
+}
+
+// ---------- interne stranice (/ab, /analiza) ----------
+
+function istiKljuc(a, b) {
+  const x = Buffer.from(String(a));
+  const y = Buffer.from(String(b));
+  return x.length === y.length && timingSafeEqual(x, y);
+}
+
+/**
+ * Proverava zaglavlje X-AB-Kljuc protiv AB_KLJUC sa Vercela.
+ * Vraca true ako je sve u redu; inace vec posalje gresku i vraca false.
+ */
+export function proveriKljuc(req, res) {
+  const tajna = process.env.AB_KLJUC;
+  if (!tajna) { greska(res, 503, "AB_KLJUC nije podesen na Vercelu."); return false; }
+  if (!istiKljuc(ocisti(req.headers["x-ab-kljuc"], 200), tajna)) { greska(res, 401, "Pogresan kljuc."); return false; }
+  return true;
 }
 
 export function ipAdresa(req) {

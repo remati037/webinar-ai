@@ -41,6 +41,35 @@
     oznaciPreporuku();
   }
 
+  /* ---------- odakle je dosao (za /analiza) ---------- */
+
+  // Pamti se PRVI dolazak sa izvorom: ako covek dodje sa oglasa, pa se
+  // sutra vrati direktno i prijavi, prijava se racuna oglasu.
+  var KLJUC_IZVOR = "vebinar_izvor_2026-11-16";
+  var izvor = (function () {
+    var q = new URLSearchParams(location.search);
+    var novi = null;
+    function u(k) { return (q.get(k) || "").trim().toLowerCase().slice(0, 80); }
+    if (u("utm_source")) {
+      novi = { izvor: u("utm_source"), medij: u("utm_medium"), kampanja: u("utm_campaign"), oglas: u("utm_content") };
+    } else if (q.get("fbclid")) {
+      novi = { izvor: "facebook", medij: "", kampanja: "", oglas: "" };
+    } else if (q.get("gclid")) {
+      novi = { izvor: "google", medij: "cpc", kampanja: "", oglas: "" };
+    } else if (refKod) {
+      novi = { izvor: "preporuka", medij: "referal", kampanja: "", oglas: "" };
+    } else {
+      var dom = "";
+      try { dom = document.referrer ? new URL(document.referrer).hostname.replace(/^www\./, "") : ""; } catch (e) {}
+      if (dom && dom !== location.hostname.replace(/^www\./, "")) novi = { izvor: dom, medij: "referral", kampanja: "", oglas: "" };
+    }
+    var stari = null;
+    try { stari = JSON.parse(procitaj(KLJUC_IZVOR) || "null"); } catch (e) {}
+    if (stari && stari.izvor) return stari;
+    if (novi) { zapamti(KLJUC_IZVOR, JSON.stringify(novi)); return novi; }
+    return { izvor: "direktno", medij: "", kampanja: "", oglas: "" };
+  })();
+
   function oznaciPreporuku() {
     var mesta = document.getElementById("mesta-info");
     if (!mesta) return;
@@ -235,6 +264,7 @@
       pozivni: pozivni(),
       ref: refPolje.value,
       varijanta: document.documentElement.getAttribute("data-v") || "",
+      izvor: izvor,
       zamka: (document.getElementById("prijava-zamka") || {}).value || ""
     };
 

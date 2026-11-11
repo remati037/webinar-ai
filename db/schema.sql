@@ -59,3 +59,11 @@ CREATE TABLE IF NOT EXISTS ab_dogadjaji (
 );
 CREATE UNIQUE INDEX IF NOT EXISTS ab_dogadjaji_uniq ON ab_dogadjaji (vebinar, posetilac, dogadjaj);
 CREATE INDEX IF NOT EXISTS ab_dogadjaji_idx ON ab_dogadjaji (vebinar, varijanta, dogadjaj);
+
+-- ---------- odakle je prijava stigla (vidi db/migracija-izvor.sql) ----------
+ALTER TABLE prijave ADD COLUMN IF NOT EXISTS izvor    TEXT;
+ALTER TABLE prijave ADD COLUMN IF NOT EXISTS medij    TEXT;
+ALTER TABLE prijave ADD COLUMN IF NOT EXISTS kampanja TEXT;
+ALTER TABLE prijave ADD COLUMN IF NOT EXISTS oglas    TEXT;
+ALTER TABLE prijave ADD COLUMN IF NOT EXISTS zemlja   TEXT;
+ALTER TABLE prijave ADD COLUMN IF NOT EXISTS uredjaj  TEXT;

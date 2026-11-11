@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Analiza prijava</title>
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <!-- Interna analiza prijava. Podaci: /api/analiza, isti kljuc kao /ab (AB_KLJUC sa Vercela).
+       Kljuc se upise jednom i pamti u ovom browseru. -->
+  <style>
+    :root {
+      --bg: #0A0908; --bg-2: #120F0C; --bg-3: #1A1612; --line: rgba(255, 238, 220, 0.1);
+      --text: #F2EBE1; --muted: #A89E93; --dim: #6F665D;
+      --orange: #F26A1F; --orange-2: rgba(242, 106, 31, 0.35); --ok: #5BD68A; --rose: #FF5A4E;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; padding: 32px 16px 64px; }
+    .wrap { max-width: 1080px; margin: 0 auto; }
+    h1 { font-size: 26px; }
+    .pod { color: var(--muted); margin-top: 4px; }
+    .pod a { color: var(--muted); }
+    .traka { margin-top: 24px; display: flex; gap: 8px; flex-wrap: wrap; }
+    input, select, button { font: inherit; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-2); color: var(--text); padding: 10px 12px; }
+    input { flex: 1; min-width: 200px; }
+    button { background: var(--orange); color: #140A04; border: 0; font-weight: 700; cursor: pointer; }
+    button.sporedno { background: var(--bg-2); color: var(--text); border: 1px solid var(--line); font-weight: 600; }
+    .greska { margin-top: 16px; color: var(--rose); }
+    .upozorenje { margin-top: 16px; padding: 12px 14px; border-radius: 10px; border: 1px solid rgba(255,90,78,.35); color: var(--text); background: rgba(255,90,78,.08); font-size: 14px; }
+    .osvezeno { color: var(--dim); font-size: 13px; margin-top: 10px; }
+
+    .kpi { margin-top: 24px; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+    .kpi div { border: 1px solid var(--line); border-radius: 12px; padding: 16px; background: var(--bg-2); }
+    .kpi b { display: block; font-size: 30px; font-weight: 800; line-height: 1.1; font-variant-numeric: tabular-nums; }
+    .kpi span { color: var(--muted); font-size: 13px; }
+    .kpi small { display: block; color: var(--dim); font-size: 12px; margin-top: 2px; }
+    .kpi .glavni { border-color: rgba(242,106,31,.5); }
+    .kpi .glavni b { font-size: 40px; }
+
+    section { margin-top: 32px; }
+    h2 { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); margin-bottom: 4px; }
+    .opis { color: var(--muted); font-size: 13px; margin-bottom: 12px; }
+    .panel { border: 1px solid var(--line); border-radius: 12px; padding: 18px; background: var(--bg-2); }
+    .dva { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .dva section { margin-top: 0; }
+    .red-sekcija { margin-top: 32px; }
+
+    svg { display: block; width: 100%; height: auto; overflow: visible; }
+    svg text { fill: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
+    svg .mreza { stroke: var(--line); stroke-width: 1; }
+    svg .stub { fill: var(--orange); }
+    svg .stub.ref { fill: var(--orange-2); }
+    svg .meta:hover + .stub, svg .meta:hover ~ .stub { opacity: .8; }
+    .legenda { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 10px; font-size: 13px; color: var(--muted); }
+    .legenda i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+    .lista { display: grid; gap: 6px; font-size: 14px; }
+    .lista .r { display: grid; grid-template-columns: minmax(90px, 38%) 1fr auto; gap: 10px; align-items: center; }
+    .lista .ime { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .lista .bar { height: 8px; border-radius: 0 4px 4px 0; background: var(--orange); min-width: 2px; }
+    .lista .br { font-variant-numeric: tabular-nums; font-weight: 600; text-align: right; min-width: 72px; }
+    .lista .br small { color: var(--dim); font-weight: 500; margin-left: 4px; }
+    .prazno { color: var(--dim); font-size: 14px; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+    th, td { padding: 7px 8px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+    th { color: var(--muted); font-weight: 600; }
+    td.br, th.br { text-align: right; }
+    .tabela-omot { overflow-x: auto; }
+    .tag { display: inline-block; padding: 1px 6px; border-radius: 4px; font-size: 11px; border: 1px solid var(--line); color: var(--muted); }
+    .tag.los { color: var(--rose); border-color: rgba(255,90,78,.4); }
+
+    #tip { position: fixed; pointer-events: none; z-index: 10; background: var(--bg-3); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; font-size: 13px; box-shadow: 0 6px 24px rgba(0,0,0,.4); max-width: 240px; }
+    #tip b { display: block; font-variant-numeric: tabular-nums; }
+    #tip span { color: var(--muted); }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Analiza prijava</h1>
+  <p class="pod">Interno. Isti ključ kao <a href="/ab">/ab</a>. Vreme je beogradsko, osvežava se na svaki minut.</p>
+
+  <form class="traka" id="kljuc-forma">
+    <input id="kljuc" type="password" placeholder="AB_KLJUC sa Vercela" autocomplete="current-password">
+    <select id="vebinar" aria-label="Vebinar" hidden></select>
+    <button type="submit">Prikaži</button>
+    <button type="button" class="sporedno" id="csv" hidden>Preuzmi CSV</button>
+  </form>
+
+  <p class="greska" id="greska" hidden></p>
+
+  <div id="rezultati" hidden>
+    <div id="upozorenja"></div>
+    <div class="kpi" id="kpi"></div>
+    <p class="osvezeno" id="osvezeno"></p>
+
+    <section>
+      <h2>Prijave po danima</h2>
+      <p class="opis" id="dani-opis"></p>
+      <div class="panel"><div id="graf-dani"></div>
+        <div class="legenda"><span><i style="background:var(--orange)"></i>Direktno</span><span><i style="background:var(--orange-2)"></i>Preko preporuke</span></div>
+      </div>
+    </section>
+
+    <section id="poredjenje-sekcija">
+      <h2>Tempo u odnosu na prošle vebinare</h2>
+      <p class="opis">Ukupan broj prijava X dana pre vebinara. Narandžasta linija je izabrani vebinar.</p>
+      <div class="panel"><div id="graf-poredjenje"></div><div class="legenda" id="leg-poredjenje"></div></div>
+    </section>
+
+    <div class="dva red-sekcija">
+      <section><h2>Po satu</h2><p class="opis">Kada se ljudi prijavljuju. Dobro za tajming oglasa i mejlova.</p><div class="panel"><div id="graf-sati"></div></div></section>
+      <section><h2>Po danu u nedelji</h2><p class="opis">Zbir svih prijava po danu.</p><div class="panel"><div id="graf-nedelja"></div></div></section>
+    </div>
+
+    <div class="dva red-sekcija">
+      <section><h2>Izvor</h2><p class="opis">utm_source sa prvog dolaska. Bez UTM-a: facebook (fbclid), preporuka, domen ili direktno.</p><div class="panel lista" id="l-izvori"></div></section>
+      <section><h2>Kampanja</h2><p class="opis">utm_campaign</p><div class="panel lista" id="l-kampanje"></div></section>
+    </div>
+    <div class="dva red-sekcija">
+      <section><h2>Oglas</h2><p class="opis">utm_content</p><div class="panel lista" id="l-oglasi"></div></section>
+      <section><h2>Uređaj</h2><p class="opis">Po browseru sa kog je stigla prijava.</p><div class="panel lista" id="l-uredjaji"></div></section>
+    </div>
+    <div class="dva red-sekcija">
+      <section><h2>Zemlja po telefonu</h2><p class="opis">Po pozivnom broju koji je upisan u formu.</p><div class="panel lista" id="l-zemlje-tel"></div></section>
+      <section><h2>Zemlja po IP adresi</h2><p class="opis">Odakle je stvarno bio u trenutku prijave.</p><div class="panel lista" id="l-zemlje-ip"></div></section>
+    </div>
+    <div class="dva red-sekcija">
+      <section><h2>Email domeni</h2><p class="opis">Bitno za isporuku mejlova (Gmail, Yahoo, Outlook...).</p><div class="panel lista" id="l-domeni"></div></section>
+      <section><h2>A/B varijanta</h2><p class="opis">Detalji i konverzija na <a href="/ab" style="color:inherit">/ab</a>.</p><div class="panel lista" id="l-varijante"></div></section>
+    </div>
+
+    <section>
+      <h2>Najbolji preporučioci</h2>
+      <p class="opis" id="ref-opis"></p>
+      <div class="panel tabela-omot"><table><thead><tr><th>#</th><th>Ime</th><th>Email</th><th>Kod</th><th class="br">Doveo/la</th></tr></thead><tbody id="t-ref"></tbody></table></div>
+    </section>
+
+    <section id="ml-sekcija" hidden>
+      <h2>Nisu stigli do MailerLite-a</h2>
+      <p class="opis">Ovi ljudi nemaju mejlove ni podsetnike. Dodaj ih ručno ili neka se prijave ponovo.</p>
+      <div class="panel tabela-omot"><table><thead><tr><th>Vreme</th><th>Ime</th><th>Email</th><th>Greška</th></tr></thead><tbody id="t-ml"></tbody></table></div>
+    </section>
+
+    <section>
+      <h2>Poslednjih 50 prijava</h2>
+      <p class="opis">Cela lista je u CSV izvozu.</p>
+      <div class="panel tabela-omot"><table><thead><tr><th>Vreme</th><th>Ime</th><th>Email</th><th>Telefon</th><th>Izvor</th><th>Uređaj</th><th>Preporuka od</th><th>ML</th></tr></thead><tbody id="t-poslednje"></tbody></table></div>
+    </section>
+  </div>
+</div>
+<div id="tip" hidden></div>
+
+<script>
+(function () {
+  var K = "ab_kljuc";
+  var polje = document.getElementById("kljuc");
+  var izbor = document.getElementById("vebinar");
+  var podaci = null;
+  try { polje.value = localStorage.getItem(K) || ""; } catch (e) {}
+
+  /* ---------- pomocne ---------- */
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function broj(x) { return (x || 0).toLocaleString("sr-RS"); }
+  function pct(a, b, dec) { return b ? (a / b * 100).toLocaleString("sr-RS", { maximumFractionDigits: dec == null ? 1 : dec }) + "%" : "–"; }
+  function datum(d) { return d.split("-").reverse().slice(0, 2).join(".") + "."; }
+  function vreme(iso) {
+    var d = new Date(iso);
+    return d.toLocaleString("sr-RS", { timeZone: "Europe/Belgrade", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+  }
+  var DANI = ["", "pon", "uto", "sre", "čet", "pet", "sub", "ned"];
+  var ZEMLJE = { RS: "Srbija", BA: "BiH", ME: "Crna Gora", HR: "Hrvatska", MK: "S. Makedonija", SI: "Slovenija", XK: "Kosovo",
+    DE: "Nemačka", AT: "Austrija", CH: "Švajcarska", US: "SAD", CA: "Kanada", "US/CA": "SAD/Kanada", SE: "Švedska", NO: "Norveška",
+    DK: "Danska", NL: "Holandija", BE: "Belgija", FR: "Francuska", IT: "Italija", GB: "V. Britanija", IE: "Irska", AU: "Australija",
+    AE: "UAE", BG: "Bugarska", CY: "Kipar", CZ: "Češka", ES: "Španija", FI: "Finska", GR: "Grčka", HU: "Mađarska", LU: "Luksemburg",
+    MT: "Malta", PL: "Poljska", PT: "Portugal", RO: "Rumunija", RU: "Rusija", SK: "Slovačka", TR: "Turska", UA: "Ukrajina" };
+  var UREDJAJI = { mobilni: "Mobilni", tablet: "Tablet", racunar: "Računar" };
+  var VARIJANTE = { a: "A: forma na strani", b: "B: popup", "-": "Pre A/B testa" };
+
+  /* ---------- tooltip ---------- */
+
+  var tip = $("tip");
+  document.addEventListener("mousemove", function (e) {
+    var t = e.target.closest && e.target.closest("[data-tip]");
+    if (!t) { tip.hidden = true; return; }
+    tip.innerHTML = t.getAttribute("data-tip");
+    tip.hidden = false;
+    var x = e.clientX + 14, y = e.clientY + 14;
+    if (x + tip.offsetWidth > innerWidth - 8) x = e.clientX - tip.offsetWidth - 14;
+    if (y + tip.offsetHeight > innerHeight - 8) y = e.clientY - tip.offsetHeight - 14;
+    tip.style.left = x + "px"; tip.style.top = y + "px";
+  });
+
+  /* ---------- grafici ---------- */
+
+  function zaokruziMax(m) {
+    if (m <= 5) return 5;
+    var p = Math.pow(10, Math.floor(Math.log10(m)));
+    var k = [1, 2, 2.5, 5, 10];
+    for (var i = 0; i < k.length; i++) if (k[i] * p >= m) return k[i] * p;
+    return 10 * p;
+  }
+
+  // Stubici sa jednom osom. stavke: [{oznaka, vrednost, deo (opciono, donji deo stuba), tip}]
+  function stubici(stavke, opcije) {
+    opcije = opcije || {};
+    var W = opcije.sirina || 1000, H = opcije.visina || 220, L = 36, B = 22, T = 8;
+    var n = stavke.length || 1;
+    var max = zaokruziMax(Math.max.apply(null, stavke.map(function (s) { return s.vrednost; }).concat([1])));
+    var korak = (W - L) / n, sirina = Math.max(2, Math.min(48, korak - 2));
+    var h = H - B - T;
+    var out = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="' + esc(opcije.naslov || "") + '">';
+    for (var g = 0; g <= 4; g++) {
+      var y = T + h - h * g / 4;
+      out += '<line class="mreza" x1="' + L + '" x2="' + W + '" y1="' + y + '" y2="' + y + '"/>';
+      out += '<text x="' + (L - 6) + '" y="' + (y + 4) + '" text-anchor="end">' + broj(max * g / 4) + '</text>';
+    }
+    var svakih = Math.ceil(n / (opcije.oznaka || 16));
+    stavke.forEach(function (s, i) {
+      var x = L + korak * i + (korak - sirina) / 2;
+      var vis = h * s.vrednost / max;
+      var deo = s.deo ? h * s.deo / max : 0;
+      var r = Math.min(4, sirina / 2);
+      // gornji deo (preporuke), pa donji (direktno), sa 2px razmakom
+      if (deo > 0 && vis - deo > 0) {
+        var gornji = Math.max(0, vis - deo - 2);
+        out += stub(x, T + h - vis, sirina, gornji, r, "stub");
+        out += stub(x, T + h - deo, sirina, deo, gornji > 0 ? 0 : r, "stub ref");
+      } else if (vis > 0) {
+        out += stub(x, T + h - vis, sirina, vis, r, deo > 0 ? "stub ref" : "stub");
+      }
+      out += '<rect x="' + (L + korak * i) + '" y="' + T + '" width="' + korak + '" height="' + h + '" fill="transparent" data-tip="' + esc(s.tip) + '"/>';
+      if (i % svakih === 0) out += '<text x="' + (x + sirina / 2) + '" y="' + (H - 6) + '" text-anchor="middle">' + esc(s.oznaka) + '</text>';
+    });
+    return out + '</svg>';
+  }
+
+  // Stub zaobljen samo gore, ravno na osnovi.
+  function stub(x, y, w, h, r, klasa) {
+    if (h <= 0) return "";
+    r = Math.min(r, h);
+    return '<path class="' + klasa + '" d="M' + x + ',' + (y + h) + 'V' + (y + r) + 'Q' + x + ',' + y + ' ' + (x + r) + ',' + y +
+      'H' + (x + w - r) + 'Q' + (x + w) + ',' + y + ' ' + (x + w) + ',' + (y + r) + 'V' + (y + h) + 'Z"/>';
+  }
+
+  // Kumulativne linije po danima pre vebinara.
+  function linije(serije, izabrani) {
+    var W = 1000, H = 260, L = 44, R = 70, B = 22, T = 10;
+    var maxDana = 0, max = 1;
+    serije.forEach(function (s) {
+      s.tacke.forEach(function (t) { maxDana = Math.max(maxDana, t.dana); max = Math.max(max, t.ukupno); });
+    });
+    maxDana = Math.max(maxDana, 7);
+    max = zaokruziMax(max);
+    var h = H - B - T, w = W - L - R;
+    function X(d) { return L + w * (1 - d / maxDana); }
+    function Y(v) { return T + h - h * v / max; }
+    var out = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Kumulativne prijave po danima pre vebinara">';
+    for (var g = 0; g <= 4; g++) {
+      out += '<line class="mreza" x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(max * g / 4) + '" y2="' + Y(max * g / 4) + '"/>';
+      out += '<text x="' + (L - 6) + '" y="' + (Y(max * g / 4) + 4) + '" text-anchor="end">' + broj(max * g / 4) + '</text>';
+    }
+    var korak = Math.max(1, Math.ceil(maxDana / 10));
+    for (var d = 0; d <= maxDana; d += korak) {
+      out += '<text x="' + X(d) + '" y="' + (H - 6) + '" text-anchor="middle">' + (d === 0 ? "dan V" : "-" + d) + '</text>';
+    }
+    // ostali prvo, izabrani preko njih
+    serije.filter(function (x) { return x.vebinar !== izabrani; }).concat(serije.filter(function (x) { return x.vebinar === izabrani; })).forEach(function (s) {
+      if (!s.tacke.length) return;
+      var glavni = s.vebinar === izabrani;
+      var boja = glavni ? "var(--orange)" : "var(--dim)";
+      var put = s.tacke.map(function (t, i) { return (i ? "L" : "M") + X(t.dana).toFixed(1) + "," + Y(t.ukupno).toFixed(1); }).join("");
+      out += '<path d="' + put + '" fill="none" stroke="' + boja + '" stroke-width="2" stroke-linejoin="round"' + (glavni ? "" : ' stroke-dasharray="5 4"') + '/>';
+      var p = s.tacke[s.tacke.length - 1];
+      out += '<circle cx="' + X(p.dana) + '" cy="' + Y(p.ukupno) + '" r="4" fill="' + boja + '" stroke="var(--bg-2)" stroke-width="2"/>';
+      out += '<text x="' + (X(p.dana) + 8) + '" y="' + (Y(p.ukupno) + 4) + '" style="fill:var(--text)">' + broj(p.ukupno) + '</text>';
+      s.tacke.forEach(function (t) {
+        out += '<circle cx="' + X(t.dana) + '" cy="' + Y(t.ukupno) + '" r="9" fill="transparent" data-tip="' +
+          esc("<b>" + broj(t.ukupno) + " prijava</b><span>" + esc(s.vebinar) + " · " + (t.dana ? t.dana + " dana pre" : "dan vebinara") + "</span>") + '"/>';
+      });
+    });
+    return out + '</svg>';
+  }
+
+  function lista(id, redovi, mapa) {
+    var el = $(id);
+    if (!redovi || !redovi.length) { el.innerHTML = '<p class="prazno">Nema podataka.</p>'; return; }
+    var ukupno = redovi.reduce(function (s, r) { return s + r.broj; }, 0);
+    var max = Math.max.apply(null, redovi.map(function (r) { return r.broj; }));
+    el.innerHTML = redovi.map(function (r) {
+      var ime = mapa && mapa[r.ime] ? mapa[r.ime] : r.ime;
+      return '<div class="r" data-tip="' + esc("<b>" + broj(r.broj) + " · " + pct(r.broj, ukupno) + "</b><span>" + esc(ime) + "</span>") + '">' +
+        '<span class="ime" title="' + esc(ime) + '">' + esc(ime) + '</span>' +
+        '<span><span class="bar" style="display:block;width:' + (r.broj / max * 100).toFixed(1) + '%"></span></span>' +
+        '<span class="br">' + broj(r.broj) + '<small>' + pct(r.broj, ukupno, 0) + '</small></span></div>';
+    }).join("");
+  }
+
+  /* ---------- prikaz ---------- */
+
+  function prikazi(d) {
+    podaci = d;
+    var k = d.kljucne;
+
+    // izbor vebinara
+    var tren = izbor.value || d.vebinar;
+    izbor.innerHTML = d.vebinari.map(function (v) {
+      return '<option value="' + esc(v.vebinar) + '">' + esc(v.vebinar) + (v.vebinar === d.tekuci ? " (tekući)" : "") + " · " + broj(v.broj) + '</option>';
+    }).join("") || '<option value="' + esc(d.vebinar) + '">' + esc(d.vebinar) + '</option>';
+    izbor.value = d.vebinar || tren;
+    izbor.hidden = false;
+    $("csv").hidden = false;
+
+    // upozorenja
+    var u = [];
+    if (!d.imaIzvor) u.push("Baza još nema kolone za izvor, zemlju i uređaj. Pokreni <b>db/migracija-izvor.sql</b> u Neon SQL Editor-u. Do tada se ti podaci ne beleže.");
+    if (k.ml_greske) u.push("<b>" + broj(k.ml_greske) + "</b> prijava nije stiglo do MailerLite-a. Lista je dole.");
+    $("upozorenja").innerHTML = u.map(function (t) { return '<div class="upozorenje">' + t + '</div>'; }).join("");
+
+    // kljucne brojke
+    var dana = null;
+    if (/^\d{4}-\d{2}-\d{2}$/.test(d.vebinar)) {
+      var danas = new Date(new Date().toLocaleString("en-US", { timeZone: "Europe/Belgrade" }));
+      danas.setHours(0, 0, 0, 0);
+      dana = Math.round((new Date(d.vebinar + "T00:00:00") - danas) / 864e5);
+    }
+    var kpi = [
+      ["glavni", broj(k.ukupno), "Ukupno prijava", k.poslednja ? "poslednja " + vreme(k.poslednja) : ""],
+      ["", broj(k.danas), "Danas", "juče " + broj(k.juce)],
+      ["", broj(k.h24), "Poslednja 24h", "7 dana: " + broj(k.d7)],
+      ["", k.posete == null ? "–" : pct(k.ukupno, k.posete), "Konverzija landinga", k.posete == null ? "nema podataka o posetama" : broj(k.posete) + " posetilaca"],
+      ["", pct(k.preko_preporuke, k.ukupno), "Preko preporuke", broj(k.preko_preporuke) + " od " + broj(k.aktivnih_preporucilaca) + " ljudi"],
+      ["", dana == null ? "–" : (dana > 0 ? broj(dana) : dana === 0 ? "danas" : "prošao"), dana > 0 ? "Dana do vebinara" : "Vebinar", k.ponovljene ? broj(k.ponovljene) + " prijavilo se ponovo" : ""]
+    ];
+    $("kpi").innerHTML = kpi.map(function (x) {
+      return '<div class="' + x[0] + '"><b>' + x[1] + '</b><span>' + x[2] + '</span>' + (x[3] ? '<small>' + x[3] + '</small>' : '') + '</div>';
+    }).join("");
+    $("osvezeno").textContent = "Osveženo " + new Date().toLocaleTimeString("sr-RS", { hour: "2-digit", minute: "2-digit" });
+
+    // po danima, sa praznim danima izmedju
+    var poDanu = {}, poseteDan = {};
+    d.poDanima.forEach(function (r) { poDanu[r.dan] = r; });
+    d.posetePoDanima.forEach(function (r) { poseteDan[r.dan] = r.broj; });
+    var dani = [];
+    if (d.poDanima.length) {
+      var od = new Date(d.poDanima[0].dan + "T12:00:00"), doD = new Date(d.poDanima[d.poDanima.length - 1].dan + "T12:00:00");
+      for (var t = od; t <= doD; t = new Date(t.getTime() + 864e5)) {
+        var dk = t.getFullYear() + "-" + String(t.getMonth() + 1).padStart(2, "0") + "-" + String(t.getDate()).padStart(2, "0");
+        var r = poDanu[dk] || { broj: 0, preporuka: 0 };
+        var pos = poseteDan[dk];
+        dani.push({
+          oznaka: datum(dk), vrednost: r.broj, deo: r.preporuka,
+          tip: "<b>" + broj(r.broj) + " prijava</b><span>" + datum(dk) + " · preporuka " + broj(r.preporuka) +
+            (pos ? " · " + broj(pos) + " posetilaca · " + pct(r.broj, pos) : "") + "</span>"
+        });
+      }
+    }
+    var najbolji = d.poDanima.slice().sort(function (a, b) { return b.broj - a.broj; })[0];
+    $("dani-opis").textContent = najbolji ? "Najjači dan: " + datum(najbolji.dan) + " sa " + broj(najbolji.broj) + " prijava. Prosek: " +
+      (k.ukupno / Math.max(1, dani.length)).toLocaleString("sr-RS", { maximumFractionDigits: 1 }) + " dnevno." : "";
+    $("graf-dani").innerHTML = dani.length ? stubici(dani, { naslov: "Prijave po danima", visina: 240 }) : '<p class="prazno">Još nema prijava.</p>';
+
+    // poredjenje sa proslim vebinarima (do 4)
+    var serije = {};
+    d.poredjenje.forEach(function (r) { (serije[r.vebinar] = serije[r.vebinar] || []).push(r); });
+    var imena = Object.keys(serije).sort().reverse().filter(function (v) { return v <= d.vebinar; }).slice(0, 4);
+    if (imena.length > 1) {
+      var s = imena.map(function (v) {
+        var red = serije[v].filter(function (r) { return r.dana_pre >= 0; }).sort(function (a, b) { return b.dana_pre - a.dana_pre; });
+        var zbir = 0;
+        // prijave posle vebinara (snimak) idu u "dan V"
+        serije[v].forEach(function (r) { if (r.dana_pre < 0) zbir += r.broj; });
+        var tacke = red.map(function (r) { zbir += r.broj; return { dana: r.dana_pre, ukupno: zbir }; });
+        return { vebinar: v, tacke: tacke.slice(-60) };
+      });
+      $("graf-poredjenje").innerHTML = linije(s, d.vebinar);
+      $("leg-poredjenje").innerHTML = imena.map(function (v) {
+        return '<span><i style="background:' + (v === d.vebinar ? "var(--orange)" : "var(--dim)") + '"></i>' + esc(v) + '</span>';
+      }).join("");
+      $("poredjenje-sekcija").hidden = false;
+    } else {
+      $("poredjenje-sekcija").hidden = true;
+    }
+
+    // po satu i danu u nedelji
+    var sati = [];
+    for (var h = 0; h < 24; h++) {
+      var rs = d.poSatima.filter(function (x) { return x.sat === h; })[0];
+      var b = rs ? rs.broj : 0;
+      sati.push({ oznaka: String(h), vrednost: b, tip: "<b>" + broj(b) + " prijava</b><span>" + h + ":00 do " + h + ":59 · " + pct(b, k.ukupno) + "</span>" });
+    }
+    $("graf-sati").innerHTML = stubici(sati, { naslov: "Prijave po satu", visina: 220, oznaka: 12, sirina: 480 });
+    var ned = [];
+    for (var n = 1; n <= 7; n++) {
+      var rn = d.poDanuNedelje.filter(function (x) { return x.dan === n; })[0];
+      var bn = rn ? rn.broj : 0;
+      ned.push({ oznaka: DANI[n], vrednost: bn, tip: "<b>" + broj(bn) + " prijava</b><span>" + DANI[n] + " · " + pct(bn, k.ukupno) + "</span>" });
+    }
+    $("graf-nedelja").innerHTML = stubici(ned, { naslov: "Prijave po danu u nedelji", visina: 220, sirina: 480 });
+
+    // liste
+    var nema = '<p class="prazno">Beleži se posle migracije db/migracija-izvor.sql.</p>';
+    if (d.imaIzvor) {
+      lista("l-izvori", d.izvori);
+      lista("l-kampanje", d.kampanje);
+      lista("l-oglasi", d.oglasi);
+      lista("l-uredjaji", d.uredjaji, UREDJAJI);
+      lista("l-zemlje-ip", d.zemljeIp, ZEMLJE);
+    } else {
+      ["l-izvori", "l-kampanje", "l-oglasi", "l-uredjaji", "l-zemlje-ip"].forEach(function (id) { $(id).innerHTML = nema; });
+    }
+    lista("l-zemlje-tel", d.zemljeTelefon, ZEMLJE);
+    lista("l-domeni", d.domeni.map(function (r) { return { ime: r.domen, broj: r.broj }; }));
+    lista("l-varijante", d.varijante, VARIJANTE);
+
+    // preporucioci
+    $("ref-opis").textContent = broj(k.aktivnih_preporucilaca) + " ljudi je dovelo bar jednu osobu, ukupno " + broj(k.preko_preporuke) + " prijava.";
+    $("t-ref").innerHTML = d.preporucioci.length ? d.preporucioci.map(function (r, i) {
+      return "<tr><td>" + (i + 1) + "</td><td>" + esc(r.ime) + " " + esc(r.prezime || "") + "</td><td>" + esc(r.email) + "</td><td>" + esc(r.ref_kod) + '</td><td class="br"><b>' + broj(r.broj) + "</b></td></tr>";
+    }).join("") : '<tr><td colspan="5" class="prazno">Još niko nije doveo nikoga.</td></tr>';
+
+    // mailerlite
+    $("ml-sekcija").hidden = !d.mlProblemi.length;
+    $("t-ml").innerHTML = d.mlProblemi.map(function (r) {
+      return "<tr><td>" + vreme(r.kreirano) + "</td><td>" + esc(r.ime) + "</td><td>" + esc(r.email) + "</td><td>" + esc((r.mailerlite_greska || "").slice(0, 120)) + "</td></tr>";
+    }).join("");
+
+    // poslednje
+    $("t-poslednje").innerHTML = d.poslednje.length ? d.poslednje.map(function (r) {
+      return "<tr><td>" + vreme(r.kreirano) + "</td><td>" + esc(r.ime) + " " + esc(r.prezime || "") + "</td><td>" + esc(r.email) + "</td><td>" + esc(r.telefon) +
+        "</td><td>" + esc(r.izvor || "–") + "</td><td>" + esc(UREDJAJI[r.uredjaj] || r.uredjaj || "–") + (r.zemlja ? " · " + esc(r.zemlja) : "") +
+        "</td><td>" + esc(r.preporucio || "") + "</td><td>" + (r.mailerlite_ok ? '<span class="tag">ok</span>' : '<span class="tag los">greška</span>') + "</td></tr>";
+    }).join("") : '<tr><td colspan="8" class="prazno">Još nema prijava.</td></tr>';
+
+    $("rezultati").hidden = false;
+  }
+
+  /* ---------- ucitavanje ---------- */
+
+  function ucitaj() {
+    var kljuc = polje.value.trim();
+    if (!kljuc) return;
+    var g = $("greska");
+    g.hidden = true;
+    var q = izbor.value ? "?vebinar=" + encodeURIComponent(izbor.value) : "";
+    fetch("/api/analiza" + q, { headers: { Accept: "application/json", "X-AB-Kljuc": kljuc } })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d.ok) throw new Error(d.poruka || "Greška");
+        try { localStorage.setItem(K, kljuc); } catch (e) {}
+        prikazi(d);
+      })
+      .catch(function (e) { g.textContent = e.message; g.hidden = false; });
+  }
+
+  function preuzmiCsv() {
+    var kljuc = polje.value.trim();
+    var v = izbor.value || (podaci && podaci.vebinar) || "";
+    fetch("/api/analiza?format=csv&vebinar=" + encodeURIComponent(v), { headers: { "X-AB-Kljuc": kljuc } })
+      .then(function (r) { if (!r.ok) throw new Error("CSV nije uspeo (" + r.status + ")"); return r.blob(); })
+      .then(function (b) {
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(b);
+        a.download = "prijave-" + v + ".csv";
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+      })
+      .catch(function (e) { var g = $("greska"); g.textContent = e.message; g.hidden = false; });
+  }
+
+  $("kljuc-forma").addEventListener("submit", function (e) { e.preventDefault(); ucitaj(); });
+  izbor.addEventListener("change", ucitaj);
+  $("csv").addEventListener("click", preuzmiCsv);
+  ucitaj();
+  setInterval(function () { if (!document.hidden) ucitaj(); }, 60000);
+})();
+</script>
+</body>
+</html>

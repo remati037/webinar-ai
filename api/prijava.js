@@ -8,7 +8,7 @@
 import { upisiPretplatnika } from "./_mailerlite.js";
 import {
   VEBINAR, db, json, greska, jedinstvenKod, noviToken, ocisti, validanEmail,
-  normalizujTelefon, referalLink, tabelaLink, ipAdresa,
+  normalizujTelefon, referalLink, tabelaLink, ipAdresa, vrstaUredjaja,
 } from "./_lib.js";
 import { VARIJANTE } from "./_ab.js";
 
@@ -100,6 +100,26 @@ export default async function handler(req, res) {
       } catch (e) {
         console.error("A/B varijanta nije upisana:", e.message);
       }
+    }
+
+    // ---------- odakle je stigao (za /analiza) ----------
+    // Isto kao A/B: posebnim upitom, da prijava prodje i bez migracije.
+    // COALESCE cuva prvi izvor ako se isti email prijavi ponovo.
+    try {
+      const iz = telo.izvor && typeof telo.izvor === "object" ? telo.izvor : {};
+      const polje = (v) => ocisti(v, 80).toLowerCase() || null;
+      const zemlja = String(req.headers["x-vercel-ip-country"] || "").toUpperCase();
+      await sql`
+        UPDATE prijave SET
+          izvor    = COALESCE(izvor, ${polje(iz.izvor)}),
+          medij    = COALESCE(medij, ${polje(iz.medij)}),
+          kampanja = COALESCE(kampanja, ${polje(iz.kampanja)}),
+          oglas    = COALESCE(oglas, ${polje(iz.oglas)}),
+          zemlja   = COALESCE(zemlja, ${/^[A-Z]{2}$/.test(zemlja) ? zemlja : null}),
+          uredjaj  = COALESCE(uredjaj, ${vrstaUredjaja(req.headers["user-agent"])})
+        WHERE id = ${red.id}`;
+    } catch (e) {
+      console.error("Izvor prijave nije upisan:", e.message);
     }
 
     const link = referalLink(req, red.ref_kod);
