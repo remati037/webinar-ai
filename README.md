@@ -84,7 +84,9 @@ git push -u origin main
 | Šta | Gde |
 |---|---|
 | Datum i vreme vebinara | `assets/js/main.js` (`VEBINAR_DATUM`), `assets/vebinar.ics` i Google Calendar link u `index.html` **i** `hvala.html` |
-| Broj prijavljenih / ukupno mesta | `assets/js/main.js`, `PRIJAVLJENO` i `UKUPNO_MESTA` |
+| Slobodna mesta (traka na vrhu, forma, popup) | `assets/js/main.js`, `MESTA_NA_POCETKU`, `MESTA_NA_KRAJU`, `PRIJAVE_OTVORENE`. Broj se računa iz vremena, ne iz baze. Ukupno „400" je upisano u `index.html` |
+| Tri rečenice ispod dugmadi | `index.html`, svaki `<ul class="garancije">` |
+| Spisak zemalja za pozivni broj | `assets/js/prijava.js`, `ZEMLJE` |
 | Boje i tipografija | `assets/css/style.css`, blok `:root` na vrhu |
 | Tekstovi, FAQ, sekcije | `index.html` |
 | Rok ponude na /snimak | `snimak.html`, `ROK_PONUDE` u `<head>`. Posle roka se ponuda sklanja i ostaje samo snimak. Tekst „do petka u 23:59" je u istom fajlu |
@@ -121,3 +123,29 @@ podešavanje** baze, API ključa i dva polja u MailerLite-u —
 korak po korak u [uputstvo-referal.md](uputstvo-referal.md).
 
 Posle podešavanja, `https://tvoj-domen.com/api/status` pokazuje da li je sve na mestu.
+
+## A/B test forme
+
+Svaki posetilac nasumično (50/50) dobija jednu varijantu i zadržava je:
+
+- **A**: forma stoji na strani, kao do sad
+- **B**: na strani je samo dugme, a forma se otvara u popupu („Korak 2 od 2")
+
+Ostatak stranice je isti, pa se poredi samo način prijave.
+
+**Rezultati:** `https://tvoj-domen.com/ab`. Prikazuje posetioce, prijave i konverziju po
+varijanti, verovatnoću da je B bolja od A i tabelu po danima. Traži ključ `AB_KLJUC`.
+
+**Pregled bez upisa u statistiku:** `/?v=a` ili `/?v=b`.
+
+**Jednokratno podešavanje:**
+
+1. U Neon SQL Editor-u pokreni [db/migracija-ab.sql](db/migracija-ab.sql). Dok to ne uradiš,
+   prijave rade normalno, samo se varijanta ne beleži.
+2. Na Vercelu dodaj Environment Variable `AB_KLJUC` (bilo koja duga lozinka) i redeploy.
+
+Kod: varijantu bira skripta u `<head>` u `index.html`, popup i beleženje poseta su u
+`assets/js/ab.js`, upis je u `api/ab.js`, a brojke daje `api/ab-rezultati.js`.
+
+Kad test završiš, ostavi pobednika: za trajno A obriši `assets/js/ab.js` iz `index.html`
+i u `<head>` skripti postavi `v = "a"`, a za trajno B postavi `v = "b"`.

@@ -44,3 +44,18 @@ CREATE UNIQUE INDEX IF NOT EXISTS prijave_token_uniq   ON prijave (token);
 -- Brojanje referala ide preko ovog indeksa.
 CREATE INDEX IF NOT EXISTS prijave_ref_od_idx ON prijave (ref_od_id);
 CREATE INDEX IF NOT EXISTS prijave_ip_idx     ON prijave (ip, kreirano);
+
+-- ---------- A/B test forme (vidi db/migracija-ab.sql) ----------
+ALTER TABLE prijave ADD COLUMN IF NOT EXISTS varijanta TEXT;
+CREATE INDEX IF NOT EXISTS prijave_varijanta_idx ON prijave (vebinar, varijanta);
+
+CREATE TABLE IF NOT EXISTS ab_dogadjaji (
+  id           BIGSERIAL PRIMARY KEY,
+  vebinar      TEXT NOT NULL,
+  varijanta    TEXT NOT NULL,
+  dogadjaj     TEXT NOT NULL,
+  posetilac    TEXT NOT NULL,
+  kreirano     TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+CREATE UNIQUE INDEX IF NOT EXISTS ab_dogadjaji_uniq ON ab_dogadjaji (vebinar, posetilac, dogadjaj);
+CREATE INDEX IF NOT EXISTS ab_dogadjaji_idx ON ab_dogadjaji (vebinar, varijanta, dogadjaj);

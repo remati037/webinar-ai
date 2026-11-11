@@ -123,5 +123,5 @@ Google Calendar link u `index.html` **i** u `hvala.html`, i `VEBINAR_DATUM` u
 | Slika rezultata | ✅ ubačena (`assets/img/rezultat.jpeg`), sekcija je vidljiva |
 | Forma za prijavu | ✅ povezana sa bazom i MailerLite API-jem |
 | Referal sistem | ⏸ kod je gotov, čeka podešavanje po `uputstvo-referal.md` |
-| Broj prijavljenih | `PRIJAVLJENO` u `assets/js/main.js` — upiši stvaran broj pa se prikazuje „Ostalo još X od 200 mesta" |
+| Slobodna mesta | računa ih `assets/js/main.js` iz vremena (`MESTA_NA_POCETKU` → `MESTA_NA_KRAJU`), „od 400 mesta" |
 | Domen u SEO tagovima | ⏸ još uvek `vebinar.vladsdigital.com` |

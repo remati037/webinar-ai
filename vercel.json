@@ -13,6 +13,15 @@
       ]
     },
     {
+      "source": "/ab",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
       "source": "/snimak",
       "headers": [
         {

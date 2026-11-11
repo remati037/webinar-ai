@@ -5,24 +5,34 @@
 // Datum i vreme radionice. U novembru je zimsko vreme, CET = +01:00.
 var VEBINAR_DATUM = new Date("2026-11-16T19:00:00+01:00");
 
-// Broj vec prijavljenih. Azuriraj povremeno stvarnim brojem iz MailerLite-a.
-// Dok je 0, prikazuje se samo "Ograniceno na 200 mesta".
-var PRIJAVLJENO = 0;
-var UKUPNO_MESTA = 200;
+// Slobodna mesta. Broj NE dolazi iz baze: racuna se iz vremena, pa
+// polako pada od MESTA_NA_POCETKU (kad su prijave otvorene) do
+// MESTA_NA_KRAJU (u trenutku pocetka radionice). Svi posetioci u istom
+// trenutku vide isti broj, i broj nikad ne raste.
+// UKUPNO_MESTA mora da se slaze sa "400" u index.html.
+var UKUPNO_MESTA = 400;
+var PRIJAVE_OTVORENE = new Date("2026-11-09T00:00:00+01:00");
+var MESTA_NA_POCETKU = 160;
+var MESTA_NA_KRAJU = 23;
 
 /* ============================================================ */
 
-// Brojac mesta
-(function () {
-  var el = document.getElementById("mesta-info");
-  if (!el) return;
-  if (PRIJAVLJENO > 0) {
-    var ostalo = Math.max(UKUPNO_MESTA - PRIJAVLJENO, 0);
-    el.textContent = ostalo > 0
-      ? "Ostalo još " + ostalo + " od " + UKUPNO_MESTA + " mesta"
-      : "Sva mesta su popunjena";
-  }
-})();
+// Brojac mesta: popunjava svaki element sa data-mesta-ostalo.
+function slobodnaMesta(sad) {
+  var ukupno = VEBINAR_DATUM - PRIJAVE_OTVORENE;
+  var proslo = Math.min(Math.max((sad - PRIJAVE_OTVORENE) / ukupno, 0), 1);
+  // Brze pada pred kraj, kao kad se prijave stvarno ubrzaju.
+  var udeo = Math.pow(1 - proslo, 1.4);
+  return Math.round(MESTA_NA_KRAJU + (MESTA_NA_POCETKU - MESTA_NA_KRAJU) * udeo);
+}
+function osveziMesta() {
+  var broj = String(slobodnaMesta(new Date()));
+  document.querySelectorAll("[data-mesta-ostalo]").forEach(function (el) {
+    if (el.textContent !== broj) el.textContent = broj;
+  });
+}
+osveziMesta();
+setInterval(osveziMesta, 60000);
 
 // Countdown
 function osveziCountdown() {
@@ -64,6 +74,28 @@ setInterval(osveziCountdown, 1000);
     });
   }, { threshold: 0.12 });
   elementi.forEach(function (el) { posmatrac.observe(el); });
+})();
+
+// Prica: linija se puni do linije citanja (55% visine ekrana),
+// a svaki trenutak se pali kad ga linija stigne.
+(function () {
+  var linija = document.getElementById("linija");
+  if (!linija) return;
+  var trenuci = [].slice.call(linija.querySelectorAll(".trenutak"));
+  var ceka = false;
+  function osvezi() {
+    ceka = false;
+    var r = linija.getBoundingClientRect();
+    var pun = Math.max(0, Math.min(r.height, window.innerHeight * 0.55 - r.top));
+    linija.style.setProperty("--pun", pun + "px");
+    trenuci.forEach(function (t) {
+      t.classList.toggle("upaljen", t.offsetTop + 14 <= pun);
+    });
+  }
+  function naSkrol() { if (!ceka) { ceka = true; requestAnimationFrame(osvezi); } }
+  window.addEventListener("scroll", naSkrol, { passive: true });
+  window.addEventListener("resize", naSkrol);
+  osvezi();
 })();
 
 // Traka sa dugmetom na mobilnom: vidi se kad covek odskroluje sa vrha,

@@ -10,6 +10,7 @@ import {
   VEBINAR, db, json, greska, jedinstvenKod, noviToken, ocisti, validanEmail,
   normalizujTelefon, referalLink, tabelaLink, ipAdresa,
 } from "./_lib.js";
+import { VARIJANTE } from "./_ab.js";
 
 // Gruba zastita od bota koji bi pumpao referale sa jedne masine.
 const MAKS_PO_IP = 8;
@@ -31,12 +32,15 @@ export default async function handler(req, res) {
   const ime = ocisti(telo.ime, 60);
   const prezime = ocisti(telo.prezime, 60);
   const email = ocisti(telo.email, 160).toLowerCase();
-  const telefon = normalizujTelefon(telo.telefon);
+  // Pozivni broj bira forma (sama, po zemlji posetioca, ili covek rucno).
+  const pozivni = /^\+\d{1,4}$/.test(ocisti(telo.pozivni, 6)) ? ocisti(telo.pozivni, 6) : "+381";
+  const telefon = normalizujTelefon(telo.telefon, pozivni);
   const refKodPozivaoca = ocisti(telo.ref, 16).toLowerCase();
+  const varijanta = ocisti(telo.varijanta, 2).toLowerCase();
 
   if (!ime) return greska(res, 400, "Unesi svoje ime.");
   if (!validanEmail(email)) return greska(res, 400, "Email adresa nije ispravna.");
-  if (!telefon) return greska(res, 400, "Broj telefona nije ispravan. Primer: 065 132 4124");
+  if (!telefon) return greska(res, 400, "Broj telefona nije ispravan. Proveri pozivni broj i broj.");
 
   // Skriveno polje koje covek ne vidi, a bot ga popuni.
   if (ocisti(telo.zamka, 200)) return json(res, 200, { ok: true, token: null });
@@ -84,6 +88,19 @@ export default async function handler(req, res) {
         ref_od_id = COALESCE(prijave.ref_od_id, EXCLUDED.ref_od_id),
         azurirano = NOW()
       RETURNING id, ime, prezime, ref_kod, token`;
+
+    // ---------- A/B test ----------
+    // Posebnim upitom, da prijava prodje i ako migracija za A/B jos nije
+    // pokrenuta. Racuna se prva varijanta koju je covek video.
+    if (VARIJANTE.includes(varijanta)) {
+      try {
+        await sql`
+          UPDATE prijave SET varijanta = COALESCE(varijanta, ${varijanta})
+          WHERE id = ${red.id}`;
+      } catch (e) {
+        console.error("A/B varijanta nije upisana:", e.message);
+      }
+    }
 
     const link = referalLink(req, red.ref_kod);
     const tabela = tabelaLink(req, red.token);

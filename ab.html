@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>A/B test prijave</title>
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <!-- Rezultati A/B testa forme. Podaci: /api/ab-rezultati, kljuc AB_KLJUC sa Vercela.
+       Kljuc se upise jednom i pamti u ovom browseru. -->
+  <style>
+    :root {
+      --bg: #0A0908; --bg-2: #120F0C; --line: rgba(255, 238, 220, 0.1);
+      --text: #F2EBE1; --muted: #A89E93; --dim: #6F665D;
+      --orange: #F26A1F; --ok: #5BD68A; --rose: #FF5A4E;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; padding: 32px 16px 64px; }
+    .wrap { max-width: 860px; margin: 0 auto; }
+    h1 { font-size: 26px; }
+    .pod { color: var(--muted); margin-top: 4px; }
+    .kljuc { margin-top: 24px; display: flex; gap: 8px; flex-wrap: wrap; }
+    input, select, button { font: inherit; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-2); color: var(--text); padding: 10px 12px; }
+    input { flex: 1; min-width: 200px; }
+    button { background: var(--orange); color: #140A04; border: 0; font-weight: 700; cursor: pointer; }
+    .greska { margin-top: 16px; color: var(--rose); }
+    .kartice { margin-top: 28px; display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .kartica { border: 1px solid var(--line); border-radius: 12px; padding: 20px; background: var(--bg-2); }
+    .kartica.vodi { border-color: var(--ok); }
+    .kartica h2 { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--orange); }
+    .kartica .opis { color: var(--muted); font-size: 14px; }
+    .konv { margin-top: 12px; font-size: 44px; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+    .konv small { font-size: 14px; font-weight: 500; color: var(--muted); margin-left: 6px; }
+    dl { margin-top: 16px; display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; font-size: 14px; }
+    dt { color: var(--muted); }
+    dd { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+    .presuda { margin-top: 18px; padding: 16px 18px; border-radius: 12px; border: 1px solid var(--line); background: var(--bg-2); }
+    .presuda b { color: var(--ok); }
+    .napomena { margin-top: 8px; color: var(--dim); font-size: 13px; }
+    table { margin-top: 28px; width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+    th, td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: right; }
+    th:first-child, td:first-child { text-align: left; }
+    th { color: var(--muted); font-weight: 600; }
+    .tabela-omot { overflow-x: auto; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>A/B test prijave</h1>
+  <p class="pod">A: forma na strani · B: dugme pa popup sa formom. Posetilac se broji jednom.</p>
+
+  <form class="kljuc" id="kljuc-forma">
+    <input id="kljuc" type="password" placeholder="AB_KLJUC sa Vercela" autocomplete="current-password">
+    <button type="submit">Prikaži</button>
+  </form>
+
+  <p class="greska" id="greska" hidden></p>
+  <div id="rezultati" hidden>
+    <div class="kartice" id="kartice"></div>
+    <div class="presuda" id="presuda"></div>
+    <p class="napomena" id="napomena"></p>
+    <div class="tabela-omot">
+      <table>
+        <thead><tr><th>Dan</th><th>A posete</th><th>A prijave</th><th>A konv.</th><th>B posete</th><th>B prijave</th><th>B konv.</th></tr></thead>
+        <tbody id="dani"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var K = "ab_kljuc";
+  var polje = document.getElementById("kljuc");
+  try { polje.value = localStorage.getItem(K) || ""; } catch (e) {}
+
+  function pct(a, b) { return b ? (a / b * 100) : 0; }
+  function fmt(x) { return x.toLocaleString("sr-RS", { maximumFractionDigits: 1, minimumFractionDigits: 1 }) + "%"; }
+  function el(tag, html) { var e = document.createElement(tag); e.innerHTML = html; return e; }
+
+  // Normalna raspodela, za verovatnocu da je B bolja od A (z-test dve proporcije).
+  function phi(z) {
+    var t = 1 / (1 + 0.2316419 * Math.abs(z));
+    var d = 0.3989423 * Math.exp(-z * z / 2);
+    var p = d * t * (0.3193815 + t * (-0.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274))));
+    return z > 0 ? 1 - p : p;
+  }
+
+  function prikazi(d) {
+    var a = d.varijante[0], b = d.varijante[1];
+    var ka = pct(a.prijave, a.posete), kb = pct(b.prijave, b.posete);
+    var kartice = document.getElementById("kartice");
+    kartice.innerHTML = "";
+    d.varijante.forEach(function (v) {
+      var k = pct(v.prijave, v.posete);
+      var vodi = (v.varijanta === "a" ? ka > kb : kb > ka) && v.prijave > 0;
+      var c = el("div",
+        "<h2>Varijanta " + v.varijanta.toUpperCase() + "</h2>" +
+        "<p class='opis'>" + v.opis + "</p>" +
+        "<p class='konv'>" + fmt(k) + "<small>konverzija</small></p>" +
+        "<dl><dt>Posetioci</dt><dd>" + v.posete + "</dd>" +
+        (v.varijanta === "b" ? "<dt>Otvorili popup</dt><dd>" + v.popup + " (" + fmt(pct(v.popup, v.posete)) + ")</dd>" +
+          "<dt>Prijava od otvorenih</dt><dd>" + fmt(pct(v.prijave, v.popup)) + "</dd>" : "") +
+        "<dt>Prijave</dt><dd>" + v.prijave + "</dd></dl>");
+      c.className = "kartica" + (vodi ? " vodi" : "");
+      kartice.appendChild(c);
+    });
+
+    var presuda = document.getElementById("presuda");
+    if (a.posete && b.posete && (a.prijave + b.prijave) > 0) {
+      var pa = a.prijave / a.posete, pb = b.prijave / b.posete;
+      var p = (a.prijave + b.prijave) / (a.posete + b.posete);
+      var se = Math.sqrt(p * (1 - p) * (1 / a.posete + 1 / b.posete));
+      var verB = se ? phi((pb - pa) / se) : 0.5;
+      var razlika = pa ? ((pb - pa) / pa * 100) : 0;
+      presuda.innerHTML = "Verovatnoća da je <b>B bolja od A</b>: <b>" + Math.round(verB * 100) + "%</b>" +
+        (pa ? " · B je " + (razlika >= 0 ? "+" : "") + razlika.toFixed(0) + "% u odnosu na A" : "");
+    } else {
+      presuda.textContent = "Još nema dovoljno podataka.";
+    }
+    document.getElementById("napomena").textContent =
+      "Pobednika proglasi tek kad verovatnoća pređe 95% (ili padne ispod 5%) i kad svaka varijanta ima bar 100 prijava. " +
+      (d.bezVarijante ? d.bezVarijante + " prijava pre početka testa nije uračunato." : "");
+
+    var poDanu = {};
+    d.poDanima.forEach(function (r) {
+      poDanu[r.dan] = poDanu[r.dan] || { a: { posete: 0, prijave: 0 }, b: { posete: 0, prijave: 0 } };
+      if (poDanu[r.dan][r.varijanta]) poDanu[r.dan][r.varijanta] = r;
+    });
+    var tbody = document.getElementById("dani");
+    tbody.innerHTML = "";
+    Object.keys(poDanu).sort().reverse().forEach(function (dan) {
+      var x = poDanu[dan];
+      tbody.appendChild(el("tr",
+        "<td>" + dan.split("-").reverse().join(".") + "</td>" +
+        "<td>" + x.a.posete + "</td><td>" + x.a.prijave + "</td><td>" + fmt(pct(x.a.prijave, x.a.posete)) + "</td>" +
+        "<td>" + x.b.posete + "</td><td>" + x.b.prijave + "</td><td>" + fmt(pct(x.b.prijave, x.b.posete)) + "</td>"));
+    });
+    document.getElementById("rezultati").hidden = false;
+  }
+
+  function ucitaj() {
+    var k = polje.value.trim();
+    if (!k) return;
+    var g = document.getElementById("greska");
+    g.hidden = true;
+    fetch("/api/ab-rezultati", { headers: { Accept: "application/json", "X-AB-Kljuc": k } })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d.ok) throw new Error(d.poruka || "Greška");
+        try { localStorage.setItem(K, k); } catch (e) {}
+        prikazi(d);
+      })
+      .catch(function (e) { g.textContent = e.message; g.hidden = false; });
+  }
+
+  document.getElementById("kljuc-forma").addEventListener("submit", function (e) { e.preventDefault(); ucitaj(); });
+  ucitaj();
+  setInterval(function () { if (!document.hidden) ucitaj(); }, 60000);
+})();
+</script>
+</body>
+</html>

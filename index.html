@@ -17,7 +17,7 @@
   <meta property="og:site_name" content="Vladimir Stanković · AI Profit Lab">
   <meta property="og:url" content="https://webinar.aiprofit.rs/">
   <meta property="og:title" content="Uđi bez ideje. Izađi sa nišom za svoj prvi digitalni proizvod.">
-  <meta property="og:description" content="Besplatna live radionica. Ponedeljak, 16. novembar u 19h, uživo online. Modul 01 InfoCash Akceleratora uživo. 200 mesta, bez snimka.">
+  <meta property="og:description" content="Besplatna live radionica. Ponedeljak, 16. novembar u 19h, uživo online. Modul 01 InfoCash Akceleratora uživo. 400 mesta, bez snimka.">
   <meta property="og:image" content="https://webinar.aiprofit.rs/assets/img/og-radionica.jpg?v=2">
   <meta property="og:image:secure_url" content="https://webinar.aiprofit.rs/assets/img/og-radionica.jpg?v=2">
   <meta property="og:image:type" content="image/jpeg">
@@ -26,7 +26,7 @@
   <meta property="og:image:alt" content="Vladimir Stanković i natpis: Uđi bez ideje, izađi sa nišom za svoj prvi digitalni proizvod. Ponedeljak, 16. novembar u 19h, uživo online.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Uđi bez ideje. Izađi sa nišom za svoj prvi digitalni proizvod.">
-  <meta name="twitter:description" content="Besplatna live radionica. Ponedeljak, 16. novembar u 19h, uživo online. 200 mesta, bez snimka.">
+  <meta name="twitter:description" content="Besplatna live radionica. Ponedeljak, 16. novembar u 19h, uživo online. 400 mesta, bez snimka.">
   <meta name="twitter:image" content="https://webinar.aiprofit.rs/assets/img/og-radionica.jpg?v=2">
   <meta name="twitter:image:alt" content="Vladimir Stanković i natpis: Uđi bez ideje, izađi sa nišom za svoj prvi digitalni proizvod.">
 
@@ -41,7 +41,30 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Geist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/landing.css?v=1">
+  <!-- ============================================================
+       A/B TEST FORME. Pre CSS-a, da stranica ne trepne.
+       a = forma na strani (kao do sad), b = dugme pa popup sa formom.
+       Posetilac dobija varijantu nasumicno, 50/50, i zadrzava je.
+       Pregled bez upisa u statistiku: ?v=a ili ?v=b na kraju adrese.
+       Rezultati: /ab (kljuc AB_KLJUC sa Vercela).
+       ============================================================ -->
+  <script>
+  (function () {
+    var K = "ab_v_2026-11-16", d = document.documentElement, v = null, pregled = false;
+    try {
+      var q = new URLSearchParams(location.search).get("v");
+      if (q === "a" || q === "b") { v = q; pregled = true; }
+      else v = localStorage.getItem(K);
+    } catch (e) {}
+    if (v !== "a" && v !== "b") {
+      v = Math.random() < 0.5 ? "a" : "b";
+      try { localStorage.setItem(K, v); } catch (e) {}
+    }
+    d.setAttribute("data-v", v);
+    if (pregled) d.setAttribute("data-pregled", "");
+  })();
+  </script>
+  <link rel="stylesheet" href="assets/css/landing.css?v=2">
 
   <!-- ============================================================
        META PIXEL. ID 539402290072454. Ovde samo PageView.
@@ -65,8 +88,13 @@
   src="https://www.facebook.com/tr?id=539402290072454&ev=PageView&noscript=1"
   alt=""></noscript>
 
-<div class="topbar">
-  Besplatna radionica<span class="sakrij-mob"> uživo</span> · <strong>Pon, 16.<span class="sakrij-mob"> novembar</span><span class="samo-mob">11.</span> u 19h</strong><span class="sakrij-mob"> · Samo 200 mesta</span>
+<!-- Traka na vrhu. Broj slobodnih mesta racuna main.js (MESTA_*). -->
+<div class="topbar" id="topbar">
+  <div class="topbar-in">
+    <span class="topbar-mesta"><span class="tacka" aria-hidden="true"></span>Ostalo još <b data-mesta-ostalo>100</b><span class="sakrij-mob"> od 400</span> mesta</span>
+    <span class="topbar-sred"><span class="sakrij-mob">Besplatna radionica · </span><strong>Pon, 16.11. u 19h</strong></span>
+    <a href="#prijava" class="topbar-dugme" data-cta>Prijavi se besplatno</a>
+  </div>
 </div>
 
 <!-- ============ HERO + FORMA ============ -->
@@ -86,13 +114,20 @@
 
         <p class="pod">Za 90 minuta zajedno biramo temu i <strong>uživo, uz AI, proveravamo da li za nju postoje kupci</strong>. Ovo nije prezentacija koju gledaš. Ovo je radionica u kojoj radiš, po istom redosledu po kom sam od 2020. prodao preko 50.000 digitalnih proizvoda.</p>
 
-        <a href="#prijava" class="cta-btn hero-cta">Rezerviši besplatno mesto <span class="strelica" aria-hidden="true">↓</span></a>
+        <div class="hero-cta-blok">
+          <a href="#prijava" class="cta-btn hero-cta" data-cta>Rezerviši besplatno mesto <span class="strelica" aria-hidden="true">→</span></a>
+          <ul class="garancije">
+            <li>Ne treba ti gotova ideja</li>
+            <li>Ne treba ti velika publika</li>
+            <li>Besplatan AI alat je dovoljan</li>
+          </ul>
+        </div>
 
         <div class="cinjenice">
           <div><b>16. nov</b><span>ponedeljak</span></div>
           <div><b>19:00</b><span>90 minuta</span></div>
           <div><b>Online</b><span>WebinarJam, bez snimka</span></div>
-          <div><b>200</b><span>mesta ukupno</span></div>
+          <div><b>400</b><span>mesta ukupno</span></div>
         </div>
 
         <div class="domacin">
@@ -111,8 +146,20 @@
       <div class="forma-kartica" id="prijava">
         <h2 id="forma-naslov">Rezerviši svoje mesto</h2>
         <p class="forma-podnaslov">Besplatno. Link za ulazak ti stiže na email.</p>
-        <span class="mesta" id="mesta-info">Ograničeno na 200 mesta</span>
+        <span class="mesta" id="mesta-info">Ostalo još <span data-mesta-ostalo>100</span> od 400 mesta</span>
 
+        <!-- Varijanta B: ovde stoji samo dugme, a forma (#forma-mesto)
+             se seli u popup (#prijava-modal). Radi assets/js/ab.js. -->
+        <div class="samo-b korak-1">
+          <button type="button" class="cta-btn" data-cta>Rezerviši besplatno mesto <span class="strelica" aria-hidden="true">→</span></button>
+          <ul class="garancije">
+            <li>Ne treba ti gotova ideja</li>
+            <li>Ne treba ti velika publika</li>
+            <li>Besplatan AI alat je dovoljan</li>
+          </ul>
+        </div>
+
+        <div id="forma-mesto">
         <form id="prijava-forma" method="post" action="/api/prijava" novalidate aria-labelledby="forma-naslov">
           <div class="polja">
             <div class="polje ml-field-group">
@@ -125,7 +172,17 @@
             </div>
             <div class="polje ml-field-group">
               <label for="ml-telefon">Broj telefona <small>za podsetnik pred početak</small></label>
-              <input id="ml-telefon" name="telefon" type="tel" inputmode="tel" placeholder="065 132 4124" autocomplete="tel" aria-required="true">
+              <!-- Pozivni broj se bira sam po zemlji posetioca (/api/zemlja).
+                   Spisak zemalja je u assets/js/prijava.js (ZEMLJE). -->
+              <div class="telefon-red">
+                <div class="pozivni">
+                  <span class="pozivni-prikaz" id="pozivni-prikaz" aria-hidden="true">🇷🇸 +381</span>
+                  <select id="ml-pozivni" name="pozivni" aria-label="Pozivni broj zemlje" autocomplete="tel-country-code">
+                    <option value="+381" data-zemlja="RS" selected>🇷🇸 Srbija +381</option>
+                  </select>
+                </div>
+                <input id="ml-telefon" name="telefon" type="tel" inputmode="tel" placeholder="65 132 4124" autocomplete="tel-national" aria-required="true">
+              </div>
             </div>
           </div>
 
@@ -149,9 +206,15 @@
               <span class="sr-only">Šaljem prijavu…</span>
             </button>
           </div>
+          <ul class="garancije">
+            <li>Ne treba ti gotova ideja</li>
+            <li>Ne treba ti velika publika</li>
+            <li>Besplatan AI alat je dovoljan</li>
+          </ul>
         </form>
 
         <p class="privatnost">Bez spama. Podatke koristim samo za link za ulazak i podsetnik.</p>
+        </div>
 
         <div class="odbrojavanje">
           <p class="odbrojavanje-naslov">Radionica počinje za</p>
@@ -274,8 +337,12 @@
     </div>
 
     <div class="cta-red rv">
-      <a href="#prijava" class="cta-btn">Hoću svoje mesto <span class="strelica" aria-hidden="true">→</span></a>
-      <small>Besplatno · 200 mesta · Pon, 16. novembar u 19:00</small>
+      <a href="#prijava" class="cta-btn" data-cta>Hoću svoje mesto <span class="strelica" aria-hidden="true">→</span></a>
+      <ul class="garancije">
+        <li>Ne treba ti gotova ideja</li>
+        <li>Ne treba ti velika publika</li>
+        <li>Besplatan AI alat je dovoljan</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -351,35 +418,121 @@
   </div>
 </section>
 
-<!-- ============ VODITELJ ============ -->
-<section class="blok">
+<!-- ============ VODITELJ: PRICA KAO VREMENSKA LINIJA ============
+     Linija se puni dok se skroluje, a tacke se pale kad ih linija
+     stigne (assets/js/main.js, "Prica"). Sve cinjenice su iste kao u
+     ranijem bio tekstu, samo poredjane kao put. -->
+<section class="blok" id="prica">
   <div class="wrap">
     <p class="oznaka rv">Ko vodi radionicu</p>
     <h2 class="naslov rv">Nisam pametniji od tebe. <span class="nar">Samo sam pogrešio dovoljno puta.</span></h2>
 
-    <div class="voditelj">
-      <img class="foto rv"
-           src="assets/img/vladimir-stankovic.webp"
-           srcset="assets/img/vladimir-stankovic-560.webp 560w, assets/img/vladimir-stankovic.webp 840w"
-           sizes="(max-width: 960px) 340px, 320px"
-           width="840" height="1260" loading="lazy" decoding="async"
-           alt="Vladimir Stanković">
-      <div class="bio">
-        <p class="rv">Zovem se <strong>Vladimir Stanković</strong>. Moj prvi kurs, „Sve tajne Instagram marketinga", doneo je <strong>10.000 € za prvi mesec</strong>, sa svega nekoliko hiljada pratilaca. Ne zato što je publika bila velika, nego zato što su ponuda i ljudi kojima je bila namenjena bili pravi.</p>
-        <p class="rv">Od tada sam prodao <strong>preko 50.000 digitalnih proizvoda</strong> u šest oblasti, sve na srpskom: kurseve, priručnike, membership zajednice, konferencije. Neke stvari su propale i koštale me mesece. Neke su uradile milione. Iz toga je nastao InfoCash metod.</p>
-        <div class="miljokazi">
-          <div class="rv"><b>AI Profit Lab</b><span>Zajednica u kojoj preduzetnici primenjuju AI u poslu · <a href="https://aiprofit.rs" target="_blank" rel="noopener">aiprofit.rs</a></span></div>
-          <div class="rv"><b>Podkast Biznis priče</b><span>Stotine gostiju, od početnika do vlasnika kompanija</span></div>
-          <div class="rv"><b>Biznis priče konferencija</b><span>Najveća biznis konferencija u regionu</span></div>
-          <div class="rv"><b>40.000+ na YouTube-u</b><span>Publika koja uči biznis i AI iz prve ruke</span></div>
+    <div class="prica">
+      <figure class="prica-foto rv">
+        <img src="assets/img/vladimir-stankovic.webp"
+             srcset="assets/img/vladimir-stankovic-560.webp 560w, assets/img/vladimir-stankovic.webp 840w"
+             sizes="(max-width: 960px) 340px, 320px"
+             width="840" height="1260" loading="lazy" decoding="async"
+             alt="Vladimir Stanković">
+        <figcaption><strong>Vladimir Stanković</strong>Osnivač AI Profit Lab-a · autor podkasta Biznis priče</figcaption>
+      </figure>
+
+      <ol class="linija" id="linija">
+        <li class="trenutak">
+          <span class="kad">2020.</span>
+          <h3>Par hiljada pratilaca i jedan kurs</h3>
+          <p>Moj prvi kurs, „Sve tajne Instagram marketinga", doneo je <strong>10.000 € za prvi mesec</strong>. Publika je bila mala. Ali ponuda i ljudi kojima je bila namenjena bili su pravi.</p>
+          <p class="pouka">Tad sam prvi put video da veličina publike nije presudna.</p>
+        </li>
+        <li class="trenutak">
+          <span class="kad">Sledećih godina</span>
+          <h3>Šest oblasti. Mnogo pokušaja.</h3>
+          <p>Kursevi, priručnici, membership zajednice, konferencije. Sve na srpskom. <strong>Neke stvari su propale i koštale me mesece.</strong> Neke su uradile milione.</p>
+        </li>
+        <li class="trenutak">
+          <span class="kad">50.000+ prodatih proizvoda</span>
+          <h3>Od promašaja je nastao redosled</h3>
+          <p>Kad sam poređao šta je radilo, a šta nije, ostao je isti niz koraka koji se ponavljao kod svakog proizvoda koji se prodao. Taj niz danas zovem <strong>InfoCash metod</strong>.</p>
+        </li>
+        <li class="trenutak">
+          <span class="kad">4 meseca</span>
+          <h3>Jedan priručnik, kupci koji me ne znaju</h3>
+          <p><strong>67.726 € za četiri meseca.</strong> 90% kupaca je došlo preko Facebook reklama, od ljudi koji za mene nikad nisu čuli. Proizvod i funnel sklopljeni za nekoliko dana, po istom redosledu.</p>
+        </li>
+        <li class="trenutak sad">
+          <span class="kad">Danas</span>
+          <h3>Prvi put pokazujem prvi korak, uživo</h3>
+          <p>Vodim zajednicu, podkast i konferenciju o biznisu. Na ovoj radionici prvi put javno prolazim Modul 01, korak na kom većina zapne.</p>
+          <ul class="znacke">
+            <li><b>AI Profit Lab</b><span>zajednica za AI u poslu</span></li>
+            <li><b>Biznis priče</b><span>podkast, stotine gostiju</span></li>
+            <li><b>Biznis priče konferencija</b><span>najveća u regionu</span></li>
+            <li><b>40.000+</b><span>pratilaca na YouTube-u</span></li>
+          </ul>
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ZASTO JE BESPLATNO ============ -->
+<section class="blok tamnije" id="besplatno">
+  <div class="wrap">
+    <p class="oznaka rv">Pošteno pitanje</p>
+    <h2 class="naslov rv">Zašto je besplatna? <span class="nar">I gde je kvaka?</span></h2>
+    <p class="uvod rv">Fer pitanje. Evo odgovora bez uvijanja.</p>
+
+    <div class="besplatno">
+      <ol class="razlozi">
+        <li class="razlog rv">
+          <span class="br">01</span>
+          <div>
+            <h3>Hoću da vidiš kako radim, a ne da mi veruješ na reč</h3>
+            <p>Modul 01 je pravi deo InfoCash Akceleratora, ne isečak za reklamu. Posle 90 minuta tačno znaš da li ti moj način rada odgovara.</p>
+          </div>
+        </li>
+        <li class="razlog rv">
+          <span class="br">02</span>
+          <div>
+            <h3>Kvaku ti kažem unapred</h3>
+            <p>Na kraju predstavljam InfoCash Akcelerator i ponudu za prisutne. To je sve. <strong>Ništa od onoga što uradiš na radionici ne zavisi od toga da li kupiš.</strong></p>
+          </div>
+        </li>
+        <li class="razlog rv">
+          <span class="br">03</span>
+          <div>
+            <h3>Lakše je pokazati nego objasniti</h3>
+            <p>Na prošlom vebinaru sam pokazao šta treba da se uradi. Ovaj put to radimo zajedno, na tvom primeru, jer se tek tako vidi gde zapinje.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="racun rv">
+        <p class="racun-naslov">Šta ti ostaje i ako ništa ne kupiš</p>
+        <ul>
+          <li><b>3 do 5 tema</b> iz tvog znanja i iskustva</li>
+          <li><b>Test niše sa četiri filtera</b>, za ovu i svaku sledeću ideju</li>
+          <li><b>Promptovi</b> koje kucam uživo za istraživanje kupaca</li>
+          <li><b>Jedna niša</b> i profil osobe kojoj prodaješ</li>
+        </ul>
+        <div class="racun-cena">
+          <span>Cena</span>
+          <b>0 €</b>
         </div>
+        <p class="racun-dno">Bez kartice. Bez skrivenih troškova.</p>
+        <a href="#prijava" class="cta-btn" data-cta>Hoću besplatno mesto <span class="strelica" aria-hidden="true">→</span></a>
+        <ul class="garancije">
+          <li>Ne treba ti gotova ideja</li>
+          <li>Ne treba ti velika publika</li>
+          <li>Besplatan AI alat je dovoljan</li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============ ZA KOGA ============ -->
-<section class="blok tamnije">
+<section class="blok">
   <div class="wrap">
     <p class="oznaka rv">Pošteno</p>
     <h2 class="naslov rv">Za koga je, <span class="nar">a za koga nije</span></h2>
@@ -407,7 +560,7 @@
 </section>
 
 <!-- ============ FAQ ============ -->
-<section class="blok">
+<section class="blok tamnije">
   <div class="wrap uzi">
     <p class="oznaka rv">Pitanja</p>
     <h2 class="naslov rv">Česta pitanja</h2>
@@ -442,7 +595,7 @@
       </details>
       <details class="rv">
         <summary>Šta ako se mesta popune?</summary>
-        <p>Soba za radionicu prima 200 ljudi i prijave se zatvaraju kad se popuni. Ko se ranije prijavi, ima mesto.</p>
+        <p>Soba za radionicu prima 400 ljudi i prijave se zatvaraju kad se popuni. Ko se ranije prijavi, ima mesto.</p>
       </details>
     </div>
   </div>
@@ -453,14 +606,19 @@
   <div class="wrap">
     <p class="oznaka rv" style="justify-content:center;">Ponedeljak, 16. novembar u 19:00</p>
     <h2 class="naslov rv">Za 90 minuta odluka koju odlažeš <span class="nar">mesecima</span></h2>
-    <p class="rv">Uživo online. 200 mesta. Bez snimka. Jedna prijava te deli od niše za tvoj prvi digitalni proizvod.</p>
+    <p class="rv">Uživo online. 400 mesta. Bez snimka. Jedna prijava te deli od niše za tvoj prvi digitalni proizvod.</p>
     <div class="countdown" id="countdown2" aria-hidden="true">
       <div class="box"><div class="broj" id="cd2-dana">0</div><div class="lab">dana</div></div>
       <div class="box"><div class="broj" id="cd2-sati">0</div><div class="lab">sati</div></div>
       <div class="box"><div class="broj" id="cd2-min">0</div><div class="lab">min</div></div>
       <div class="box"><div class="broj" id="cd2-sek">0</div><div class="lab">sek</div></div>
     </div>
-    <a href="#prijava" class="cta-btn">Rezerviši besplatno mesto <span class="strelica" aria-hidden="true">→</span></a>
+    <a href="#prijava" class="cta-btn" data-cta>Rezerviši besplatno mesto <span class="strelica" aria-hidden="true">→</span></a>
+    <ul class="garancije">
+      <li>Ne treba ti gotova ideja</li>
+      <li>Ne treba ti velika publika</li>
+      <li>Besplatan AI alat je dovoljan</li>
+    </ul>
   </div>
 </section>
 
@@ -471,8 +629,27 @@
 <!-- Traka sa dugmetom na mobilnom. Pojavljuje se kad forma izadje iz
      ekrana, a sakriva se kad je forma ili finale ponovo vidljivo. -->
 <div class="lepljivo" id="lepljivo" aria-hidden="true">
-  <div class="lepljivo-tekst"><strong>Pon, 16. nov u 19:00</strong>Besplatno · 200 mesta</div>
-  <a href="#prijava" class="cta-btn" tabindex="-1">Rezerviši mesto</a>
+  <div class="lepljivo-tekst"><strong>Pon, 16. nov u 19:00</strong>Još <span data-mesta-ostalo>100</span> od 400 mesta</div>
+  <a href="#prijava" class="cta-btn" tabindex="-1" data-cta>Rezerviši mesto</a>
+</div>
+
+<!-- ============ POPUP ZA PRIJAVU (samo varijanta B) ============
+     Prazan je dok assets/js/ab.js ne preseli #forma-mesto ovde.
+     Otvara ga svako dugme sa data-cta. -->
+<div class="modal" id="prijava-modal" hidden>
+  <div class="modal-pozadina" data-zatvori></div>
+  <div class="modal-kartica" role="dialog" aria-modal="true" aria-labelledby="modal-naslov">
+    <button type="button" class="modal-x" data-zatvori aria-label="Zatvori">×</button>
+    <div class="modal-napredak" aria-hidden="true">
+      <span class="modal-korak">Korak 2 od 2</span>
+      <span class="modal-traka"><span></span></span>
+    </div>
+    <p class="modal-oznaka">Poslednji korak</p>
+    <h2 id="modal-naslov">Osiguraj svoje mesto</h2>
+    <p class="modal-pod">Upiši gde da ti pošaljem link za ulazak. Radionica je u <strong>ponedeljak, 16.11. u 19:00</strong>.</p>
+    <span class="mesta">Ostalo još <span data-mesta-ostalo>100</span> od 400 mesta</span>
+    <div id="modal-mesto"></div>
+  </div>
 </div>
 
 <script type="application/ld+json">
@@ -517,7 +694,7 @@
       "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
       "isAccessibleForFree": true,
       "inLanguage": "sr",
-      "maximumAttendeeCapacity": 200,
+      "maximumAttendeeCapacity": 400,
       "location": {
         "@type": "VirtualLocation",
         "url": "https://webinar.aiprofit.rs/"
@@ -602,7 +779,7 @@
           "name": "Šta ako se mesta popune?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Soba za radionicu prima 200 ljudi i prijave se zatvaraju kad se popuni. Ko se ranije prijavi, ima mesto."
+            "text": "Soba za radionicu prima 400 ljudi i prijave se zatvaraju kad se popuni. Ko se ranije prijavi, ima mesto."
           }
         }
       ]
@@ -610,7 +787,8 @@
   ]
 }
 </script>
-<script src="assets/js/main.js?v=3" defer></script>
-<script src="assets/js/prijava.js?v=3" defer></script>
+<script src="assets/js/main.js?v=4" defer></script>
+<script src="assets/js/prijava.js?v=4" defer></script>
+<script src="assets/js/ab.js?v=2" defer></script>
 </body>
 </html>
