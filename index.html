@@ -64,7 +64,7 @@
     if (pregled) d.setAttribute("data-pregled", "");
   })();
   </script>
-  <link rel="stylesheet" href="assets/css/landing.css?v=4">
+  <link rel="stylesheet" href="assets/css/landing.css?v=5">
 
   <!-- ============================================================
        META PIXEL. ID 539402290072454. Ovde samo PageView.
@@ -99,6 +99,13 @@
 
 <!-- ============ HERO + FORMA ============ -->
 <header class="hero">
+  <!-- Vladimir u studiju. Na telefonu baner na vrhu, na desktopu zatamnjena pozadina. -->
+  <picture class="hero-foto" aria-hidden="true">
+    <source media="(max-width: 959px)" srcset="assets/img/vlada-studio-mob.webp">
+    <img src="assets/img/vlada-studio-1600.webp"
+         srcset="assets/img/vlada-studio-960.webp 960w, assets/img/vlada-studio-1600.webp 1600w"
+         sizes="100vw" width="1600" height="679" alt="" fetchpriority="high" decoding="async">
+  </picture>
   <div class="wrap">
     <div class="hero-mreza">
 
@@ -136,7 +143,7 @@
         </div>
 
         <div class="domacin">
-          <img src="assets/img/vladimir-stankovic-560.webp" width="560" height="840" alt="" decoding="async">
+          <img src="assets/img/vlada-avatar.webp" width="160" height="160" alt="" decoding="async">
           <p><strong>Vodi Vladimir Stanković</strong>Osnivač AI Profit Lab-a i autor podkasta Biznis priče</p>
         </div>
       </div>
@@ -727,7 +734,7 @@
       "name": "Vladimir Stanković",
       "jobTitle": "Osnivač AI Profit Lab-a",
       "url": "https://aiprofit.rs",
-      "image": "https://webinar.aiprofit.rs/assets/img/vladimir-stankovic.webp",
+      "image": "https://webinar.aiprofit.rs/assets/img/vlada-studio-1600.webp",
       "sameAs": [
         "https://aiprofit.rs",
         "https://vladsdigital.com"
@@ -861,7 +868,7 @@
 }
 </script>
 <script src="assets/js/main.js?v=4" defer></script>
-<script src="assets/js/prijava.js?v=4" defer></script>
+<script src="assets/js/prijava.js?v=5" defer></script>
 <script src="assets/js/ab.js?v=2" defer></script>
 </body>
 </html>

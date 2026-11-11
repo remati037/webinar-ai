@@ -58,6 +58,11 @@ Grupa: **Webinar 16.11.2026.** (ID `203700115470288528`, postavljen kao
 | Za sat vremena | **Kampanja** na grupu | pon 16.11. u 18:00 | [podsetnik-3-sat-pre.html](mejlovi/podsetnik-3-sat-pre.html) |
 | Počinjemo | **Kampanja** na grupu | pon 16.11. u 18:58 | [podsetnik-4-pocinjemo.html](mejlovi/podsetnik-4-pocinjemo.html) |
 
+> **Izmena 11.11.** Welcome i sva četiri podsetnika su dopunjeni: molba „odgovori sa
+> 'vidimo se'", poklon (Meta Ads priručnik) za one koji ostanu do kraja i „unutra sam od 18:50".
+> Welcome u automatizaciji i već zakazane kampanje treba ponovo nalepiti iz ovih fajlova.
+> Reply-to adresa pošiljaoca mora biti pravo sanduče koje neko čita, jer ljudi odgovaraju na mejl.
+
 Podsetnici su **kampanje, a ne koraci u automatizaciji**: kampanja ide svima koji
 su u grupi u trenutku slanja, pa i ko se prijavi u nedelju uveče dobije sve
 podsetnike na vreme. U automatizaciji bi „čekaj do datuma" kasnim prijavama

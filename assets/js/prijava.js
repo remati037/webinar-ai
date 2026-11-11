@@ -259,6 +259,8 @@
         // Kod pozivaoca je iskoriscen, da se ne lepi na sledecu prijavu
         // sa istog uredjaja (npr. kad se prijavljuju dvoje sa istog laptopa).
         obrisi(KLJUC_REF);
+        // Samo domen (npr. gmail.com), da /hvala ponudi pravo dugme za sanduce.
+        zapamti("vebinar_email_domen", (podaci.email.split("@")[1] || "").toLowerCase());
         location.href = "/hvala?k=" + encodeURIComponent(telo.token) + "&novo=1";
       })
       .catch(function (e) {

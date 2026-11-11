@@ -1319,3 +1319,31 @@ footer a { color: var(--muted); text-decoration: none; }
   .poklon-knjiga { width: 100%; margin: 0; }
 }
 .forma-poklon > span { margin-right: 4px; }
+
+/* ---------- HERO FOTO (Vladimir u studiju) ---------- */
+.hero-foto { display: block; pointer-events: none; }
+.hero-foto img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 959px) {
+  .hero { padding-top: 0; }
+  .hero-foto {
+    position: relative;
+    height: clamp(230px, 62vw, 420px);
+    margin-bottom: -56px;
+    -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent);
+    mask-image: linear-gradient(180deg, #000 60%, transparent);
+  }
+  .hero-foto img { object-position: 50% 22%; }
+}
+@media (min-width: 960px) {
+  .hero-foto {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: min(760px, 100%);
+    opacity: 0.42;
+    -webkit-mask-image: radial-gradient(120% 95% at 55% 0%, #000 35%, transparent 80%);
+    mask-image: radial-gradient(120% 95% at 55% 0%, #000 35%, transparent 80%);
+  }
+  .hero-foto img { object-position: 50% 0%; }
+  .hero::before { z-index: 0; }
+  .hero > .wrap { z-index: 1; }
+}

@@ -18,7 +18,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Geist:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=5">
+<link rel="stylesheet" href="assets/css/style.css?v=6">
 
 <!-- ============================================================
      META PIXEL. ID 539402290072454. Ovde stoji samo PageView.
@@ -51,15 +51,90 @@ alt=""></noscript>
 <main class="hvala-omot">
   <div class="wrap">
 
-    <!-- ============ 1. POTVRDA PRIJAVE (samo odmah posle prijave) ============ -->
-    <section class="hvala-kartica hvala-potvrda" id="potvrda" hidden>
-      <div class="uspeh-ikona" aria-hidden="true">✓</div>
-      <h1>Mesto je rezervisano<span id="potvrda-ime"></span></h1>
-      <p>Link za ulazak i podsetnik šaljem na email pred radionicu. Ako ih ne vidiš u prijemnom sandučetu, pogledaj <strong>Promotions</strong> i <strong>Spam</strong> folder.</p>
-      <p class="uspeh-napomena">Radionica je u <strong>ponedeljak, 16. novembra u 19:00</strong> i snimka neće biti. Ubaci je odmah u kalendar da ti ne promakne.</p>
-      <div class="uspeh-dugmad">
-        <a class="uspeh-btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Radionica%3A%20Na%C4%91i%20ni%C5%A1u%20za%20svoj%20prvi%20digitalni%20proizvod&amp;dates=20261116T180000Z%2F20261116T193000Z&amp;details=Uzivo%20online%20na%20WebinarJam-u%20sa%20Vladimirom%20Stankovicem.%20Ponesi%20laptop%20i%20otvoren%20AI%20alat.%20Link%20za%20ulazak%20stize%20na%20email.&amp;location=WebinarJam" target="_blank" rel="noopener">Dodaj u Google kalendar</a>
-        <a class="uspeh-btn" href="assets/vebinar.ics?v=2" download>Apple / Outlook (.ics)</a>
+    <!-- ============ 1. POTVRDA + KORACI ============
+         Napredak i naslov se vide samo odmah posle prijave (?novo=1).
+         Koraci, poruka i odbrojavanje se vide uvek, i kad se covek vrati
+         preko linka iz mejla. -->
+    <section class="napredak" id="potvrda" hidden>
+      <div class="napredak-red">
+        <span class="napredak-tekst">Još jedan korak</span>
+        <span class="napredak-broj">97%</span>
+      </div>
+      <div class="napredak-traka" aria-hidden="true"><span></span></div>
+      <h1>Mesto je rezervisano<span id="potvrda-ime"></span>.</h1>
+      <p class="napredak-pod">Uradi još ova tri koraka. Traju minut, a od njih zavisi da li ćeš u ponedeljak stvarno biti unutra.</p>
+    </section>
+
+    <ol class="koraci-hvala">
+      <li class="korak-hvala">
+        <span class="korak-br">1</span>
+        <div class="korak-telo">
+          <h2>Ubaci radionicu u kalendar</h2>
+          <p>Ponedeljak, <strong>16. novembar u 19:00</strong>. Snimka neće biti, pa nemoj da se oslanjaš na pamćenje. Treba ti deset sekundi.</p>
+          <div class="korak-dugmad">
+            <a class="dugme-glavno" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Radionica%3A%20Na%C4%91i%20ni%C5%A1u%20za%20svoj%20prvi%20digitalni%20proizvod&amp;dates=20261116T180000Z%2F20261116T193000Z&amp;details=Uzivo%20online%20na%20WebinarJam-u%20sa%20Vladimirom%20Stankovicem.%20Ponesi%20laptop%20i%20otvoren%20AI%20alat.%20Link%20za%20ulazak%20stize%20na%20email.%20Ostani%20do%20kraja%3A%20na%20kraju%20se%20dele%20pokloni.&amp;location=WebinarJam" target="_blank" rel="noopener">Dodaj u Google kalendar</a>
+            <a class="dugme-sporedno" href="assets/vebinar.ics?v=2" download>Apple / Outlook</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="korak-hvala">
+        <span class="korak-br">2</span>
+        <div class="korak-telo">
+          <h2>Pronađi moj mejl i odgovori „vidimo se"</h2>
+          <p>Upravo sam ti poslao potvrdu. Ako je završila u <strong>Promotions</strong> ili <strong>Spam</strong>, prebaci je u Primary i odgovori mi samo sa <strong>„vidimo se"</strong>. Tako link za ulazak sigurno stiže tamo gde ga vidiš.</p>
+          <div class="korak-dugmad" id="mejl-dugmad">
+            <a class="dugme-glavno" id="mejl-glavno" href="https://mail.google.com/mail/u/0/#search/in%3Aanywhere+Mesto+je+rezervisano" target="_blank" rel="noopener">Otvori Gmail</a>
+            <a class="dugme-sporedno" id="mejl-sporedno" href="https://outlook.live.com/mail/0/" target="_blank" rel="noopener">Otvori Outlook</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="korak-hvala korak-poklon">
+        <span class="korak-br">3</span>
+        <div class="korak-telo">
+          <h2>Ostani do kraja</h2>
+          <p>Na samom kraju radionice delim poklone, samo onima koji su još tu. Glavni je <strong>Meta Ads priručnik za digitalne proizvode</strong>: 26 strana, 12 koraka od prve brojke do skaliranja.</p>
+        </div>
+        <img class="korak-knjiga" src="assets/img/meta-ads-prirucnik-korica.webp" width="720" height="1020" alt="Korica priručnika Meta Ads za digitalne proizvode" loading="lazy" decoding="async">
+      </li>
+    </ol>
+
+    <!-- ============ PORUKA OD VLADIMIRA ============
+         Kad stigne video, ide umesto slike na vrhu ove kartice. -->
+    <article class="pismo" aria-labelledby="pismo-naslov">
+      <picture class="pismo-foto">
+        <source media="(max-width: 640px)" srcset="assets/img/vlada-studio-mob.webp">
+        <img src="assets/img/vlada-studio-960.webp" width="960" height="407" alt="Vladimir Stanković" loading="lazy" decoding="async">
+      </picture>
+      <div class="pismo-telo">
+        <span class="hvala-oznaka">Poruka od Vladimira</span>
+        <h2 id="pismo-naslov">Pre nego što zatvoriš ovu stranicu</h2>
+
+        <p>Zdravo<span id="pismo-ime"></span>,</p>
+        <p>hvala ti na prijavi. Pre ponedeljka hoću da ti kažem nešto što većina ljudi koji prave digitalne proizvode sazna prekasno.</p>
+        <p>Moj prvi kurs je za prvi mesec doneo <strong>10.000 €</strong>. Imao sam svega nekoliko hiljada pratilaca. Nije pomogla publika. Pomoglo je to što sam pogodio ljude kojima prodajem i problem koji ih stvarno muči.</p>
+        <p>Posle toga sam napravio mnogo proizvoda. Neki su uradili milione. Neki su propali i koštali me mesece. Kad sam ih poređao jedan pored drugog, razlika skoro nikad nije bila u sadržaju. <strong>Bila je u prvoj odluci:</strong> za koga je proizvod i da li ti ljudi već plaćaju za rešenje.</p>
+        <p>Tu odluku većina preskoči. Uzme prvu ideju koja zvuči dobro, potroši tri meseca na pravljenje i onda shvati da niko ne kupuje. Ne zato što nisu dovoljno dobri, nego zato što niko nije proverio nišu pre nego što su krenuli.</p>
+        <p>Zato u ponedeljak ne držim predavanje. Radimo zajedno. Ti na svom primeru, ja uživo pred svima, sa AI-jem, na temama iz chata. Za 90 minuta izlaziš sa <strong>nišom, profilom kupca i dokazom da ljudi već plaćaju</strong> za taj problem.</p>
+        <p class="pismo-molba">Imam samo jednu molbu: dođi uživo i ostani do kraja.</p>
+
+        <p class="pismo-potpis">Vidimo se u ponedeljak u 19h,<br><strong>Vladimir</strong></p>
+
+        <div class="pismo-ps">
+          <b>P.S.</b> Večeras zapiši jednu stvar za koju te ljudi najčešće pitaju za savet, a ti im pomažeš besplatno. Sa tim krećemo u ponedeljak.
+        </div>
+      </div>
+    </article>
+
+    <!-- ============ ODBROJAVANJE ============ -->
+    <section class="hvala-odbrojavanje" aria-label="Odbrojavanje do radionice">
+      <p>Radionica počinje za</p>
+      <div class="countdown" role="timer">
+        <div class="box"><div class="broj" id="cd-dana">0</div><div class="lab">dana</div></div>
+        <div class="box"><div class="broj" id="cd-sati">0</div><div class="lab">sati</div></div>
+        <div class="box"><div class="broj" id="cd-min">0</div><div class="lab">min</div></div>
+        <div class="box"><div class="broj" id="cd-sek">0</div><div class="lab">sek</div></div>
       </div>
     </section>
 
@@ -127,6 +202,6 @@ alt=""></noscript>
   </div>
 </main>
 
-<script src="assets/js/hvala.js?v=6" defer></script>
+<script src="assets/js/hvala.js?v=7" defer></script>
 </body>
 </html>

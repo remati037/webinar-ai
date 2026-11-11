@@ -955,3 +955,172 @@ footer a { color: var(--muted); }
 .podeli-fb { border-color: rgba(24, 119, 242, 0.5); }
 
 .podeli-btn[hidden] { display: none; }
+
+/* ============================================================
+   /hvala: napredak, 3 koraka, poruka od Vladimira, odbrojavanje
+   ============================================================ */
+:root { --lime: #D4F53C; --anton: 'Anton', Impact, 'Arial Narrow', sans-serif; }
+
+/* napredak (samo odmah posle prijave) */
+.napredak { text-align: center; padding: 6px 0 4px; }
+.napredak-red { display: flex; justify-content: space-between; align-items: baseline; max-width: 520px; margin: 0 auto; }
+.napredak-tekst { font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--violet-pale); }
+.napredak-broj { font-family: var(--anton); font-size: 22px; color: var(--text); }
+.napredak-traka {
+  max-width: 520px; height: 10px; margin: 8px auto 0;
+  border-radius: 99px; background: rgba(255,238,220,0.08); overflow: hidden;
+}
+.napredak-traka span {
+  display: block; height: 100%; width: 97%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #A83C0C, #FF8B45);
+  box-shadow: 0 0 18px rgba(242,106,31,0.6);
+  animation: napuni 1.4s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes napuni { from { width: 30%; } }
+.napredak h1 {
+  margin-top: 26px;
+  font-family: var(--anton);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-size: clamp(36px, 7vw, 56px);
+  line-height: 1;
+}
+.napredak-pod { margin: 14px auto 0; max-width: 46ch; color: var(--muted); font-size: 16.5px; }
+
+/* koraci */
+.koraci-hvala { list-style: none; display: grid; gap: 14px; }
+.korak-hvala {
+  position: relative;
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: 16px;
+  padding: 24px 22px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.korak-hvala:first-child {
+  border-color: var(--line-strong);
+  background: linear-gradient(160deg, rgba(242,106,31,0.14), rgba(242,106,31,0.02) 60%);
+}
+.korak-br {
+  width: 46px; height: 46px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: #F26A1F;
+  color: #140A04;
+  font-family: var(--anton);
+  font-size: 22px;
+}
+.korak-telo h2 {
+  font-family: var(--anton);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-size: clamp(24px, 4vw, 30px);
+  line-height: 1.05;
+}
+.korak-telo p { margin-top: 8px; color: var(--muted); font-size: 15.5px; }
+.korak-telo p strong { color: var(--text); font-weight: 600; }
+.korak-dugmad { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 10px; }
+.dugme-glavno, .dugme-sporedno {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 14px 22px;
+  border-radius: 8px;
+  font-weight: 800;
+  font-size: 14.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 0.14s ease, background-color 0.14s ease;
+}
+.dugme-glavno { background: #F26A1F; color: #140A04; box-shadow: 0 10px 30px rgba(242,106,31,0.3); }
+.dugme-glavno:hover { background: #FF8B45; transform: translateY(-1px); }
+.dugme-sporedno { border: 1px solid var(--line-strong); color: var(--violet-pale); background: rgba(242,106,31,0.06); }
+.dugme-sporedno:hover { background: rgba(242,106,31,0.14); }
+.dugme-sporedno[hidden] { display: none; }
+.dugme-glavno:focus-visible, .dugme-sporedno:focus-visible { outline: 3px solid var(--violet-pale); outline-offset: 2px; }
+
+.korak-poklon { border-color: rgba(212,245,60,0.3); grid-template-columns: 46px 1fr; }
+.korak-poklon .korak-br { background: var(--lime); color: #0E1206; }
+.korak-poklon .korak-telo p strong { color: var(--lime); }
+.korak-knjiga {
+  grid-column: 2;
+  width: 110px;
+  border-radius: 3px 6px 6px 3px;
+  transform: rotate(-4deg);
+  box-shadow: -10px 16px 34px rgba(0,0,0,0.55), 0 0 40px rgba(212,245,60,0.15);
+}
+
+/* poruka od Vladimira */
+.pismo {
+  margin-top: 10px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  background: #110D0A;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+}
+.pismo-foto { display: block; position: relative; }
+.pismo-foto img { display: block; width: 100%; height: auto; aspect-ratio: 960 / 407; object-fit: cover; object-position: 50% 15%; }
+.pismo-foto::after {
+  content: ""; position: absolute; inset: auto 0 0 0; height: 45%;
+  background: linear-gradient(180deg, transparent, #110D0A);
+}
+.pismo-telo { padding: 6px 30px 32px; }
+.pismo-telo h2 {
+  font-family: var(--anton);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  font-size: clamp(30px, 5vw, 42px);
+  line-height: 1.02;
+  margin-bottom: 18px;
+}
+.pismo-telo p { margin-top: 14px; font-size: 17px; line-height: 1.7; color: #D6CCC0; }
+.pismo-telo p strong { color: var(--text); font-weight: 700; }
+.pismo-molba {
+  padding: 14px 18px;
+  border-left: 3px solid #F26A1F;
+  background: rgba(242,106,31,0.08);
+  border-radius: 0 10px 10px 0;
+  color: var(--text) !important;
+  font-weight: 700;
+  font-size: 18px !important;
+}
+.pismo-potpis { margin-top: 22px !important; }
+.pismo-potpis strong { font-family: var(--anton); font-weight: 400; font-size: 26px; letter-spacing: 0.02em; color: var(--violet-light) !important; }
+.pismo-ps {
+  margin-top: 22px;
+  padding: 16px 18px;
+  border-radius: 10px;
+  border: 1px dashed var(--line-strong);
+  font-size: 15.5px;
+  color: var(--muted);
+}
+.pismo-ps b { color: var(--violet-pale); margin-right: 4px; }
+
+/* odbrojavanje */
+.hvala-odbrojavanje { text-align: center; padding: 10px 0 6px; }
+.hvala-odbrojavanje > p { font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.hvala-odbrojavanje .countdown { margin-top: 12px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .napredak-traka span { animation: none; }
+  .dugme-glavno, .dugme-sporedno { transition: none; }
+}
+@media (min-width: 641px) {
+  .korak-poklon { grid-template-columns: 46px 1fr 120px; align-items: center; }
+  .korak-knjiga { grid-column: auto; width: 120px; }
+  .pismo-telo { padding: 8px 48px 40px; }
+}
+@media (max-width: 640px) {
+  .korak-hvala { grid-template-columns: 38px 1fr; gap: 12px; padding: 20px 16px; }
+  .korak-br { width: 38px; height: 38px; font-size: 19px; }
+  .korak-dugmad a { flex: 1 1 100%; }
+  .pismo-telo { padding: 4px 20px 26px; }
+  .pismo-telo p { font-size: 16px; }
+  .hvala-odbrojavanje .countdown .box { width: 70px; }
+}

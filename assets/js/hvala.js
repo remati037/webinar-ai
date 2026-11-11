@@ -34,6 +34,9 @@
 
   if (svezaPrijava && el.potvrda) el.potvrda.hidden = false;
 
+  pripremiMejlDugmad();
+  pokreniOdbrojavanje();
+
   if (!kljuc) {
     prikaziGresku("Ovaj link nema tvoj lični ključ, pa ne mogu da nađem tvoje podatke. Otvori link koji ti je stigao na email.", true);
     return;
@@ -61,6 +64,8 @@
     if (svezaPrijava && el.potvrdaIme && p.ime) {
       el.potvrdaIme.textContent = ", " + p.ime;
     }
+    var pismoIme = document.getElementById("pismo-ime");
+    if (pismoIme && p.ime) pismoIme.textContent = " " + p.ime;
 
     // referal link
     el.linkPolje.value = p.ref_link;
@@ -95,6 +100,49 @@
     el.stanjeTekst.textContent = poruka;
     el.stanje.classList.add("stanje-greska");
     if (ponudiPrijavu) el.stanjeAkcija.hidden = false;
+  }
+
+  // ---------- korak 2: dugme za mejl ----------
+
+  // Forma pamti samo domen mejla (gmail.com, outlook.com...), ne celu adresu,
+  // pa ovde nudimo bas taj sanduce. Bez domena ostaju Gmail i Outlook.
+  var SANDUCICI = {
+    gmail: ["Otvori Gmail", "https://mail.google.com/mail/u/0/#search/in%3Aanywhere+Mesto+je+rezervisano"],
+    outlook: ["Otvori Outlook", "https://outlook.live.com/mail/0/"],
+    yahoo: ["Otvori Yahoo Mail", "https://mail.yahoo.com/"],
+    icloud: ["Otvori iCloud Mail", "https://www.icloud.com/mail"]
+  };
+
+  function pripremiMejlDugmad() {
+    var glavno = document.getElementById("mejl-glavno");
+    var sporedno = document.getElementById("mejl-sporedno");
+    if (!glavno || !sporedno) return;
+    var domen = "";
+    try { domen = (localStorage.getItem("vebinar_email_domen") || "").toLowerCase(); } catch (e) {}
+    var vrsta =
+      /^(gmail|googlemail)\./.test(domen) ? "gmail" :
+      /^(outlook|hotmail|live|msn)\./.test(domen) ? "outlook" :
+      /^(yahoo|ymail)\./.test(domen) ? "yahoo" :
+      /^(icloud|me|mac)\./.test(domen) ? "icloud" : "";
+    if (!vrsta || vrsta === "gmail") return; // podrazumevano: Gmail + Outlook
+    glavno.textContent = SANDUCICI[vrsta][0];
+    glavno.href = SANDUCICI[vrsta][1];
+    sporedno.hidden = true;
+  }
+
+  // ---------- odbrojavanje ----------
+
+  function pokreniOdbrojavanje() {
+    var POCETAK = new Date("2026-11-16T19:00:00+01:00");
+    var polja = ["dana", "sati", "min", "sek"].map(function (n) { return document.getElementById("cd-" + n); });
+    if (!polja[0]) return;
+    function osvezi() {
+      var r = Math.max(0, POCETAK - new Date());
+      var v = [Math.floor(r / 864e5), Math.floor(r % 864e5 / 36e5), Math.floor(r % 36e5 / 6e4), Math.floor(r % 6e4 / 1e3)];
+      polja.forEach(function (p, i) { p.textContent = v[i]; });
+    }
+    osvezi();
+    setInterval(osvezi, 1000);
   }
 
   // ---------- deljenje ----------
