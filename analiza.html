@@ -330,11 +330,15 @@
       danas.setHours(0, 0, 0, 0);
       dana = Math.round((new Date(d.vebinar + "T00:00:00") - danas) / 864e5);
     }
+    // Posete se broje tek od pocetka A/B testa, pa se i prijave racunaju samo od tada.
+    var uTestu = d.varijante.length
+      ? d.varijante.reduce(function (z, r) { return z + (r.ime === "-" ? 0 : r.broj); }, 0)
+      : k.ukupno;
     var kpi = [
       ["glavni", broj(k.ukupno), "Ukupno prijava", k.poslednja ? "poslednja " + vreme(k.poslednja) : ""],
       ["", broj(k.danas), "Danas", "juče " + broj(k.juce)],
       ["", broj(k.h24), "Poslednja 24h", "7 dana: " + broj(k.d7)],
-      ["", k.posete == null ? "–" : pct(k.ukupno, k.posete), "Konverzija landinga", k.posete == null ? "nema podataka o posetama" : broj(k.posete) + " posetilaca"],
+      ["", k.posete == null ? "–" : pct(uTestu, k.posete), "Konverzija landinga", k.posete == null ? "nema podataka o posetama" : broj(uTestu) + " od " + broj(k.posete) + " posetilaca"],
       ["", pct(k.preko_preporuke, k.ukupno), "Preko preporuke", broj(k.preko_preporuke) + " od " + broj(k.aktivnih_preporucilaca) + " ljudi"],
       ["", dana == null ? "–" : (dana > 0 ? broj(dana) : dana === 0 ? "danas" : "prošao"), dana > 0 ? "Dana do vebinara" : "Vebinar", k.ponovljene ? broj(k.ponovljene) + " prijavilo se ponovo" : ""]
     ];
