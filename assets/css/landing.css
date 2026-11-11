@@ -1133,3 +1133,189 @@ footer a { color: var(--muted); text-decoration: none; }
   .besplatno { grid-template-columns: 1.15fr 1fr; gap: 28px; }
   .racun { position: sticky; top: 90px; }
 }
+
+/* ============================================================
+   POKLONI (Meta Ads prirucnik + ostali pokloni)
+   Prirucnik ima svoju limeta boju sa korice, da se odvoji od
+   narandzaste i izgleda kao poseban predmet.
+   ============================================================ */
+:root { --lime: #D4F53C; }
+
+/* mala traka sa poklonom (hero) */
+.poklon-traka {
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 540px;
+  padding: 10px 16px 10px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(212, 245, 60, 0.35);
+  background: linear-gradient(90deg, rgba(212, 245, 60, 0.1), rgba(212, 245, 60, 0.02));
+  text-decoration: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.poklon-traka:hover { border-color: var(--lime); transform: translateY(-1px); }
+.poklon-traka img {
+  width: 44px;
+  height: auto;
+  border-radius: 3px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+  transform: rotate(-4deg);
+  flex: none;
+}
+.poklon-traka span { font-size: 13.5px; color: var(--muted); line-height: 1.4; }
+.poklon-traka b { display: block; color: var(--lime); font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+
+/* red sa poklonom u formi i popupu */
+.forma-poklon {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px dashed rgba(212, 245, 60, 0.4);
+  background: rgba(212, 245, 60, 0.06);
+  font-size: 13.5px;
+  color: var(--muted);
+}
+.forma-poklon b { color: var(--lime); font-weight: 700; }
+
+/* sekcija */
+.pokloni-blok {
+  overflow: hidden;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(700px 400px at 15% 45%, rgba(212, 245, 60, 0.09), transparent 70%),
+    radial-gradient(600px 300px at 100% 0%, rgba(242, 106, 31, 0.12), transparent 70%),
+    var(--bg);
+}
+.poklon {
+  margin-top: 40px;
+  display: grid;
+  gap: 36px;
+  align-items: center;
+  padding: 28px 22px;
+  border-radius: 18px;
+  border: 1px solid rgba(212, 245, 60, 0.28);
+  background: rgba(18, 15, 12, 0.7);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.45);
+}
+
+/* knjiga: korica napred, strana sa sadrzajem iza nje */
+.poklon-knjiga {
+  position: relative;
+  width: min(78%, 300px);
+  margin: 10px auto 18px;
+  aspect-ratio: 720 / 1020;
+  perspective: 1400px;
+}
+.poklon-knjiga img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px 8px 8px 4px;
+}
+.knjiga-zadnja {
+  transform: translate(16%, 4%) rotate(6deg);
+  opacity: 0.9;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.55);
+}
+.knjiga-prednja {
+  transform: rotateY(-14deg) rotate(-3deg);
+  box-shadow:
+    inset 6px 0 10px -6px rgba(255, 255, 255, 0.25),
+    -18px 30px 60px rgba(0, 0, 0, 0.6),
+    0 0 80px rgba(212, 245, 60, 0.18);
+  transition: transform 0.4s ease;
+}
+.poklon:hover .knjiga-prednja { transform: rotateY(-6deg) rotate(-2deg) translateY(-6px); }
+.poklon-pecat {
+  position: absolute;
+  top: -14px; left: -16px;
+  z-index: 2;
+  width: 78px; height: 78px;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  border-radius: 50%;
+  background: var(--lime);
+  color: #0E1206;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  transform: rotate(-12deg);
+  box-shadow: 0 10px 30px rgba(212, 245, 60, 0.35);
+}
+.poklon-pecat b { font-family: var(--display); font-weight: 400; font-size: 26px; letter-spacing: 0; }
+
+.poklon-znak {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 4px;
+  background: rgba(212, 245, 60, 0.12);
+  color: var(--lime);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.poklon-opis h3 {
+  margin-top: 12px;
+  font-family: var(--display);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: clamp(30px, 5vw, 46px);
+  line-height: 1.02;
+}
+.poklon-opis p { margin-top: 12px; color: var(--muted); font-size: 16px; max-width: 56ch; }
+.poklon-opis p strong { color: var(--text); font-weight: 600; }
+.poklon-teme { list-style: none; margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px; }
+.poklon-teme li {
+  padding: 5px 11px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-size: 13px;
+  color: var(--text);
+}
+.poklon-teme li:last-child { border-color: rgba(212, 245, 60, 0.45); color: var(--lime); }
+
+.pokloni-ostalo { margin-top: 14px; display: grid; gap: 12px; }
+.ostali-poklon {
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.ostali-poklon .br { font-family: var(--display); font-size: 22px; color: var(--orange); }
+.ostali-poklon h3 { margin-top: 4px; font-size: 17px; font-weight: 700; }
+.ostali-poklon p { margin-top: 4px; font-size: 14.5px; color: var(--muted); }
+
+.pokloni-uslov {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 18px;
+}
+.pokloni-uslov p { max-width: 56ch; color: var(--muted); }
+.pokloni-uslov p strong { color: var(--orange-light); }
+.pokloni-uslov .garancije { margin-top: -4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .knjiga-prednja, .poklon-traka { transition: none; }
+}
+@media (min-width: 640px) {
+  .poklon { padding: 40px; }
+  .pokloni-ostalo { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 960px) {
+  .poklon { grid-template-columns: 340px 1fr; gap: 64px; padding: 48px 56px; }
+  .poklon-knjiga { width: 100%; margin: 0; }
+}
+.forma-poklon > span { margin-right: 4px; }

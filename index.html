@@ -64,7 +64,7 @@
     if (pregled) d.setAttribute("data-pregled", "");
   })();
   </script>
-  <link rel="stylesheet" href="assets/css/landing.css?v=2">
+  <link rel="stylesheet" href="assets/css/landing.css?v=4">
 
   <!-- ============================================================
        META PIXEL. ID 539402290072454. Ovde samo PageView.
@@ -114,6 +114,11 @@
 
         <p class="pod">Za 90 minuta zajedno biramo temu i <strong>uživo, uz AI, proveravamo da li za nju postoje kupci</strong>. Ovo nije prezentacija koju gledaš. Ovo je radionica u kojoj radiš, po istom redosledu po kom sam od 2020. prodao preko 50.000 digitalnih proizvoda.</p>
 
+        <a href="#pokloni" class="poklon-traka">
+          <img src="assets/img/meta-ads-prirucnik-korica.webp" width="720" height="1020" alt="" decoding="async">
+          <span><b>Poklon za one koji ostanu do kraja</b>Meta Ads priručnik za digitalne proizvode, 26 strana</span>
+        </a>
+
         <div class="hero-cta-blok">
           <a href="#prijava" class="cta-btn hero-cta" data-cta>Rezerviši besplatno mesto <span class="strelica" aria-hidden="true">→</span></a>
           <ul class="garancije">
@@ -147,6 +152,7 @@
         <h2 id="forma-naslov">Rezerviši svoje mesto</h2>
         <p class="forma-podnaslov">Besplatno. Link za ulazak ti stiže na email.</p>
         <span class="mesta" id="mesta-info">Ostalo još <span data-mesta-ostalo>100</span> od 400 mesta</span>
+        <p class="forma-poklon"><span aria-hidden="true">🎁</span> Ko ostane do kraja, dobija <b>Meta Ads priručnik</b> na poklon</p>
 
         <!-- Varijanta B: ovde stoji samo dugme, a forma (#forma-mesto)
              se seli u popup (#prijava-modal). Radi assets/js/ab.js. -->
@@ -321,8 +327,8 @@
 
       <article class="deo rv">
         <div class="deo-vreme"><span class="sat">20:05</span><span>Deo 3 · 25 min</span></div>
-        <h3>Tvoja pitanja i ponuda samo za prisutne</h3>
-        <p>Odgovaram na pitanja uživo. Na kraju predstavljam InfoCash Akcelerator i specijalnu ponudu koja važi samo za one koji su uživo.</p>
+        <h3>Tvoja pitanja, pokloni i ponuda za prisutne</h3>
+        <p>Odgovaram na pitanja uživo i predstavljam InfoCash Akcelerator sa specijalnom ponudom samo za prisutne. <strong>Na samom kraju delim poklone, među njima i Meta Ads priručnik, svima koji su ostali do kraja.</strong></p>
       </article>
 
     </div>
@@ -376,18 +382,71 @@
   </div>
 </section>
 
-<!-- ============ BONUS ZA PRISUTNE ============ -->
-<section class="blok" style="padding-top:0;">
-  <div class="wrap uzi">
-    <div class="bonus rv">
-      <p class="oznaka">Samo uživo</p>
-      <h2>Za one koji budu <span class="nar">uživo u 19:00</span></h2>
-      <ul>
-        <li>Ekskluzivni <strong>bonus paket</strong> koji delim samo na radionici</li>
-        <li><strong>Specijalni popust</strong> na InfoCash Akcelerator, rezervisan za prisutne</li>
-        <li>Live Q&amp;A u kom <strong>mi postavljaš pitanje direktno</strong></li>
+<!-- ============ POKLONI ZA PRISUTNE ============
+     Glavni poklon je Meta Ads prirucnik (PDF, 26 strana). Slike korice i
+     strane sa sadrzajem su iz samog PDF-a: assets/img/meta-ads-prirucnik-*.webp
+     Uslov: dobija ga ko dodje uzivo i ostane do kraja. Poklon se pominje i u
+     heroju, formi, popupu, agendi, FAQ i finalu (trazi "poklon" ako menjas uslove). -->
+<section class="blok pokloni-blok" id="pokloni">
+  <div class="wrap">
+    <p class="oznaka rv">Pokloni za one koji ostanu do kraja</p>
+    <h2 class="naslov rv">Ostani do kraja. <span class="nar">Odnosiš i poklone.</span></h2>
+    <p class="uvod rv">Svako ko dođe uživo i <strong>ostane do kraja</strong> dobija paket poklona. Glavni je priručnik iz InfoCash Akceleratora. Delim ih na samom kraju radionice.</p>
+
+    <div class="poklon rv">
+      <div class="poklon-knjiga" aria-hidden="true">
+        <img class="knjiga-zadnja" src="assets/img/meta-ads-prirucnik-sadrzaj.webp" width="600" height="849" loading="lazy" decoding="async" alt="">
+        <img class="knjiga-prednja" src="assets/img/meta-ads-prirucnik-korica.webp" width="720" height="1020" loading="lazy" decoding="async" alt="">
+        <span class="poklon-pecat">Poklon<br><b>#1</b></span>
+      </div>
+
+      <div class="poklon-opis">
+        <span class="poklon-znak">Glavni poklon · PDF · 26 strana</span>
+        <h3>Meta Ads za digitalne proizvode</h3>
+        <p>Kompletan sistem za prodaju e-knjiga, kurseva, vebinara i zajednica kroz Fejsbuk i Instagram reklame. <strong>Od prve brojke do skaliranja</strong>, u 12 koraka koji idu redom.</p>
+        <p>Sve što piše u njemu dolazi iz kampanja na srpskom tržištu, sa mojih naloga i naloga partnera. Bez filozofije, svaki deo je za primenu.</p>
+        <ul class="poklon-teme" aria-label="Šta je u priručniku">
+          <li>Finansijski model</li>
+          <li>Ponuda</li>
+          <li>Avatari kupaca</li>
+          <li>Meta Andromeda</li>
+          <li>Oglasi</li>
+          <li>Prodajna stranica</li>
+          <li>Piksel i CAPI</li>
+          <li>Mejlovi</li>
+          <li>Kampanje</li>
+          <li>Skaliranje</li>
+          <li>Čeklista pre lansiranja</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pokloni-ostalo">
+      <div class="ostali-poklon rv">
+        <span class="br">#2</span>
+        <h3>Bonus paket sa radionice</h3>
+        <p>Dodatni materijali koje delim na kraju, samo onima koji su ostali.</p>
+      </div>
+      <div class="ostali-poklon rv">
+        <span class="br">#3</span>
+        <h3>Specijalni popust</h3>
+        <p>Na InfoCash Akcelerator, rezervisan samo za prisutne.</p>
+      </div>
+      <div class="ostali-poklon rv">
+        <span class="br">#4</span>
+        <h3>Live Q&amp;A</h3>
+        <p>Pitanje mi postavljaš direktno i dobijaš odgovor uživo.</p>
+      </div>
+    </div>
+
+    <div class="pokloni-uslov rv">
+      <p><strong>Snimka neće biti.</strong> Pokloni se dele na samom kraju radionice, u ponedeljak 16. novembra. Ko nije tu do kraja, ne dobija ih.</p>
+      <a href="#prijava" class="cta-btn" data-cta>Hoću mesto i poklone <span class="strelica" aria-hidden="true">→</span></a>
+      <ul class="garancije">
+        <li>Ne treba ti gotova ideja</li>
+        <li>Ne treba ti velika publika</li>
+        <li>Besplatan AI alat je dovoljan</li>
       </ul>
-      <p class="napomena"><strong>Snimka neće biti.</strong> Sve što se dešava na radionici, dešava se samo uživo, 16. novembra u 19h.</p>
     </div>
   </div>
 </section>
@@ -514,6 +573,7 @@
           <li><b>Test niše sa četiri filtera</b>, za ovu i svaku sledeću ideju</li>
           <li><b>Promptovi</b> koje kucam uživo za istraživanje kupaca</li>
           <li><b>Jedna niša</b> i profil osobe kojoj prodaješ</li>
+          <li><b>Meta Ads priručnik</b> na poklon, ako ostaneš do kraja</li>
         </ul>
         <div class="racun-cena">
           <span>Cena</span>
@@ -586,6 +646,10 @@
         <p>Ne. Radionica je samo uživo, 16. novembra u 19h. Bonusi i specijalna ponuda važe samo za prisutne, zato ubaci termin u kalendar odmah posle prijave.</p>
       </details>
       <details class="rv">
+        <summary>Koje poklone dobijam?</summary>
+        <p>Svi koji dođu uživo i ostanu do kraja dobijaju Meta Ads priručnik za digitalne proizvode (PDF, 26 strana, 12 koraka od brojki do skaliranja) i bonus paket sa radionice. Pokloni se dele na samom kraju, samo onima koji su još tu. Prisutni dobijaju i specijalni popust na InfoCash Akcelerator.</p>
+      </details>
+      <details class="rv">
         <summary>Mogu li da pratim sa telefona?</summary>
         <p>Možeš. Za vežbe je lakše sa laptopa, jer ti u drugom prozoru stoji otvoren AI alat.</p>
       </details>
@@ -606,7 +670,7 @@
   <div class="wrap">
     <p class="oznaka rv" style="justify-content:center;">Ponedeljak, 16. novembar u 19:00</p>
     <h2 class="naslov rv">Za 90 minuta odluka koju odlažeš <span class="nar">mesecima</span></h2>
-    <p class="rv">Uživo online. 400 mesta. Bez snimka. Jedna prijava te deli od niše za tvoj prvi digitalni proizvod.</p>
+    <p class="rv">Uživo online. 400 mesta. Bez snimka. Jedna prijava te deli od niše za tvoj prvi digitalni proizvod, a ko ostane do kraja odnosi i <strong>Meta Ads priručnik</strong> na poklon.</p>
     <div class="countdown" id="countdown2" aria-hidden="true">
       <div class="box"><div class="broj" id="cd2-dana">0</div><div class="lab">dana</div></div>
       <div class="box"><div class="broj" id="cd2-sati">0</div><div class="lab">sati</div></div>
@@ -629,7 +693,7 @@
 <!-- Traka sa dugmetom na mobilnom. Pojavljuje se kad forma izadje iz
      ekrana, a sakriva se kad je forma ili finale ponovo vidljivo. -->
 <div class="lepljivo" id="lepljivo" aria-hidden="true">
-  <div class="lepljivo-tekst"><strong>Pon, 16. nov u 19:00</strong>Još <span data-mesta-ostalo>100</span> od 400 mesta</div>
+  <div class="lepljivo-tekst"><strong>Pon, 16. nov u 19:00</strong>🎁 Poklon ako ostaneš do kraja</div>
   <a href="#prijava" class="cta-btn" tabindex="-1" data-cta>Rezerviši mesto</a>
 </div>
 
@@ -648,6 +712,7 @@
     <h2 id="modal-naslov">Osiguraj svoje mesto</h2>
     <p class="modal-pod">Upiši gde da ti pošaljem link za ulazak. Radionica je u <strong>ponedeljak, 16.11. u 19:00</strong>.</p>
     <span class="mesta">Ostalo još <span data-mesta-ostalo>100</span> od 400 mesta</span>
+    <p class="forma-poklon"><span aria-hidden="true">🎁</span> Ko ostane do kraja, dobija <b>Meta Ads priručnik</b> na poklon</p>
     <div id="modal-mesto"></div>
   </div>
 </div>
@@ -756,6 +821,14 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "Ne. Radionica je samo uživo, 16. novembra u 19h. Bonusi i specijalna ponuda važe samo za prisutne, zato ubaci termin u kalendar odmah posle prijave."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Koje poklone dobijam?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Svi koji dođu uživo i ostanu do kraja dobijaju Meta Ads priručnik za digitalne proizvode (PDF, 26 strana, 12 koraka od brojki do skaliranja) i bonus paket sa radionice. Pokloni se dele na samom kraju, samo onima koji su još tu. Prisutni dobijaju i specijalni popust na InfoCash Akcelerator."
           }
         },
         {
