@@ -64,7 +64,7 @@
     if (pregled) d.setAttribute("data-pregled", "");
   })();
   </script>
-  <link rel="stylesheet" href="assets/css/landing.css?v=6">
+  <link rel="stylesheet" href="assets/css/landing.css?v=9">
 
   <!-- ============================================================
        META PIXEL. ID 539402290072454. Ovde samo PageView.
@@ -99,6 +99,16 @@
 
 <!-- ============ HERO + FORMA ============ -->
 <header class="hero">
+  <!-- Vladimir u studiju, preko cele sirine na vrhu (kao kod Tibora).
+       Tekst krece ispod lica, slika se pri dnu topi u pozadinu. -->
+  <div class="hero-foto" aria-hidden="true">
+    <picture>
+      <source media="(max-width: 959px)" srcset="assets/img/vlada-studio-mob.webp">
+      <img src="assets/img/vlada-studio-1600.webp"
+           srcset="assets/img/vlada-studio-960.webp 960w, assets/img/vlada-studio-1600.webp 1600w"
+           sizes="100vw" width="1600" height="679" alt="" fetchpriority="high" decoding="async">
+    </picture>
+  </div>
   <div class="wrap">
     <div class="hero-mreza">
 
