@@ -1,10 +1,10 @@
-// Vercel Routing Middleware. /snimak je zakljucan sifrom.
+// Vercel Routing Middleware. /snimak i /studio su zakljucani sifrom.
 // Sifra je ista kao za /ab i /analiza (AB_KLJUC na Vercelu).
 // Pregledac sam otvara prozor za korisnicko ime i sifru: ime moze biti bilo sta,
 // bitna je samo sifra. Pokriva i /snimak.html da se ne bi zaobislo.
 
 export const config = {
-  matcher: ["/snimak", "/snimak/", "/snimak.html"],
+  matcher: ["/snimak", "/snimak/", "/snimak.html", "/studio", "/studio/", "/studio.html"],
 };
 
 function istiTekst(a, b) {
@@ -32,7 +32,7 @@ export default function middleware(request) {
   return new Response("Potrebna je šifra.", {
     status: 401,
     headers: {
-      "WWW-Authenticate": 'Basic realm="Snimak", charset="UTF-8"',
+      "WWW-Authenticate": 'Basic realm="Interno", charset="UTF-8"',
       "Content-Type": "text/plain; charset=utf-8",
       "Cache-Control": "no-store",
       "X-Robots-Tag": "noindex, nofollow",

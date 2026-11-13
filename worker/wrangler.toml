@@ -1,0 +1,25 @@
+# Cloudflare Worker za "uzivo" deo vebinara: chat, objave, ankete, reakcije,
+# pracenje gledanja i video stream (HLS iz R2, pusta se samo ono sto je "emitovano").
+# Uputstvo: worker/UPUTSTVO.md
+
+name = "vebinar-stream"
+main = "src/index.js"
+compatibility_date = "2026-04-07"
+compatibility_flags = ["nodejs_compat"]
+
+[[durable_objects.bindings]]
+name = "SOBA"
+class_name = "Soba"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Soba"]
+
+[[r2_buckets]]
+binding = "VIDEO"
+bucket_name = "vebinar-video"
+
+# Tajne se ne pisu ovde nego:  npx wrangler secret put IME
+#   LIVE_TAJNA    potpisivanje ulaznica (bilo koja duga nasumicna lozinka)
+#   STUDIO_KLJUC  sifra za /studio (moze ista kao AB_KLJUC na Vercelu)
+#   DATABASE_URL  (opciono) Neon, da se ucesnici upisu i u glavnu bazu

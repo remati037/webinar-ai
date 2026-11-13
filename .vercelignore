@@ -5,3 +5,5 @@ uputstvo-*.md
 db/
 skripte/
 mejlovi/
+worker/
+.studio-kljuc.txt

@@ -10,3 +10,9 @@ node_modules/
 npm-debug.log*
 .env
 .env.local
+
+# Worker
+worker/.hls/
+worker/.wrangler/
+worker/.dev.vars
+.studio-kljuc.txt

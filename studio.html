@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Studio · Radionica uživo</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="live-api" content="https://vebinar-stream.vladimirst95.workers.dev">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/studio.css">
+</head>
+<body>
+
+  <section id="prijava" class="prijava" hidden>
+    <form id="forma-kljuc" class="kartica">
+      <h1>Studio</h1>
+      <p>Upiši šifru studija (STUDIO_KLJUC).</p>
+      <input type="password" name="k" autocomplete="current-password" placeholder="Šifra" required>
+      <p class="greska" id="kljuc-greska"></p>
+      <button class="dugme">Uđi</button>
+    </form>
+  </section>
+
+  <section id="app" class="app" hidden>
+    <header class="vrh">
+      <strong>Studio</strong>
+      <nav class="tabovi">
+        <button data-tab="uzivo" class="aktivan">Uživo</button>
+        <button data-tab="analitika">Analitika</button>
+        <button data-tab="podesavanja">Podešavanja</button>
+      </nav>
+      <div class="vrh-status">
+        <span id="st-faza" class="faza">—</span>
+        <span>Online <b id="st-online">0</b></span>
+        <span>Ukupno ušlo <b id="st-ukupno">0</b></span>
+        <span class="veza" id="st-veza">●</span>
+      </div>
+    </header>
+
+    <!-- ============ UŽIVO ============ -->
+    <main class="tab tab-uzivo" data-tab="uzivo">
+      <aside class="lista">
+        <div class="lista-vrh">
+          <input id="pretraga" placeholder="Pretraži ime ili email">
+          <label class="samo-nove"><input type="checkbox" id="samo-neprocitane"> Samo nepročitane</label>
+        </div>
+        <div id="razgovori" class="razgovori"></div>
+      </aside>
+
+      <section class="razgovor">
+        <div class="razgovor-vrh" id="razgovor-vrh"><p class="prazno">Izaberi razgovor sa leve strane.</p></div>
+        <div class="poruke" id="poruke"></div>
+        <form class="odgovor" id="forma-odgovor" hidden>
+          <textarea id="tekst-odgovor" rows="2" placeholder="Odgovor (Enter šalje, Shift+Enter novi red)"></textarea>
+          <button class="dugme">Pošalji</button>
+        </form>
+        <div class="brzi" id="brzi-odgovori" hidden></div>
+      </section>
+
+      <aside class="kontrole">
+        <div class="blok">
+          <label class="mali">Tvoje ime (vide ga učesnici kao „Ime (tim)")</label>
+          <input id="moje-ime" placeholder="npr. Marko" maxlength="40">
+        </div>
+
+        <div class="blok blok-ponuda">
+          <h3>Ponuda</h3>
+          <p class="mali" id="ponuda-pregled">—</p>
+          <button class="dugme narandzasto" id="posalji-ponudu">Pošalji ponudu svima</button>
+        </div>
+
+        <div class="blok">
+          <h3>Poruka svima</h3>
+          <textarea id="tekst-objava" rows="3" placeholder="Vide je svi učesnici, kao poruku domaćina"></textarea>
+          <div class="red">
+            <input id="objava-od" placeholder="Od (prazno = domaćin)" maxlength="40">
+            <button class="dugme" id="posalji-objavu">Pošalji svima</button>
+          </div>
+          <div id="objave" class="objave"></div>
+        </div>
+
+        <div class="blok">
+          <h3>Anketa</h3>
+          <input id="anketa-pitanje" placeholder="Pitanje">
+          <textarea id="anketa-opcije" rows="3" placeholder="Odgovori, svaki u novom redu (2 do 6)"></textarea>
+          <button class="dugme" id="pokreni-anketu">Pokreni anketu</button>
+          <div id="ankete"></div>
+        </div>
+
+        <div class="blok">
+          <h3>Reakcije</h3>
+          <div id="reakcije" class="reakcije"></div>
+        </div>
+      </aside>
+    </main>
+
+    <!-- ============ ANALITIKA ============ -->
+    <main class="tab tab-analitika" data-tab="analitika" hidden>
+      <div class="analitika-vrh">
+        <div class="kpi" id="kpi"></div>
+        <div class="red">
+          <button class="dugme sivo" id="osvezi-stats">Osveži</button>
+          <button class="dugme sivo" id="izvoz-csv">Preuzmi CSV</button>
+        </div>
+      </div>
+      <div class="kartica-bela">
+        <h3>Koliko ljudi je gledalo, po minutu</h3>
+        <div id="grafikon" class="grafikon"></div>
+      </div>
+      <div class="kartica-bela">
+        <h3>Učesnici</h3>
+        <div class="tabela-omot"><table id="tabela"></table></div>
+      </div>
+    </main>
+
+    <!-- ============ PODEŠAVANJA ============ -->
+    <main class="tab tab-podesavanja" data-tab="podesavanja" hidden>
+      <form id="forma-cfg" class="kartica-bela cfg">
+        <h3>Prenos</h3>
+        <label>Naslov radionice <input name="naslov"></label>
+        <label>Ime domaćina (na videu) <input name="voditelj"></label>
+        <label>Početak videa (tvoje lokalno vreme) <input name="start" type="datetime-local" step="1"></label>
+        <label>Soba se otvara (minuta pre početka) <input name="vrata" type="number" min="0" max="240"></label>
+        <p class="mali" id="cfg-trajanje"></p>
+
+        <h3>Ponuda</h3>
+        <label>Naslov <input name="p_naslov"></label>
+        <label>Opis <textarea name="p_opis" rows="3"></textarea></label>
+        <label>Link za kupovinu <input name="p_link" type="url" placeholder="https://"></label>
+        <label>Tekst dugmeta <input name="p_dugme"></label>
+        <label>Automatski prikaži ponudu u minutu snimka (prazno = isključeno) <input name="autoPonudaMinut" type="number" min="0" step="0.5"></label>
+
+        <h3>Chat</h3>
+        <label>Poruka dobrodošlice ({ime} = ime učesnika) <textarea name="dobrodoslica" rows="3"></textarea></label>
+        <label>Dobrodošlicu šalje <input name="dobrodoslicaOd"></label>
+        <label>Tekst na kraju radionice <input name="krajPoruka"></label>
+
+        <div class="red">
+          <button class="dugme">Sačuvaj</button>
+          <span class="mali" id="cfg-sacuvano"></span>
+        </div>
+      </form>
+
+      <div class="kartica-bela cfg">
+        <h3>Proba</h3>
+        <p class="mali">Za test pre radionice. Ne diraj na dan radionice.</p>
+        <div class="red">
+          <button class="dugme sivo" data-za="1">Počni za 1 min</button>
+          <button class="dugme sivo" data-za="0">Počni sada</button>
+          <button class="dugme sivo" id="vrati-start">Vrati na 16.11. 18:58</button>
+        </div>
+        <div class="red" style="margin-top:16px">
+          <button class="dugme crveno" id="resetuj">Obriši sve podatke (poruke, statistiku, ankete)</button>
+        </div>
+      </div>
+    </main>
+  </section>
+
+  <script src="/assets/js/studio.js"></script>
+</body>
+</html>

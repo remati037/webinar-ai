@@ -47,6 +47,12 @@ nekoliko Vercel serverless funkcija i Neon Postgres baza za prijave i referale.
 └── .gitignore
 ```
 
+## Radionica uživo (/uzivo i /studio)
+
+Simulirani prenos uživo: video se pušta svima u isto vreme, privatni chat sa timom,
+poruke svima, ponuda, ankete, reakcije i analitika gledanja. Uživo deo radi na
+Cloudflare Worker-u u folderu `worker/`. Postavljanje i proba: [worker/UPUTSTVO.md](worker/UPUTSTVO.md).
+
 ## Lokalni pregled
 
 ```bash
