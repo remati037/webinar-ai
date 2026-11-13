@@ -42,7 +42,7 @@ cd worker
 ./skripte/pripremi-video.sh /putanja/do/radionica.mp4
 ```
 
-Skripta pretvara video u HLS (delovi od 6 sekundi) i šalje ga u R2. Za video od 90 minuta
+Skripta pretvara video u HLS (delovi od 6 sekundi), normalizuje jačinu zvuka i šalje ga u R2. Za video od 90 minuta
 traje nekoliko minuta. Za zamenu videa samo je pokreni ponovo sa novim fajlom.
 
 ## 4. Podešavanja u /studio
@@ -87,5 +87,7 @@ Na `localhost` stranice same koriste lokalni Worker.
 |---|---|
 | Vreme, ponuda, dobrodošlica, tekst na kraju | `/studio` → Podešavanja |
 | Brzi odgovori u studiju | `assets/js/studio.js`, `BRZI` |
-| Kašnjenje prenosa (sada oko 12 s, kao kod pravih prenosa) | `assets/js/uzivo.js`, `liveSyncDurationCount` |
+| Rezerva i sinhronizacija prenosa | `PRED` u `worker/src/index.js` i `liveSyncDuration` u `assets/js/uzivo.js` (drugi broj treba da bude za oko 3 veći) |
 | Izgled sobe | `assets/css/uzivo.css` |
+
+Posle izmene JS ili CSS fajla promeni broj `?v=` u `uzivo.html` / `studio.html`. Fajlovi se keširaju 7 dana, pa bez toga ljudi koji su već bili na stranici dobijaju staru verziju.
