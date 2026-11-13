@@ -258,7 +258,8 @@
         // pa nema zastoja (zastoj se cuje kao isecen zvuk). Ko zaostane vise od 45 s
         // (spavao telefon, losa mreza), plejer ga sam vraca na "uzivo".
         liveSyncDuration: 21,
-        liveMaxLatencyDuration: 45,
+        liveMaxLatencyDuration: 58,
+        autoStartLoad: false, // pocetnu poziciju racunamo sami, vidi LEVEL_LOADED ispod
         maxBufferLength: 30,
         backBufferLength: 10,
         manifestLoadingMaxRetry: 20,
@@ -276,9 +277,33 @@
       hls.loadSource(adresaPrenosa());
       hls.attachMedia(video);
       hls.on(Hls.Events.MANIFEST_PARSED, () => pusti());
+      // Ivica playliste je do 24 s ispred "sada" i pomera se u koracima od 6 s. Zato
+      // pri ulasku racunamo tacno koliko je ivica ispred trenutnog vremena (po
+      // EXT-X-PROGRAM-DATE-TIME) i toliko stojimo iza nje: ko je tu na pocetku,
+      // gleda od nulte sekunde, a svi ostali tacno trenutak "uzivo".
+      let pocetak = false;
+      hls.on(Hls.Events.LEVEL_LOADED, (_, d) => {
+        if (pocetak) return;
+        pocetak = true;
+        const f = d.details && d.details.fragments;
+        const zadnji = f && f[f.length - 1];
+        if (zadnji && zadnji.programDateTime) {
+          const ispred = (zadnji.programDateTime + zadnji.duration * 1000 - sad()) / 1000;
+          if (ispred > 0.5 && ispred < 55) hls.config.liveSyncDuration = ispred;
+        }
+        hls.startLoad(-1);
+      });
     } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
       video.src = adresaPrenosa();
-      video.addEventListener("loadedmetadata", pusti, { once: true });
+      video.addEventListener("loadedmetadata", () => {
+        // Safari (iPhone) sam bira mesto u prenosu; postavljamo ga na tacno "sada".
+        const d = video.getStartDate && video.getStartDate();
+        if (d && !isNaN(d.getTime())) {
+          const cilj = (sad() - d.getTime()) / 1000;
+          if (cilj >= 0 && Math.abs(video.currentTime - cilj) > 1) { try { video.currentTime = cilj; } catch {} }
+        }
+        pusti();
+      }, { once: true });
       video.load();
     }
   }
