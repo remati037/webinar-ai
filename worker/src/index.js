@@ -93,7 +93,7 @@ function uredjaj(ua) {
 
 // ---------- video: playlista iz R2 ----------
 
-let _video = null; // { segmenti: [{uri, dur, od}], ukupno, target }
+let _video = null; // { segmenti: [{uri, dur, od}], ukupno, target, verzija }
 let _videoVreme = 0;
 
 async function ucitajVideo(env) {
@@ -111,7 +111,8 @@ async function ucitajVideo(env) {
       od += dur;
     }
   }
-  _video = { segmenti, ukupno: od, target };
+  // verzija: menja se kad se postavi nov video, pa kes na ivici ne servira stare delove
+  _video = { segmenti, ukupno: od, target, verzija: (obj.etag || String(obj.uploaded?.getTime() || "")).replace(/\W/g, "") };
   _videoVreme = Date.now();
   return _video;
 }
@@ -126,7 +127,11 @@ async function javnaPodesavanja(env) {
   return _cfg;
 }
 
-const PROZOR = 5; // koliko delova je u "live" playlisti
+// Server daje delove videa PRED sekundi unapred, da pregledac ima rezervu i ne
+// zastaje (zastoj se cuje kao isecen zvuk). Gde se pusta odredjuje klijent, po
+// EXT-X-PROGRAM-DATE-TIME: uvek tacno "sada", isto za sve gledaoce.
+const PRED = 18;
+const PROZOR = 10; // koliko delova je u playlisti
 
 async function playlista(env) {
   const video = await ucitajVideo(env);
@@ -136,15 +141,14 @@ async function playlista(env) {
   if (proteklo < 0) return new Response("jos nije pocelo", { status: 404, headers: { ...CORS, "Cache-Control": "no-store" } });
 
   const zavrseno = proteklo >= video.ukupno;
-  // Deo je "emitovan" cim je njegov pocetak prosao, kao kod pravog prenosa.
-  let poslednji = video.segmenti.findIndex((s) => s.od > proteklo) - 1;
+  let poslednji = video.segmenti.findIndex((s) => s.od > proteklo + PRED) - 1;
   if (poslednji < 0) poslednji = video.segmenti.length - 1;
   const prvi = Math.max(0, poslednji - PROZOR + 1);
 
   let out = `#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-TARGETDURATION:${video.target}\n#EXT-X-MEDIA-SEQUENCE:${prvi}\n`;
   for (let i = prvi; i <= poslednji; i++) {
     const s = video.segmenti[i];
-    out += `#EXTINF:${s.dur.toFixed(3)},\ns/${s.uri}\n`;
+    out += `#EXT-X-PROGRAM-DATE-TIME:${new Date(cfg.start + s.od * 1000).toISOString()}\n#EXTINF:${s.dur.toFixed(3)},\ns/${s.uri}\n`;
   }
   if (zavrseno) out += "#EXT-X-ENDLIST\n";
   return new Response(out, {
@@ -159,11 +163,11 @@ async function deoVidea(env, ime, request, ctx) {
   if (!seg) return new Response("nema", { status: 404, headers: CORS });
   const cfg = await javnaPodesavanja(env);
   const proteklo = (Date.now() - cfg.start) / 1000;
-  if (seg.od > proteklo + 2) return new Response("nema", { status: 404, headers: CORS });
+  if (seg.od > proteklo + PRED + 2) return new Response("nema", { status: 404, headers: CORS });
 
   // Kes na ivici: isti deo gleda hiljade ljudi u istom trenutku.
   const cache = caches.default;
-  const kesKljuc = new Request(new URL(`/__seg/${ime}`, request.url).toString());
+  const kesKljuc = new Request(new URL(`/__seg/${video.verzija}/${ime}`, request.url).toString());
   let odg = await cache.match(kesKljuc);
   if (!odg) {
     const obj = await env.VIDEO.get(`video/${ime}`);

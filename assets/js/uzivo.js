@@ -253,9 +253,13 @@
 
     if (window.Hls && Hls.isSupported()) {
       hls = new Hls({
-        liveSyncDurationCount: 2,
-        liveMaxLatencyDurationCount: 5,
-        maxBufferLength: 18,
+        // Server daje delove 18 s unapred (PRED u worker/src/index.js), a plejer stoji
+        // 21 s iza ivice. Tako je slika +-3 s od stvarnog "sada" i uvek ima rezervu,
+        // pa nema zastoja (zastoj se cuje kao isecen zvuk). Ko zaostane vise od 45 s
+        // (spavao telefon, losa mreza), plejer ga sam vraca na "uzivo".
+        liveSyncDuration: 21,
+        liveMaxLatencyDuration: 45,
+        maxBufferLength: 30,
         backBufferLength: 10,
         manifestLoadingMaxRetry: 20,
         manifestLoadingRetryDelay: 1500,
@@ -278,6 +282,8 @@
       video.load();
     }
   }
+
+  if (LOKALNO) window.__uzivo = { get hls() { return hls; }, video };
 
   function zaustaviPrenos() {
     if (!prenosPokrenut) return;
@@ -312,10 +318,6 @@
   // Nema pauze: ako bilo sta zaustavi video (slusalice, tastatura, sistem), nastavlja se.
   video.addEventListener("pause", () => { if (prenosPokrenut && !napustio) setTimeout(() => { if (prenosPokrenut && video.paused) video.play().catch(() => {}); }, 300); });
   video.addEventListener("ratechange", () => { if (video.playbackRate !== 1) video.playbackRate = 1; });
-  document.addEventListener("visibilitychange", () => {
-    // Posle povratka na tab skacemo na "uzivo" trenutak.
-    if (!document.hidden && hls && hls.liveSyncPosition && video.currentTime < hls.liveSyncPosition - 10) video.currentTime = hls.liveSyncPosition;
-  });
   if ("mediaSession" in navigator) {
     for (const a of ["pause", "seekbackward", "seekforward", "seekto", "previoustrack", "nexttrack"]) {
       try { navigator.mediaSession.setActionHandler(a, a === "pause" ? () => video.play() : () => {}); } catch {}
