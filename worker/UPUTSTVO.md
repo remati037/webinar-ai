@@ -42,7 +42,7 @@ cd worker
 ./skripte/pripremi-video.sh /putanja/do/radionica.mp4
 ```
 
-Skripta pretvara video u HLS (delovi od 6 sekundi), normalizuje jačinu zvuka i šalje ga u R2. Za video od 90 minuta
+Skripta pretvara video u HLS (delovi od 6 sekundi, 720p), pojača tih zvuk jednim stalnim pojačanjem i šalje ga u R2. Za video od 90 minuta
 traje nekoliko minuta. Za zamenu videa samo je pokreni ponovo sa novim fajlom.
 
 ## 4. Podešavanja u /studio
