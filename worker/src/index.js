@@ -93,7 +93,7 @@ function uredjaj(ua) {
 
 // ---------- video: playlista iz R2 ----------
 
-let _video = null; // { segmenti: [{uri, dur, od}], ukupno, target, verzija }
+let _video = null; // { segmenti: [{uri, dur, od}], ukupno, target, verzija, init }
 let _videoVreme = 0;
 
 async function ucitajVideo(env) {
@@ -102,9 +102,10 @@ async function ucitajVideo(env) {
   if (!obj) return null;
   const tekst = await obj.text();
   const segmenti = [];
-  let dur = 0, od = 0, target = 6;
+  let dur = 0, od = 0, target = 6, init = null;
   for (const red of tekst.split("\n").map((r) => r.trim())) {
     if (red.startsWith("#EXT-X-TARGETDURATION:")) target = parseInt(red.split(":")[1], 10) || 6;
+    else if (red.startsWith("#EXT-X-MAP:")) { const m = red.match(/URI="([^"]+)"/); if (m) init = m[1]; }
     else if (red.startsWith("#EXTINF:")) dur = parseFloat(red.slice(8));
     else if (red && !red.startsWith("#")) {
       segmenti.push({ uri: red, dur, od });
@@ -112,7 +113,7 @@ async function ucitajVideo(env) {
     }
   }
   // verzija: menja se kad se postavi nov video, pa kes na ivici ne servira stare delove
-  _video = { segmenti, ukupno: od, target, verzija: (obj.etag || String(obj.uploaded?.getTime() || "")).replace(/\W/g, "") };
+  _video = { segmenti, ukupno: od, target, init, verzija: (obj.etag || String(obj.uploaded?.getTime() || "")).replace(/\W/g, "") };
   _videoVreme = Date.now();
   return _video;
 }
@@ -149,7 +150,9 @@ async function playlista(env) {
   if (poslednji < 0) return nijePocelo();
   const prvi = Math.max(0, poslednji - PROZOR + 1);
 
-  let out = `#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-TARGETDURATION:${video.target}\n#EXT-X-MEDIA-SEQUENCE:${prvi}\n`;
+  // fMP4 delovi (EXT-X-MAP) idu pregledacu bez prepakivanja zvuka; .ts delovi kao ranije.
+  let out = `#EXTM3U\n#EXT-X-VERSION:${video.init ? 7 : 3}\n#EXT-X-TARGETDURATION:${video.target}\n#EXT-X-MEDIA-SEQUENCE:${prvi}\n`;
+  if (video.init) out += `#EXT-X-MAP:URI="s/${video.init}"\n`;
   for (let i = prvi; i <= poslednji; i++) {
     const s = video.segmenti[i];
     out += `#EXT-X-PROGRAM-DATE-TIME:${new Date(cfg.start + s.od * 1000).toISOString()}\n#EXTINF:${s.dur.toFixed(3)},\ns/${s.uri}\n`;
@@ -163,11 +166,15 @@ async function playlista(env) {
 async function deoVidea(env, ime) {
   const video = await ucitajVideo(env);
   if (!video) return new Response("nema", { status: 404, headers: CORS });
-  const seg = video.segmenti.find((s) => s.uri === ime);
-  if (!seg) return new Response("nema", { status: 404, headers: CORS });
-  const cfg = await javnaPodesavanja(env);
-  const proteklo = (Date.now() - cfg.start) / 1000;
-  if (seg.od > proteklo + PRED + 2) return new Response("nema", { status: 404, headers: CORS });
+  const jeInit = video.init && ime === video.init;
+  const seg = jeInit ? null : video.segmenti.find((s) => s.uri === ime);
+  if (!jeInit && !seg) return new Response("nema", { status: 404, headers: CORS });
+  if (seg) {
+    const cfg = await javnaPodesavanja(env);
+    const proteklo = (Date.now() - cfg.start) / 1000;
+    if (seg.od > proteklo + PRED + 2) return new Response("nema", { status: 404, headers: CORS });
+  }
+  const tip = /\.ts$/.test(ime) ? "video/mp2t" : "video/mp4";
 
   // Svi gledaoci traze isti deo u istih par sekundi. Deo se posle prvog citanja iz R2
   // drzi u memoriji instance servera (Cloudflare-ov kes ne radi na workers.dev adresi).
@@ -182,7 +189,7 @@ async function deoVidea(env, ime) {
     _delovi.set(kljuc, bajtovi);
     while (_delovi.size > MEMORIJA_DELOVA) _delovi.delete(_delovi.keys().next().value);
   }
-  return new Response(bajtovi, { headers: { ...CORS, "Content-Type": "video/mp2t", "Cache-Control": "private, max-age=3600" } });
+  return new Response(bajtovi, { headers: { ...CORS, "Content-Type": tip, "Cache-Control": "private, max-age=3600" } });
 }
 
 const MEMORIJA_DELOVA = 14; // ~14 delova po 2-3 MB, daleko ispod 128 MB po instanci
@@ -256,7 +263,7 @@ export default {
         return json({ ok: istiKljuc(url.searchParams.get("k"), env.STUDIO_KLJUC) });
       }
 
-      const m = p.match(/^\/stream\/([^/]+)\/(live\.m3u8|s\/([\w.-]+\.ts))$/);
+      const m = p.match(/^\/stream\/([^/]+)\/(live\.m3u8|s\/([\w.-]+\.(?:ts|m4s|mp4)))$/);
       if (m) {
         if (!(await proveriUlaznicu(env, decodeURIComponent(m[1])))) return new Response("ne", { status: 401, headers: CORS });
         if (m[2] === "live.m3u8") return playlista(env);
