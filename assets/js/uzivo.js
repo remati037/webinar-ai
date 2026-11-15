@@ -98,6 +98,7 @@
     $("ekran-ulaz").hidden = true;
     $("ekran-soba").hidden = false;
     postaviPanel(!mobilni());
+    zauzmiTab();
     poveziSe();
     setInterval(otkucaj, 500);
     otkucaj();
@@ -273,7 +274,7 @@
   }
 
   function pokreniPrenos(unapred) {
-    if (prenosPokrenut) return;
+    if (prenosPokrenut || drugiTab) return;
     prenosPokrenut = true;
     cekaPocetak = !!unapred;
     $("stanje-povezivanje").hidden = cekaPocetak;
@@ -300,6 +301,7 @@
         fragLoadingMaxRetry: 10,
       });
       hls.on(Hls.Events.ERROR, (_, d) => {
+        if (window.__dijagHls) window.__dijagHls(d.details + (d.fatal ? " (fatalno)" : ""));
         if (!d.fatal) { if (d.details === "bufferStalledError") postaviVezu("slaba"); return; }
         postaviVezu("slaba");
         if (d.type === Hls.ErrorTypes.MEDIA_ERROR) { hls.recoverMediaError(); return; }
@@ -736,6 +738,78 @@
     postaviRuku(gore);
     if (gore) obavesti("Ruka je podignuta ✋", "Tim radionice vidi da imaš pitanje. Možeš i da ga napišeš u chatu.");
   });
+
+  // ---------- jedan tab ----------
+  // Dva taba sa radionicom u istom pregledacu pustaju isti zvuk sa razmakom od par
+  // desetina milisekundi, sto zvuci kao robot. Noviji tab preuzima, stariji staje.
+  const mojTab = Math.random().toString(36).slice(2);
+  let drugiTab = false;
+  let kanal = null;
+  try { kanal = new BroadcastChannel("uzivo-radionica"); } catch {}
+  function zauzmiTab() {
+    drugiTab = false;
+    $("stanje-drugi-tab").hidden = true;
+    if (kanal) kanal.postMessage({ t: "ovde", id: mojTab });
+  }
+  if (kanal) {
+    kanal.onmessage = (e) => {
+      const m = e.data || {};
+      if (m.t === "ovde" && m.id !== mojTab && !drugiTab) {
+        drugiTab = true;
+        zaustaviPrenos();
+        $("stanje-drugi-tab").hidden = false;
+      }
+      if (m.t === "ping" && m.id !== mojTab) kanal.postMessage({ t: "pong", id: mojTab });
+      if (m.t === "pong" && m.id !== mojTab) dijagTabovi.add(m.id);
+    };
+  }
+  $("dugme-ovde").addEventListener("click", () => { zauzmiTab(); poslednjeStanje = ""; otkucaj(); });
+
+  // ---------- dijagnostika (/uzivo?dijagnostika=1) ----------
+  const dijagTabovi = new Set();
+  try { if (/[?&]dijagnostika=1/.test(location.search)) sessionStorage.setItem("dijag", "1"); } catch {}
+  let dijagUkljucena = false;
+  try { dijagUkljucena = sessionStorage.getItem("dijag") === "1"; } catch {}
+  if (dijagUkljucena) {
+    const d = $("dijag");
+    d.hidden = false;
+    const brojaci = { waiting: 0, stalled: 0, seeking: 0, ratechange: 0, pause: 0, hlsGreske: [] };
+    ["waiting", "stalled", "seeking", "ratechange", "pause"].forEach((ev) => video.addEventListener(ev, () => brojaci[ev]++));
+    let poslednjiOtkucaj = performance.now(), maxKasnjenje = 0, aud0 = 0, vreme0 = performance.now();
+    setInterval(() => {
+      const sadP = performance.now();
+      maxKasnjenje = Math.max(maxKasnjenje, sadP - poslednjiOtkucaj - 250);
+      poslednjiOtkucaj = sadP;
+    }, 250);
+    setInterval(() => {
+      dijagTabovi.clear();
+      if (kanal) kanal.postMessage({ t: "ping", id: mojTab });
+      const sb = hls && hls.bufferController && hls.bufferController.sourceBuffer || {};
+      const opsezi = (b) => { try { return b ? Array.from({ length: b.buffered.length }, (_, i) => b.buffered.start(i).toFixed(2) + "-" + b.buffered.end(i).toFixed(2)).join(" ") : "-"; } catch { return "?"; } };
+      const q = video.getVideoPlaybackQuality ? video.getVideoPlaybackQuality() : {};
+      const aud = video.webkitAudioDecodedByteCount || 0;
+      const audBrzina = ((aud - aud0) / ((performance.now() - vreme0) / 1000) / 1024).toFixed(1);
+      aud0 = aud; vreme0 = performance.now();
+      const pd = hls && hls.playingDate;
+      const red = [
+        `stvarno ${cfg ? ((sad() - cfg.start) / 1000).toFixed(1) : "-"} s   video ${pd ? ((pd.getTime() - cfg.start) / 1000).toFixed(1) : "-"} s   t=${video.currentTime.toFixed(2)}`,
+        `brzina ${video.playbackRate}  pauza ${video.paused}  utisan ${video.muted}  jacina ${video.volume}`,
+        `bafer audio ${opsezi(sb.audio)}`,
+        `bafer video ${opsezi(sb.video)}`,
+        `bafer zajedno ${opsezi(sb.audiovideo)}`,
+        `zastoji ${brojaci.waiting}  stalled ${brojaci.stalled}  premotavanja ${brojaci.seeking}  promene brzine ${brojaci.ratechange}  pauze ${brojaci.pause}`,
+        `kadrovi izgubljeni ${q.droppedVideoFrames ?? "-"} od ${q.totalVideoFrames ?? "-"}   dekodiran zvuk ${audBrzina} KB/s`,
+        `kasnjenje glavne niti max ${Math.round(maxKasnjenje)} ms   tab skriven ${document.hidden}`,
+        `plejer ${hls ? "hls.js" : (video.currentSrc ? "Safari" : "nije pokrenut")}  kasnjenje ${hls && hls.latency ? hls.latency.toFixed(1) : "-"} s  propusnost ${hls && hls.bandwidthEstimate ? (hls.bandwidthEstimate / 1e6).toFixed(1) + " Mbit/s" : "-"}`,
+        `drugih tabova sa radionicom ${dijagTabovi.size}`,
+        `hls upozorenja: ${brojaci.hlsGreske.slice(-4).join(" | ") || "nema"}`,
+        navigator.userAgent.replace(/\(KHTML.*$/, ""),
+      ];
+      d.textContent = red.join("\n");
+      maxKasnjenje = 0;
+    }, 1000);
+    window.__dijagHls = (det) => { brojaci.hlsGreske.push(((sad() - (cfg ? cfg.start : 0)) / 1000).toFixed(0) + "s " + det); };
+  }
 
   // ---------- izlazak ----------
 

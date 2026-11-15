@@ -130,6 +130,12 @@ video::-webkit-media-controls-start-playback-button, video::-webkit-media-contro
 .vrtesko { width: 38px; height: 38px; border-radius: 50%; border: 3px solid rgba(255,255,255,.15); border-top-color: #fff; animation: vrti .9s linear infinite; }
 @keyframes vrti { to { transform: rotate(360deg) } }
 .stanje-kraj { overflow-y: auto; }
+#stanje-drugi-tab { z-index: 6; }
+.dijag {
+  position: absolute; z-index: 8; left: 8px; top: 8px; max-width: calc(100% - 16px); max-height: calc(100% - 16px); overflow: auto;
+  background: rgba(0,0,0,.82); color: #9effa8; font: 11.5px/1.35 ui-monospace, Menlo, monospace; padding: 8px 10px; border-radius: 6px;
+  white-space: pre-wrap; pointer-events: none;
+}
 
 .zvuk-kapija {
   position: absolute; z-index: 4; left: 50%; top: 50%; transform: translate(-50%, -50%);
