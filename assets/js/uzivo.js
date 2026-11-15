@@ -429,8 +429,7 @@
     zvukDozvoljen = true;
     utisano = false;
     $("alatka-zvuk").classList.remove("utisano");
-    // Kratak "otkljucavajuci" play u okviru klika (Safari i iPhone ga pamte za ovaj video).
-    try { video.muted = false; const p = video.play(); if (p) p.then(() => { if (cekaPocetak || !prenosPokrenut) video.pause(); }).catch(() => {}); } catch {}
+    // Sam klik pregledacu dozvoljava zvuk; video se NE pokrece ovde (krenuo bi pre pocetka).
     osveziDugmeZvuka();
   });
   osveziDugmeZvuka();
