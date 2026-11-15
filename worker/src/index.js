@@ -160,7 +160,7 @@ async function playlista(env) {
   });
 }
 
-async function deoVidea(env, ime, request, ctx) {
+async function deoVidea(env, ime) {
   const video = await ucitajVideo(env);
   if (!video) return new Response("nema", { status: 404, headers: CORS });
   const seg = video.segmenti.find((s) => s.uri === ime);
@@ -169,18 +169,24 @@ async function deoVidea(env, ime, request, ctx) {
   const proteklo = (Date.now() - cfg.start) / 1000;
   if (seg.od > proteklo + PRED + 2) return new Response("nema", { status: 404, headers: CORS });
 
-  // Kes na ivici: isti deo gleda hiljade ljudi u istom trenutku.
-  const cache = caches.default;
-  const kesKljuc = new Request(new URL(`/__seg/${video.verzija}/${ime}`, request.url).toString());
-  let odg = await cache.match(kesKljuc);
-  if (!odg) {
+  // Svi gledaoci traze isti deo u istih par sekundi. Deo se posle prvog citanja iz R2
+  // drzi u memoriji instance servera (Cloudflare-ov kes ne radi na workers.dev adresi).
+  const kljuc = `${video.verzija}/${ime}`;
+  let bajtovi = _delovi.get(kljuc);
+  if (bajtovi) {
+    _delovi.delete(kljuc); _delovi.set(kljuc, bajtovi);
+  } else {
     const obj = await env.VIDEO.get(`video/${ime}`);
     if (!obj) return new Response("nema", { status: 404, headers: CORS });
-    odg = new Response(obj.body, { headers: { "Content-Type": "video/mp2t", "Cache-Control": "public, max-age=86400" } });
-    ctx.waitUntil(cache.put(kesKljuc, odg.clone()));
+    bajtovi = await obj.arrayBuffer();
+    _delovi.set(kljuc, bajtovi);
+    while (_delovi.size > MEMORIJA_DELOVA) _delovi.delete(_delovi.keys().next().value);
   }
-  return new Response(odg.body, { headers: { ...CORS, "Content-Type": "video/mp2t", "Cache-Control": "private, max-age=3600" } });
+  return new Response(bajtovi, { headers: { ...CORS, "Content-Type": "video/mp2t", "Cache-Control": "private, max-age=3600" } });
 }
+
+const MEMORIJA_DELOVA = 14; // ~14 delova po 2-3 MB, daleko ispod 128 MB po instanci
+const _delovi = new Map();  // kljuc -> ArrayBuffer, poslednji korisceni su na kraju
 
 // ---------- Neon (opciono) ----------
 
@@ -254,7 +260,7 @@ export default {
       if (m) {
         if (!(await proveriUlaznicu(env, decodeURIComponent(m[1])))) return new Response("ne", { status: 401, headers: CORS });
         if (m[2] === "live.m3u8") return playlista(env);
-        return deoVidea(env, m[3], request, ctx);
+        return deoVidea(env, m[3]);
       }
 
       if (p === "/") return new Response("ok", { headers: CORS });

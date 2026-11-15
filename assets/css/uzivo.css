@@ -118,6 +118,12 @@ video::-webkit-media-controls-start-playback-button, video::-webkit-media-contro
 .stanje h2 { font-size: clamp(17px, 2.4vw, 24px); letter-spacing: -.01em; max-width: 30ch; }
 .stanje p { color: var(--muted); font-size: 14.5px; max-width: 44ch; }
 .stanje .dugme-glavno { width: auto; margin-top: 8px; }
+.ceka-zvuk {
+  margin-top: 10px; display: inline-flex; align-items: center; gap: 8px; background: var(--plava); color: #fff;
+  font-weight: 600; padding: 11px 18px; border-radius: 10px; font-size: 15px;
+}
+.ceka-zvuk svg { width: 20px; height: 20px; }
+.stanje .ceka-zvuk-ok { color: var(--ok); font-weight: 600; font-size: 14px; margin-top: 6px; }
 .stanje-avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; margin-bottom: 6px; border: 3px solid var(--bg-4); }
 .odbrojavanje { font-variant-numeric: tabular-nums; font-size: clamp(26px, 4vw, 40px); font-weight: 700; letter-spacing: .02em; margin-top: 6px; }
 #stanje-povezivanje { background: rgba(0,0,0,.6); }

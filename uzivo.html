@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/uzivo.css?v=202611152045">
+  <link rel="stylesheet" href="/assets/css/uzivo.css?v=202611160026">
 </head>
 <body>
 
@@ -74,6 +74,11 @@
             <h2>Domaćin će uskoro započeti radionicu</h2>
             <p>Ostani na ovoj stranici. Prenos kreće automatski.</p>
             <div class="odbrojavanje" id="odbrojavanje">--:--</div>
+            <button type="button" class="ceka-zvuk" id="ceka-zvuk" hidden>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10v4h4l5 5V5L7 10H3Zm13.5 2A4.5 4.5 0 0 0 14 8v8a4.47 4.47 0 0 0 2.5-4ZM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06A9 9 0 0 0 14 3.23Z"/></svg>
+              Uključi zvuk za radionicu
+            </button>
+            <p class="ceka-zvuk-ok" id="ceka-zvuk-ok" hidden>✓ Zvuk je uključen</p>
           </div>
           <div class="stanje" id="stanje-zatvoreno" hidden>
             <h2>Soba još nije otvorena</h2>
@@ -205,6 +210,6 @@
   </div>
 
   <script src="/assets/js/vendor/hls.light.min.js"></script>
-  <script src="/assets/js/uzivo.js?v=202611152045"></script>
+  <script src="/assets/js/uzivo.js?v=202611160026"></script>
 </body>
 </html>

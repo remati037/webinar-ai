@@ -108,29 +108,32 @@
   function poveziSe() {
     if (napustio) return;
     try { ws && ws.close(); } catch {}
-    ws = new WebSocket(`${WS}/ws?t=${encodeURIComponent(ulaznica)}`);
+    const ovaj = new WebSocket(`${WS}/ws?t=${encodeURIComponent(ulaznica)}`);
+    ws = ovaj;
     let ping, ziv;
-    ws.onopen = () => {
+    ovaj.onopen = () => {
       wsPokusaj = 0;
       postaviVezu("dobra");
       ping = setInterval(() => posalji("ping"), 25000);
       ziv = setInterval(() => posalji({ t: "ziv" }), 60000);
     };
-    ws.onmessage = (e) => {
+    ovaj.onmessage = (e) => {
       if (e.data === "pong") return;
       let m; try { m = JSON.parse(e.data); } catch { return; }
       primi(m);
     };
-    ws.onclose = (e) => {
+    ovaj.onclose = (e) => {
       clearInterval(ping); clearInterval(ziv);
+      if (ws !== ovaj) return; // zatvorena stara konekcija, nova je vec otvorena
       if (napustio) return;
       if (e.code === 4000) { location.reload(); return; }
       postaviVezu("nema");
-      if (e.code === 1006 && wsPokusaj > 3 && !cfg) {
-        // ulaznica vise ne vazi (npr. promenjena tajna): trazimo ponovni ulaz
-        skladiste.del(KLJUC);
-        location.reload();
-        return;
+      if (wsPokusaj === 3 && !cfg) {
+        // Mozda ulaznica vise ne vazi (npr. promenjena tajna). Brisemo je samo ako
+        // server to potvrdi; ako server privremeno ne radi, samo pokusavamo ponovo.
+        fetch(adresaPrenosa()).then((r) => {
+          if (r.status === 401) { skladiste.del(KLJUC); location.reload(); }
+        }).catch(() => {});
       }
       wsPokusaj++;
       setTimeout(poveziSe, Math.min(15000, 600 * 2 ** Math.min(wsPokusaj, 5)) + Math.random() * 1000);
@@ -188,7 +191,15 @@
       if (!m.gore && m.tim) obavesti("Tim radionice", "Videli smo tvoju podignutu ruku. Odgovor stiže u chatu.");
       return;
     }
-    if (m.t === "cfg") { pomak = m.sad - Date.now(); cfg = m.cfg; primeniCfg(); prenosPokrenut && proveriVideoStanje(); return; }
+    if (m.t === "cfg") {
+      const stari = cfg;
+      pomak = m.sad - Date.now(); cfg = m.cfg; primeniCfg();
+      // Video se ponovo pokrece samo ako se promenio pocetak ili video. Izmena teksta
+      // ili linka ponude ne sme da zaustavi sliku gledaocima.
+      if (prenosPokrenut && (!stari || stari.start !== cfg.start || stari.trajanje !== cfg.trajanje)) proveriVideoStanje();
+      else if (!prenosPokrenut) { poslednjeStanje = ""; otkucaj(); }
+      return;
+    }
   }
 
   function primeniCfg() {
@@ -291,9 +302,9 @@
       hls.on(Hls.Events.ERROR, (_, d) => {
         if (!d.fatal) { if (d.details === "bufferStalledError") postaviVezu("slaba"); return; }
         postaviVezu("slaba");
-        if (d.type === Hls.ErrorTypes.NETWORK_ERROR) setTimeout(() => hls && hls.startLoad(-1), 2000);
-        else if (d.type === Hls.ErrorTypes.MEDIA_ERROR) hls.recoverMediaError();
-        else { zaustaviPrenos(); setTimeout(() => { poslednjeStanje = ""; }, 3000); }
+        if (d.type === Hls.ErrorTypes.MEDIA_ERROR) { hls.recoverMediaError(); return; }
+        // Mreza je pala duze od svih pokusaja: plejer krece ispocetka, na trenutak "uzivo".
+        ponovoZa(3000);
       });
       hls.loadSource(adresaPrenosa());
       hls.attachMedia(video);
@@ -321,6 +332,7 @@
       });
     } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
       video.src = adresaPrenosa();
+      video.onerror = () => { if (prenosPokrenut && !hls) ponovoZa(3000); };
       video.addEventListener("loadedmetadata", () => {
         // Safari (iPhone) sam bira mesto u prenosu; postavljamo ga na tacno "sada".
         const d = video.getStartDate && video.getStartDate();
@@ -351,6 +363,7 @@
     if (!prenosPokrenut) return;
     prenosPokrenut = false;
     if (hls) { hls.destroy(); hls = null; }
+    video.onerror = null;
     video.removeAttribute("src");
     try { video.load(); } catch {}
     $("stanje-povezivanje").hidden = true;
@@ -370,6 +383,14 @@
     }
   }
 
+  let tajmerPonovo = null;
+  function ponovoZa(ms) {
+    clearTimeout(tajmerPonovo);
+    zaustaviPrenos();
+    $("stanje-povezivanje").hidden = false;
+    tajmerPonovo = setTimeout(() => { poslednjeStanje = ""; otkucaj(); }, ms);
+  }
+
   function proveriVideoStanje() {
     poslednjeStanje = "";
     zaustaviPrenos();
@@ -381,11 +402,36 @@
   // Nema pauze: ako bilo sta zaustavi video (slusalice, tastatura, sistem), nastavlja se.
   video.addEventListener("pause", () => { if (prenosPokrenut && !cekaPocetak && !napustio) setTimeout(() => { if (prenosPokrenut && !cekaPocetak && video.paused) video.play().catch(() => {}); }, 300); });
   video.addEventListener("ratechange", () => { if (video.playbackRate !== 1) video.playbackRate = 1; });
+  // Zakljucan telefon ili drugi tab pauziraju video. Po povratku nastavlja, a ako je
+  // zaostao vise od pola minuta, vraca se na trenutak "uzivo".
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden || !prenosPokrenut || cekaPocetak || napustio) return;
+    if (hls && hls.latency && hls.targetLatency && hls.latency - hls.targetLatency > 30) { ponovoZa(0); return; }
+    if (video.paused) video.play().catch(() => { $("zvuk-kapija").hidden = false; });
+  });
   if ("mediaSession" in navigator) {
     for (const a of ["pause", "seekbackward", "seekforward", "seekto", "previoustrack", "nexttrack"]) {
       try { navigator.mediaSession.setActionHandler(a, a === "pause" ? () => video.play() : () => {}); } catch {}
     }
   }
+
+  // Ko je usao preko linka iz mejla nije nista kliknuo, pa bi mu pregledac pustio video
+  // bez zvuka. Klik na ovo dugme u cekaonici dozvoljava zvuk unapred.
+  let zvukDozvoljen = !!(navigator.userActivation && navigator.userActivation.hasBeenActive);
+  function osveziDugmeZvuka() {
+    $("ceka-zvuk").hidden = zvukDozvoljen;
+    $("ceka-zvuk-ok").hidden = !zvukDozvoljen;
+  }
+  document.addEventListener("pointerdown", () => { if (!zvukDozvoljen) { zvukDozvoljen = true; osveziDugmeZvuka(); } }, { capture: true });
+  $("ceka-zvuk").addEventListener("click", () => {
+    zvukDozvoljen = true;
+    utisano = false;
+    $("alatka-zvuk").classList.remove("utisano");
+    // Kratak "otkljucavajuci" play u okviru klika (Safari i iPhone ga pamte za ovaj video).
+    try { video.muted = false; const p = video.play(); if (p) p.then(() => { if (cekaPocetak || !prenosPokrenut) video.pause(); }).catch(() => {}); } catch {}
+    osveziDugmeZvuka();
+  });
+  osveziDugmeZvuka();
 
   $("zvuk-kapija").addEventListener("click", () => {
     utisano = false;
@@ -714,7 +760,14 @@
   // ---------- start ----------
 
   const sacuvano = skladiste.get(KLJUC);
-  if (sacuvano && sacuvano.ulaznica) {
+  // Link iz mejla sa drugim emailom od sacuvanog (dve osobe na istom uredjaju, proba
+  // tima): vazi link, ne stari ulaz.
+  const emailIzLinka = (new URLSearchParams(location.search).get("email") || "").trim().toLowerCase();
+  let emailSacuvan = "";
+  try { emailSacuvan = JSON.parse(decodeURIComponent(escape(atob(sacuvano.ulaznica.split(".")[0].replace(/-/g, "+").replace(/_/g, "/"))))).e || ""; } catch {}
+  if (sacuvano && emailIzLinka && emailSacuvan && emailIzLinka !== emailSacuvan) skladiste.del(KLJUC);
+  else if (sacuvano && sacuvano.ulaznica && emailIzLinka) history.replaceState(null, "", location.pathname);
+  if (sacuvano && sacuvano.ulaznica && !(emailIzLinka && emailSacuvan && emailIzLinka !== emailSacuvan)) {
     ulaznica = sacuvano.ulaznica; ime = sacuvano.ime || "";
     udjiUSobu(false);
   } else {
