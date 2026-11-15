@@ -73,7 +73,7 @@ svg { width: 22px; height: 22px; fill: currentColor; flex: none; }
 .ulaz-napomena { color: var(--muted); font-size: 12px; text-align: center; margin-top: 12px; }
 
 /* ---------- SOBA ---------- */
-.soba { height: 100%; display: flex; flex-direction: column; height: 100dvh; }
+.soba { display: flex; flex-direction: column; height: 100%; height: var(--app-h, 100dvh); }
 .soba-vrh {
   height: 48px; flex: none; display: flex; align-items: center; justify-content: space-between;
   padding: 0 16px; background: var(--bg); border-bottom: 1px solid var(--line); gap: 12px;
@@ -198,7 +198,9 @@ video::-webkit-media-controls-start-playback-button, video::-webkit-media-contro
 .panel-vrh { display: flex; justify-content: space-between; align-items: flex-start; padding: 14px 16px; border-bottom: 1px solid var(--line); }
 .panel-vrh h2 { font-size: 15px; }
 .panel-vrh p { font-size: 12.5px; color: var(--muted); }
-.panel-zatvori { font-size: 22px; color: var(--muted); width: 30px; height: 30px; margin: -4px -6px 0 0; }
+.panel-zatvori { color: var(--muted); width: 34px; height: 34px; margin: -6px -8px 0 0; border-radius: 8px; display: grid; place-items: center; }
+.panel-zatvori:hover { background: var(--bg-3); color: var(--text); }
+.panel-zatvori svg { width: 20px; height: 20px; }
 .poruke { flex: 1; overflow-y: auto; padding: 14px 14px 6px; display: flex; flex-direction: column; gap: 10px; -webkit-user-select: text; user-select: text; overscroll-behavior: contain; }
 .poruka { max-width: 86%; display: flex; flex-direction: column; }
 .poruka .ko { font-size: 12px; color: var(--muted); margin-bottom: 3px; display: flex; gap: 6px; align-items: baseline; }
@@ -231,11 +233,18 @@ video::-webkit-media-controls-start-playback-button, video::-webkit-media-contro
   display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 72px; padding: 8px 10px;
   border-radius: 10px; font-size: 12px; color: #d8dbe0; position: relative; transition: background .15s;
 }
-.alatka:hover { background: var(--bg-3); }
+@media (hover: hover) { .alatka:hover { background: var(--bg-3); } }
 .alatka .ik-bez { display: none; }
 .alatka.utisano .ik-zvuk { display: none; }
 .alatka.utisano .ik-bez { display: block; color: var(--crvena); }
 .alatka.aktivna { color: var(--plava); }
+#alatka-ruka[aria-pressed="true"] { color: #ffc940; background: rgba(255,201,64,.12); }
+#alatka-ruka[aria-pressed="true"] svg { animation: mahni 1.2s ease-in-out 2; transform-origin: 50% 90%; }
+@keyframes mahni { 0%,100% { transform: rotate(0) } 25% { transform: rotate(-14deg) } 75% { transform: rotate(14deg) } }
+@media (prefers-reduced-motion: reduce) { #alatka-ruka[aria-pressed="true"] svg, .leti, .uzivo .tacka { animation: none; } }
+
+/* deo ispod videa na telefonu (na racunaru se ne vidi) */
+.mob-info { display: none; }
 .alatka.napusti { margin-left: 18px; min-width: 0; }
 .alatka.napusti span { background: var(--crvena); color: #fff; padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 600; }
 .alatka.napusti:hover { background: none; }
@@ -268,30 +277,85 @@ video::-webkit-media-controls-start-playback-button, video::-webkit-media-contro
 
 /* ---------- TELEFON ---------- */
 @media (max-width: 900px) {
+  body { font-size: 15px; }
+  .soba-vrh { height: 46px; padding: 0 12px; padding-top: env(safe-area-inset-top, 0px); height: calc(46px + env(safe-area-inset-top, 0px)); }
+  .soba-naslov { font-size: 13.5px; gap: 8px; }
+  .soba-naslov img { width: 20px; height: 20px; }
+  .soba-status { gap: 8px; }
+  .vreme { font-size: 12px; }
+
   .soba-telo { flex-direction: column; }
   .pozornica { flex: none; padding: 0; }
   .video-okvir { border-radius: 0; max-width: none; }
-  .panel { width: auto; flex: 1; border-left: 0; border-top: 1px solid var(--line); }
-  .panel.zatvoren { display: flex; }
-  .panel-zatvori { display: none; }
-  .panel-vrh { padding: 10px 14px; }
-  .alatke { height: 60px; gap: 0; justify-content: space-around; }
-  .alatka { min-width: 0; padding: 6px 8px; font-size: 11px; }
-  .alatka.napusti { margin-left: 0; }
-  .alatka.napusti span { padding: 6px 12px; font-size: 13px; }
-  .sakrij-mob, #alatka-chat { display: none; }
-  .govornik { left: 8px; bottom: 8px; font-size: 12px; }
+  .govornik { left: 8px; bottom: 8px; font-size: 12px; padding: 3px 8px 3px 6px; }
   .stanje { padding: 14px; gap: 6px; }
-  .stanje-avatar { width: 56px; height: 56px; }
+  .stanje h2 { font-size: 16px; }
+  .stanje-avatar { width: 52px; height: 52px; margin-bottom: 2px; }
   .stanje p { font-size: 13px; }
+  .odbrojavanje { font-size: 26px; }
   .ponuda-plutajuca { display: none !important; }
   .objava-traka { top: 8px; padding: 9px 36px 9px 12px; }
   .objava-traka p { font-size: 13.5px; }
-  .obavestenje { display: none !important; }
-  .soba-vrh { height: 44px; padding: 0 12px; }
+  .obavestenje { left: 12px; right: 12px; width: auto; bottom: calc(72px + env(safe-area-inset-bottom, 0px)); }
+  .zvuk-kapija { padding: 11px 18px; font-size: 15px; }
+
+  /* ispod videa: ili informacije, ili otvoren chat */
+  .mob-info {
+    display: flex; flex-direction: column; gap: 12px; flex: 1; min-height: 0; overflow-y: auto;
+    padding: 14px 14px 16px; overscroll-behavior: contain;
+  }
+  .soba.chat-otvoren .mob-info { display: none; }
+  .mob-domacin { display: flex; gap: 12px; align-items: center; }
+  .mob-domacin img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex: none; border: 2px solid var(--bg-4); }
+  .mob-domacin strong { display: block; font-size: 15px; line-height: 1.3; text-wrap: balance; }
+  .mob-domacin span { color: var(--muted); font-size: 13px; }
+  .mob-domacin b { color: var(--text); font-weight: 500; }
+  #mob-ponuda:empty, #mob-objava:empty { display: none; }
+  #mob-objava .poruka { max-width: 100%; }
+  .mob-chat {
+    margin-top: auto; display: flex; align-items: center; gap: 12px; text-align: left; width: 100%;
+    background: var(--bg-2); border: 1px solid var(--bg-4); border-radius: 14px; padding: 14px; position: relative;
+  }
+  .mob-chat > svg { color: var(--plava); width: 26px; height: 26px; }
+  .mob-chat-tekst { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+  .mob-chat-tekst b { font-size: 15px; }
+  .mob-chat-tekst span { color: var(--muted); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mob-chat .znacka { position: static; flex: none; }
+
+  .panel { width: auto; flex: 1; border-left: 0; border-top: 1px solid var(--line); display: none; }
+  .soba.chat-otvoren .panel { display: flex; }
+  .panel.zatvoren { display: none; }
+  .panel-vrh { padding: 10px 14px; align-items: center; }
+  .panel-vrh h2 { font-size: 14.5px; }
+  .panel-vrh p { font-size: 12px; }
+  .poruke { padding: 12px; }
+  .unos { padding: 8px 10px 10px; }
+
+  .alatke {
+    height: auto; min-height: 62px; gap: 0; justify-content: space-around; padding: 4px 4px calc(4px + env(safe-area-inset-bottom, 0px));
+  }
+  .alatka { min-width: 0; flex: 1; padding: 6px 2px; font-size: 11px; gap: 2px; }
+  .alatka svg { width: 24px; height: 24px; }
+  .alatka.napusti { margin-left: 0; flex: none; padding: 6px 6px; }
+  .alatka.napusti span { padding: 7px 12px; font-size: 13px; }
+  .sakrij-mob { display: none; }
+  .znacka { right: calc(50% - 22px); }
+  .reakcije-meni { left: 0; transform: none; }
+  .reakcije-meni button { width: 44px; height: 44px; font-size: 24px; }
+
+  /* dok se kuca na telefonu: sklanjamo alatke da tastatura ne pojede chat */
+  .soba.kucanje .alatke { display: none; }
+
+  .anketa { position: fixed; z-index: 35; }
 }
-@media (max-width: 900px) and (orientation: landscape) and (max-height: 500px) {
-  .soba-telo { flex-direction: row; }
-  .pozornica { flex: 1; }
-  .panel { width: 300px; flex: none; }
+
+/* telefon polozen: video preko celog ekrana, chat kao fioka sa desne strane */
+@media (max-width: 900px) and (orientation: landscape) and (max-height: 520px) {
+  .soba-vrh { display: none; }
+  .soba-telo { flex-direction: row; position: relative; }
+  .pozornica { flex: 1; display: grid; place-items: center; background: #000; }
+  .video-okvir { height: 100%; width: auto; max-width: 100%; aspect-ratio: 16 / 9; }
+  .mob-info { display: none !important; }
+  .soba.chat-otvoren .panel { position: absolute; right: 0; top: 0; bottom: 0; width: min(340px, 55vw); z-index: 20; border-left: 1px solid var(--line); border-top: 0; box-shadow: -10px 0 40px rgba(0,0,0,.5); }
+  .alatke { min-height: 52px; }
 }

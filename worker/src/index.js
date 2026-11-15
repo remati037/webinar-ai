@@ -138,11 +138,15 @@ async function playlista(env) {
   if (!video) return new Response("nema", { status: 404, headers: CORS });
   const cfg = await javnaPodesavanja(env);
   const proteklo = (Date.now() - cfg.start) / 1000;
-  if (proteklo < 0) return new Response("jos nije pocelo", { status: 404, headers: { ...CORS, "Cache-Control": "no-store" } });
+  // Playlista postoji i PRED sekundi pre pocetka: pregledac u cekaonici vec ucita
+  // prve delove, pa u trenutku pocetka samo krene, sa punom rezervom.
+  const nijePocelo = () => new Response("jos nije pocelo", { status: 404, headers: { ...CORS, "Cache-Control": "no-store" } });
+  if (proteklo < -PRED) return nijePocelo();
 
   const zavrseno = proteklo >= video.ukupno;
-  let poslednji = video.segmenti.findIndex((s) => s.od > proteklo + PRED) - 1;
-  if (poslednji < 0) poslednji = video.segmenti.length - 1;
+  const sledeci = video.segmenti.findIndex((s) => s.od > proteklo + PRED);
+  const poslednji = sledeci === -1 ? video.segmenti.length - 1 : sledeci - 1;
+  if (poslednji < 0) return nijePocelo();
   const prvi = Math.max(0, poslednji - PROZOR + 1);
 
   let out = `#EXTM3U\n#EXT-X-VERSION:3\n#EXT-X-TARGETDURATION:${video.target}\n#EXT-X-MEDIA-SEQUENCE:${prvi}\n`;
@@ -305,7 +309,15 @@ export class Soba extends DurableObject {
       CREATE TABLE IF NOT EXISTS glasovi (anketa INTEGER, uid TEXT, opcija INTEGER, PRIMARY KEY (anketa, uid));
       CREATE TABLE IF NOT EXISTS reakcije (e TEXT, minut INTEGER, broj INTEGER, PRIMARY KEY (e, minut));
     `);
+    // Kolone dodate posle prve verzije (ALTER pada ako kolona vec postoji).
+    for (const q of ["ALTER TABLE ucesnici ADD COLUMN ruka INTEGER", "ALTER TABLE ucesnici ADD COLUMN ruku_digao INTEGER DEFAULT 0"]) {
+      try { this.sql.exec(q); } catch {}
+    }
     ctx.setWebSocketAutoResponse(new WebSocketRequestResponsePair("ping", "pong"));
+  }
+
+  podignuteRuke() {
+    return this.sql.exec("SELECT uid, ime, email, ruka FROM ucesnici WHERE ruka IS NOT NULL ORDER BY ruka").toArray();
   }
 
   async cfg() {
@@ -381,7 +393,9 @@ export class Soba extends DurableObject {
       const g = this.sql.exec("SELECT opcija FROM glasovi WHERE anketa = ? AND uid = ?", anketa.id, uid).toArray();
       glasao = g.length ? g[0].opcija : null;
     }
-    return { t: "init", sad: Date.now(), cfg: await this.javniCfg(), poruke, objave, anketa, glasao };
+    const r = this.sql.exec("SELECT ruka FROM ucesnici WHERE uid = ?", uid).toArray();
+    const ruka = !!(r.length && r[0].ruka);
+    return { t: "init", sad: Date.now(), cfg: await this.javniCfg(), poruke, objave, anketa, glasao, ruka };
   }
 
   objavaZaSlanje(o) {
@@ -420,7 +434,7 @@ export class Soba extends DurableObject {
     const reakcije = this.sql.exec("SELECT e, SUM(broj) AS n FROM reakcije GROUP BY e").toArray();
     return {
       t: "init", sad: Date.now(), cfg: await this.cfg(), trajanje: await this.trajanje(),
-      razgovori, ankete, objave, reakcije, online: this.brojOnline(),
+      razgovori, ankete, objave, reakcije, online: this.brojOnline(), ruke: this.podignuteRuke(),
       ukupno: this.sql.exec("SELECT COUNT(*) AS n FROM ucesnici").one().n,
     };
   }
@@ -521,6 +535,15 @@ export class Soba extends DurableObject {
       return;
     }
 
+    if (m.t === "ruka") {
+      const gore = !!m.gore;
+      if (gore) this.sql.exec("UPDATE ucesnici SET ruka = ?, ruku_digao = COALESCE(ruku_digao, 0) + 1 WHERE uid = ? AND ruka IS NULL", sad, uid);
+      else this.sql.exec("UPDATE ucesnici SET ruka = NULL WHERE uid = ?", uid);
+      this.ucesniku(uid, { t: "ruka", gore });
+      this.studiju({ t: "ruke", ruke: this.podignuteRuke(), novi: gore ? uid : null });
+      return;
+    }
+
     if (m.t === "klik") {
       this.sql.exec("UPDATE ucesnici SET klik = klik + 1 WHERE uid = ?", uid);
       this.studiju({ t: "klik", uid });
@@ -548,6 +571,16 @@ export class Soba extends DurableObject {
       const u = this.ucesnikZaStudio(m.uid);
       const online = this.ctx.getWebSockets(`u:${m.uid}`).length > 0;
       this.posalji(ws, { t: "razgovor", uid: m.uid, poruke, u, online });
+      return;
+    }
+
+    if (m.t === "spusti_ruku") {
+      const uidovi = m.sve ? this.podignuteRuke().map((r) => r.uid) : [m.uid];
+      for (const u of uidovi) {
+        this.sql.exec("UPDATE ucesnici SET ruka = NULL WHERE uid = ?", u);
+        this.ucesniku(u, { t: "ruka", gore: false, tim: true });
+      }
+      this.studiju({ t: "ruke", ruke: this.podignuteRuke() });
       return;
     }
 
@@ -656,7 +689,7 @@ export class Soba extends DurableObject {
     const sad = Date.now();
     const minuta = Math.max(1, Math.ceil(trajanje / 60));
 
-    const ucesnici = this.sql.exec("SELECT uid, ime, email, uredjaj, izvor, prvi, poslednji, klik, reakcije FROM ucesnici").toArray();
+    const ucesnici = this.sql.exec("SELECT uid, ime, email, uredjaj, izvor, prvi, poslednji, klik, reakcije, ruku_digao FROM ucesnici").toArray();
     const poruka = {};
     for (const r of this.sql.exec("SELECT uid, COUNT(*) AS n FROM poruke WHERE ko = 'u' GROUP BY uid").toArray()) poruka[r.uid] = r.n;
     const glasova = {};
@@ -697,7 +730,7 @@ export class Soba extends DurableObject {
         uid: u.uid, ime: u.ime, email: u.email, uredjaj: u.uredjaj, izvor: u.izvor,
         prvi: u.prvi, poslednji: u.poslednji, online: online.has(u.uid),
         gledao: Math.round(gledao / 1000), doMinuta: doMinuta >= 0 ? doMinuta + 1 : 0,
-        klik: u.klik, reakcije: u.reakcije, poruka: poruka[u.uid] || 0, glasova: glasova[u.uid] || 0,
+        klik: u.klik, reakcije: u.reakcije, ruka: u.ruku_digao || 0, poruka: poruka[u.uid] || 0, glasova: glasova[u.uid] || 0,
       };
     });
 

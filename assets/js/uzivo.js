@@ -45,6 +45,9 @@
   let ponudaPrikazana = false;
   let ponudaObjava = null;
   let anketaId = null;
+  let rukaGore = false;
+  let cekaPocetak = false; // video se ucitava u cekaonici i krece tacno u trenutku pocetka
+  let tajmerPocetka = null;
   const sad = () => Date.now() + pomak;
 
   // ============ ULAZ ============
@@ -94,8 +97,7 @@
   function udjiUSobu(saKlikom) {
     $("ekran-ulaz").hidden = true;
     $("ekran-soba").hidden = false;
-    if (saKlikom) otkljucajZvuk();
-    if (matchMedia("(max-width: 900px)").matches) $("panel").classList.remove("zatvoren");
+    postaviPanel(!mobilni());
     poveziSe();
     setInterval(otkucaj, 500);
     otkucaj();
@@ -160,6 +162,9 @@
       if (!sve.length) prazanChat();
       skrolujDole();
       if (m.anketa && m.glasao == null) prikaziAnketu(m.anketa, null);
+      postaviRuku(!!m.ruka);
+      const odTima = m.poruke.filter((p) => p.ko === "t").pop();
+      if (odTima) $("mob-chat-pregled").textContent = `${odTima.ime_tima} (tim): ${odTima.tekst}`;
       return;
     }
     if (m.t === "poruka") {
@@ -172,12 +177,17 @@
     if (m.t === "objava") { dodajObjavu(m.o, true); return; }
     if (m.t === "obrisi_objavu") {
       document.querySelectorAll(`[data-objava="${m.id}"]`).forEach((x) => x.remove());
-      if (ponudaObjava && ponudaObjava.id === m.id) { ponudaObjava = null; ponudaPrikazana = false; $("ponuda-plutajuca").hidden = true; $("ponuda-zakacena").hidden = true; }
+      if (ponudaObjava && ponudaObjava.id === m.id) { ponudaObjava = null; ponudaPrikazana = false; $("ponuda-plutajuca").hidden = true; $("ponuda-zakacena").hidden = true; $("mob-ponuda").textContent = ""; }
       return;
     }
     if (m.t === "anketa") { prikaziAnketu(m.anketa, null); return; }
     if (m.t === "anketa_kraj") { if (anketaId === m.id) $("anketa").hidden = true; return; }
     if (m.t === "glas_ok") { return; }
+    if (m.t === "ruka") {
+      postaviRuku(m.gore);
+      if (!m.gore && m.tim) obavesti("Tim radionice", "Videli smo tvoju podignutu ruku. Odgovor stiže u chatu.");
+      return;
+    }
     if (m.t === "cfg") { pomak = m.sad - Date.now(); cfg = m.cfg; primeniCfg(); prenosPokrenut && proveriVideoStanje(); return; }
   }
 
@@ -186,6 +196,8 @@
     $("govornik-ime").textContent = cfg.voditelj;
     document.title = cfg.naslov + " · Uživo";
     $("kraj-tekst").textContent = cfg.krajPoruka;
+    $("mob-naslov").textContent = cfg.naslov;
+    $("mob-voditelj").textContent = cfg.voditelj;
   }
 
   // ---------- glavni otkucaj: koje stanje se prikazuje ----------
@@ -213,7 +225,11 @@
       $("odbrojavanje-2").textContent = trajanjeTekst(cfg.start - t, true);
       $("zatvoreno-tekst").textContent = `Radionica počinje ${new Date(cfg.start).toLocaleString("sr-Latn-RS", { weekday: "long", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" })}. Soba se otvara ${cfg.vrata} minuta ranije.`;
     }
-    if (stanje === "ceka") $("odbrojavanje").textContent = trajanjeTekst(cfg.start - t);
+    if (stanje === "ceka") {
+      $("odbrojavanje").textContent = trajanjeTekst(cfg.start - t);
+      // 15 s pre pocetka plejer vec ucitava prve delove, a krece tacno u sekundi pocetka.
+      if (!prenosPokrenut && cfg.start - t <= 15000) pokreniPrenos(true);
+    }
     if (stanje === "uzivo") $("vreme-trajanja").textContent = trajanjeTekst(t - cfg.start, true);
 
     if (stanje !== poslednjeStanje) {
@@ -224,8 +240,8 @@
       $("oznaka-uzivo").hidden = stanje !== "uzivo";
       $("vreme-trajanja").hidden = stanje !== "uzivo";
       $("govornik").hidden = stanje !== "uzivo";
-      if (stanje === "uzivo") pokreniPrenos();
-      else zaustaviPrenos();
+      if (stanje === "uzivo") { if (prenosPokrenut && cekaPocetak) kreni(); else pokreniPrenos(false); }
+      else if (stanje !== "ceka" || !cekaPocetak) zaustaviPrenos();
       if (stanje === "kraj") prikaziKraj();
     }
 
@@ -245,11 +261,16 @@
     return `${API}/stream/${encodeURIComponent(ulaznica)}/live.m3u8`;
   }
 
-  function pokreniPrenos() {
+  function pokreniPrenos(unapred) {
     if (prenosPokrenut) return;
     prenosPokrenut = true;
-    $("stanje-povezivanje").hidden = false;
+    cekaPocetak = !!unapred;
+    $("stanje-povezivanje").hidden = cekaPocetak;
     video.muted = utisano;
+    if (cekaPocetak) {
+      clearTimeout(tajmerPocetka);
+      tajmerPocetka = setTimeout(kreni, Math.max(0, cfg.start - sad()));
+    }
 
     if (window.Hls && Hls.isSupported()) {
       hls = new Hls({
@@ -276,7 +297,7 @@
       });
       hls.loadSource(adresaPrenosa());
       hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => pusti());
+      hls.on(Hls.Events.MANIFEST_PARSED, () => { if (!cekaPocetak) pusti(); });
       // Ivica playliste je do 24 s ispred "sada" i pomera se u koracima od 6 s. Zato
       // pri ulasku racunamo tacno koliko je ivica ispred trenutnog vremena (po
       // EXT-X-PROGRAM-DATE-TIME) i toliko stojimo iza nje: ko je tu na pocetku,
@@ -287,6 +308,11 @@
         pocetak = true;
         const f = d.details && d.details.fragments;
         const zadnji = f && f[f.length - 1];
+        if (cekaPocetak && f && f.length) {
+          // U cekaonici: ucitavamo od nulte sekunde videa.
+          hls.startLoad(f[0].start);
+          return;
+        }
         if (zadnji && zadnji.programDateTime) {
           const ispred = (zadnji.programDateTime + zadnji.duration * 1000 - sad()) / 1000;
           if (ispred > 0.5 && ispred < 55) hls.config.liveSyncDuration = ispred;
@@ -299,10 +325,10 @@
         // Safari (iPhone) sam bira mesto u prenosu; postavljamo ga na tacno "sada".
         const d = video.getStartDate && video.getStartDate();
         if (d && !isNaN(d.getTime())) {
-          const cilj = (sad() - d.getTime()) / 1000;
-          if (cilj >= 0 && Math.abs(video.currentTime - cilj) > 1) { try { video.currentTime = cilj; } catch {} }
+          const cilj = Math.max(0, (sad() - d.getTime()) / 1000);
+          if (Math.abs(video.currentTime - cilj) > 1) { try { video.currentTime = cilj; } catch {} }
         }
-        pusti();
+        if (!cekaPocetak) pusti();
       }, { once: true });
       video.load();
     }
@@ -310,7 +336,18 @@
 
   if (LOKALNO) window.__uzivo = { get hls() { return hls; }, video };
 
+  // Trenutak pocetka: video je vec ucitan na 00:00, samo krece.
+  function kreni() {
+    clearTimeout(tajmerPocetka);
+    if (!prenosPokrenut || !cekaPocetak) return;
+    cekaPocetak = false;
+    $("stanje-ceka").hidden = true;
+    pusti();
+  }
+
   function zaustaviPrenos() {
+    clearTimeout(tajmerPocetka);
+    cekaPocetak = false;
     if (!prenosPokrenut) return;
     prenosPokrenut = false;
     if (hls) { hls.destroy(); hls = null; }
@@ -321,6 +358,7 @@
   }
 
   async function pusti() {
+    if (cekaPocetak) return;
     try {
       video.muted = utisano;
       await video.play();
@@ -341,20 +379,12 @@
   video.addEventListener("playing", () => { $("stanje-povezivanje").hidden = true; postaviVezu("dobra"); });
   video.addEventListener("waiting", () => { if (prenosPokrenut) postaviVezu("slaba"); });
   // Nema pauze: ako bilo sta zaustavi video (slusalice, tastatura, sistem), nastavlja se.
-  video.addEventListener("pause", () => { if (prenosPokrenut && !napustio) setTimeout(() => { if (prenosPokrenut && video.paused) video.play().catch(() => {}); }, 300); });
+  video.addEventListener("pause", () => { if (prenosPokrenut && !cekaPocetak && !napustio) setTimeout(() => { if (prenosPokrenut && !cekaPocetak && video.paused) video.play().catch(() => {}); }, 300); });
   video.addEventListener("ratechange", () => { if (video.playbackRate !== 1) video.playbackRate = 1; });
   if ("mediaSession" in navigator) {
     for (const a of ["pause", "seekbackward", "seekforward", "seekto", "previoustrack", "nexttrack"]) {
       try { navigator.mediaSession.setActionHandler(a, a === "pause" ? () => video.play() : () => {}); } catch {}
     }
-  }
-
-  function otkljucajZvuk() {
-    // Prazan zvuk u okviru klika "otkljucava" pustanje sa zvukom kasnije (Safari, iOS).
-    try {
-      const C = window.AudioContext || window.webkitAudioContext;
-      if (C) { zvukCtx = zvukCtx || new C(); zvukCtx.resume(); }
-    } catch {}
   }
 
   $("zvuk-kapija").addEventListener("click", () => {
@@ -363,7 +393,6 @@
     video.play().catch(() => {});
     $("zvuk-kapija").hidden = true;
     $("alatka-zvuk").classList.remove("utisano");
-    otkljucajZvuk();
   });
 
   $("alatka-zvuk").addEventListener("click", () => {
@@ -427,6 +456,7 @@
     red.append(ko, el("div", "balon", o.tekst));
     kontejner.append(red);
     if (dole || !uzivo) skrolujDole();
+    if (!uzivo) { $("mob-objava").textContent = ""; $("mob-objava").append(red.cloneNode(true)); }
     if (uzivo) {
       const traka = $("objava-traka");
       traka.textContent = "";
@@ -438,6 +468,10 @@
       clearTimeout(traka._t);
       traka._t = setTimeout(() => (traka.hidden = true), 20000);
       zvucnik();
+      const mob = $("mob-objava");
+      mob.textContent = "";
+      const kopija = red.cloneNode(true);
+      mob.append(kopija);
       if (!panelOtvoren()) povecajNeprocitano();
     }
   }
@@ -466,22 +500,45 @@
   // ---------- panel, nepročitano, obaveštenja ----------
 
   const mobilni = () => matchMedia("(max-width: 900px)").matches;
-  const panelOtvoren = () => mobilni() || !$("panel").classList.contains("zatvoren");
+  const soba = $("ekran-soba");
+  const panelOtvoren = () => soba.classList.contains("chat-otvoren");
 
   function postaviPanel(otvoren) {
+    soba.classList.toggle("chat-otvoren", otvoren);
     $("panel").classList.toggle("zatvoren", !otvoren);
     $("alatka-chat").classList.toggle("aktivna", otvoren);
-    if (otvoren) { neprocitano = 0; $("znacka-chat").hidden = true; $("obavestenje").hidden = true; skrolujDole(); }
+    $("alatka-chat").setAttribute("aria-expanded", String(otvoren));
+    if (otvoren) {
+      neprocitano = 0;
+      $("znacka-chat").hidden = true; $("znacka-mob").hidden = true; $("obavestenje").hidden = true;
+      skrolujDole();
+    } else {
+      $("unos-poruke").blur();
+    }
   }
   $("alatka-chat").addEventListener("click", () => postaviPanel(!panelOtvoren()));
   $("panel-zatvori").addEventListener("click", () => postaviPanel(false));
-  postaviPanel(true);
+  $("mob-chat").addEventListener("click", () => { postaviPanel(true); $("unos-poruke").focus(); });
+
+  // Telefon: visina sobe prati vidljivi deo ekrana (tastatura), a dok se kuca sklanjamo alatke.
+  if (window.visualViewport) {
+    const visina = () => {
+      document.documentElement.style.setProperty("--app-h", window.visualViewport.height + "px");
+      if (mobilni()) window.scrollTo(0, 0);
+    };
+    window.visualViewport.addEventListener("resize", visina);
+    visina();
+  }
+  $("unos-poruke").addEventListener("focus", () => { if (mobilni()) soba.classList.add("kucanje"); });
+  $("unos-poruke").addEventListener("blur", () => soba.classList.remove("kucanje"));
 
   function povecajNeprocitano() {
     neprocitano++;
-    const z = $("znacka-chat");
-    z.textContent = neprocitano > 9 ? "9+" : neprocitano;
-    z.hidden = false;
+    for (const id of ["znacka-chat", "znacka-mob"]) {
+      const z = $(id);
+      z.textContent = neprocitano > 9 ? "9+" : neprocitano;
+      z.hidden = false;
+    }
   }
 
   function obavesti(naslov, tekst) {
@@ -496,6 +553,7 @@
 
   function obavestiOPoruci(p) {
     zvucnik();
+    $("mob-chat-pregled").textContent = `${p.ime_tima} (tim): ${p.tekst}`;
     if (!panelOtvoren()) { povecajNeprocitano(); obavesti(p.ime_tima + " (tim)", p.tekst); }
     if (document.hidden) {
       const stari = document.title;
@@ -510,7 +568,12 @@
     try {
       const C = window.AudioContext || window.webkitAudioContext;
       if (!C) return;
+      // Audio kanal se otvara samo za signal i odmah gasi. Stalno otvoren kanal na
+      // macOS-u ume da prebaci izlaz zvuka i izazove krcanje u videu.
       zvukCtx = zvukCtx || new C();
+      if (zvukCtx.state === "suspended") zvukCtx.resume();
+      clearTimeout(zvukCtx._t);
+      zvukCtx._t = setTimeout(() => { try { zvukCtx.suspend(); } catch {} }, 700);
       const t = zvukCtx.currentTime;
       for (const [f, d] of [[880, 0], [1320, 0.09]]) {
         const o = zvukCtx.createOscillator(), g = zvukCtx.createGain();
@@ -555,6 +618,8 @@
     p.firstChild.append(x);
     p.dataset.objava = o.id;
     if (uzivo) { p.hidden = false; zvucnik(); }
+    const mob = $("mob-ponuda");
+    mob.textContent = ""; mob.append(karticaPonude(o, "telefon"));
     prikaziKraj();
   }
 
@@ -611,6 +676,21 @@
     if (Date.now() - poslednjaReakcija > 1500) { poslednjaReakcija = Date.now(); posalji({ t: "reakcija", e: emoji }); }
   });
 
+  // ---------- podignuta ruka ----------
+
+  function postaviRuku(gore) {
+    rukaGore = !!gore;
+    const b = $("alatka-ruka");
+    b.setAttribute("aria-pressed", String(rukaGore));
+    $("ruka-tekst").textContent = rukaGore ? "Spusti ruku" : "Podigni ruku";
+  }
+  $("alatka-ruka").addEventListener("click", () => {
+    const gore = !rukaGore;
+    if (!posalji({ t: "ruka", gore })) { obavesti("Veza", "Nema veze. Pokušaj ponovo za par sekundi."); return; }
+    postaviRuku(gore);
+    if (gore) obavesti("Ruka je podignuta ✋", "Tim radionice vidi da imaš pitanje. Možeš i da ga napišeš u chatu.");
+  });
+
   // ---------- izlazak ----------
 
   $("alatka-napusti").addEventListener("click", () => ($("modal-napusti").hidden = false));
@@ -628,7 +708,6 @@
     napustio = false;
     poslednjeStanje = "";
     $("stanje-napustio").hidden = true;
-    otkljucajZvuk();
     poveziSe();
   });
 

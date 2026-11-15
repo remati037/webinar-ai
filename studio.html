@@ -8,7 +8,7 @@
   <meta name="live-api" content="https://vebinar-stream.vladimirst95.workers.dev">
   <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/studio.css?v=202611131223">
+  <link rel="stylesheet" href="/assets/css/studio.css?v=202611152045">
 </head>
 <body>
 
@@ -62,6 +62,14 @@
         <div class="blok">
           <label class="mali">Tvoje ime (vide ga učesnici kao „Ime (tim)")</label>
           <input id="moje-ime" placeholder="npr. Marko" maxlength="40">
+        </div>
+
+        <div class="blok blok-ruke">
+          <div class="red" style="justify-content:space-between">
+            <h3 style="margin:0">✋ Podignute ruke <span id="broj-ruku">0</span></h3>
+            <button class="dugme sivo" id="spusti-sve" type="button" hidden>Spusti sve</button>
+          </div>
+          <div id="ruke" class="ruke"><p class="mali">Niko trenutno nema podignutu ruku.</p></div>
         </div>
 
         <div class="blok blok-ponuda">
@@ -157,6 +165,6 @@
     </main>
   </section>
 
-  <script src="/assets/js/studio.js?v=202611131223"></script>
+  <script src="/assets/js/studio.js?v=202611152045"></script>
 </body>
 </html>
