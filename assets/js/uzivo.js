@@ -1,6 +1,6 @@
 // ============================================================
 // /uzivo: ulaz, sinhronizovan prenos, privatni chat sa timom,
-// objave, ponuda, ankete i reakcije. Server: worker/src/index.js
+// objave, ponuda, ankete i podignuta ruka. Server: worker/src/index.js
 // ============================================================
 (function () {
   "use strict";
@@ -588,13 +588,20 @@
     }
   }
 
-  function obavesti(naslov, tekst) {
+  function obavesti(naslov, tekst, vrsta) {
     const o = $("obavestenje");
+    o.dataset.vrsta = vrsta || "";
     o.textContent = "";
     o.append(el("b", null, naslov), el("p", null, tekst));
     o.hidden = false;
     clearTimeout(o._t);
     o._t = setTimeout(() => (o.hidden = true), 8000);
+  }
+  function sakrijObavestenje(vrsta) {
+    const o = $("obavestenje");
+    if (o.dataset.vrsta !== vrsta) return;
+    clearTimeout(o._t);
+    o.hidden = true;
   }
   $("obavestenje").addEventListener("click", () => postaviPanel(true));
 
@@ -700,29 +707,6 @@
   }
   $("anketa-zatvori").addEventListener("click", () => ($("anketa").hidden = true));
 
-  // ---------- reakcije ----------
-
-  $("alatka-reakcije").addEventListener("click", (e) => {
-    e.stopPropagation();
-    const m = $("reakcije-meni");
-    m.hidden = !m.hidden;
-    $("alatka-reakcije").setAttribute("aria-expanded", String(!m.hidden));
-  });
-  document.addEventListener("click", (e) => { if (!e.target.closest(".alatka-grupa")) $("reakcije-meni").hidden = true; });
-  let poslednjaReakcija = 0;
-  $("reakcije-meni").addEventListener("click", (e) => {
-    const b = e.target.closest("button");
-    if (!b) return;
-    const emoji = b.textContent;
-    const sloj = $("reakcije-sloj");
-    const s = el("span", "leti", emoji);
-    s.style.left = 8 + Math.random() * 20 + "%";
-    s.style.setProperty("--dx", (Math.random() * 60 - 30).toFixed(0) + "px");
-    sloj.append(s);
-    setTimeout(() => s.remove(), 2700);
-    if (Date.now() - poslednjaReakcija > 1500) { poslednjaReakcija = Date.now(); posalji({ t: "reakcija", e: emoji }); }
-  });
-
   // ---------- podignuta ruka ----------
 
   function postaviRuku(gore) {
@@ -730,12 +714,13 @@
     const b = $("alatka-ruka");
     b.setAttribute("aria-pressed", String(rukaGore));
     $("ruka-tekst").textContent = rukaGore ? "Spusti ruku" : "Podigni ruku";
+    if (!rukaGore) sakrijObavestenje("ruka");
   }
   $("alatka-ruka").addEventListener("click", () => {
     const gore = !rukaGore;
     if (!posalji({ t: "ruka", gore })) { obavesti("Veza", "Nema veze. Pokušaj ponovo za par sekundi."); return; }
     postaviRuku(gore);
-    if (gore) obavesti("Ruka je podignuta ✋", "Tim radionice vidi da imaš pitanje. Možeš i da ga napišeš u chatu.");
+    if (gore) obavesti("Ruka je podignuta ✋", "Tim radionice vidi da imaš pitanje. Možeš i da ga napišeš u chatu.", "ruka");
   });
 
   // ---------- jedan tab ----------
