@@ -176,6 +176,7 @@
     /* Rezultati: samo screenshotovi */
     .rezultati { display: grid; gap: 16px; margin-top: 28px; }
     .rezultati.dva { grid-template-columns: 1fr 1fr; }
+    .rezultati.jedna-kolona { max-width: 820px; margin-left: auto; margin-right: auto; }
     .screenshot {
       background: var(--belo);
       border: 1px solid var(--linija);
@@ -326,9 +327,9 @@
     <div class="omot">
       <h2 class="naslov">Rezultati</h2>
       <p class="podnaslov">Screenshotovi iz panela prodaje digitalnih proizvoda.</p>
-      <div class="rezultati dva">
+      <div class="rezultati jedna-kolona">
         <figure class="screenshot"><img src="/assets/img/rezultat-panel.jpg" alt="Panel prodaje: 1.457 porudžbina, 67.726 € prihoda, prosečna porudžbina 46 €" width="1600" height="848" loading="lazy"></figure>
-        <figure class="screenshot"><div class="prazno">Ovde ide screenshot 2</div></figure>
+        <figure class="screenshot"><img src="/assets/img/rezultat-2.jpg" alt="Prodaja digitalnog proizvoda: 103 prodata primerka, 2.781 € neto prodaje" width="1600" height="287" loading="lazy"></figure>
       </div>
     </div>
   </section>
