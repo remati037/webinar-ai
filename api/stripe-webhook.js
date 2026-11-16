@@ -80,7 +80,7 @@ async function ograniciRate(subscriptionId) {
   }
 
   const faza = raspored.phases[0];
-  await stripe("POST", `/subscription_schedules/${raspored.id}`, {
+  const izmena = (trajanje) => stripe("POST", `/subscription_schedules/${raspored.id}`, {
     end_behavior: "cancel",
     proration_behavior: "none",
     phases: [{
@@ -89,11 +89,18 @@ async function ograniciRate(subscriptionId) {
         price: typeof s.price === "string" ? s.price : s.price.id,
         quantity: s.quantity || 1,
       })),
-      // Novije Stripe API verzije nemaju "iterations": mesečna cena x N meseci = N rata.
-      duration: { interval: "month", interval_count: brojRata },
+      ...trajanje,
       metadata: { plan: "rate", broj_rata: String(brojRata) },
     }],
   });
+  // Mesečna cena x N meseci = N rata. Novije Stripe API verzije znaju samo
+  // "duration", starije samo "iterations", pa probamo oba.
+  try {
+    await izmena({ duration: { interval: "month", interval_count: brojRata } });
+  } catch (e) {
+    if (!/duration/.test(e.message)) throw e;
+    await izmena({ iterations: brojRata });
+  }
   return `ograničeno na ${brojRata} rate`;
 }
 
