@@ -1,14 +1,14 @@
-// Vercel Routing Middleware. /snimak, /studio, /start i /ponuda su zakljucani sifrom.
-// /start i /ponuda su privremeno iza sifre dok se ponuda ne pusti javno:
-// tada samo izbaci njihove putanje iz matcher-a.
+// Vercel Routing Middleware. /snimak, /studio i /start su zakljucani sifrom.
+// /ponuda je otkljucana (javna). /start je privremeno iza sifre dok se ne pusti javno:
+// tada samo izbaci njegove putanje iz matcher-a.
 // /snimak i /studio: ista sifra kao za /ab i /analiza (AB_KLJUC na Vercelu).
-// /start i /ponuda: posebna sifra (PONUDA_KLJUC na Vercelu).
+// /start: posebna sifra (PONUDA_KLJUC na Vercelu).
 // Pregledac sam otvara prozor za korisnicko ime i sifru: ime moze biti bilo sta,
 // bitna je samo sifra. Pokriva i /snimak.html da se ne bi zaobislo.
 
 export const config = {
   matcher: ["/snimak", "/snimak/", "/snimak.html", "/studio", "/studio/", "/studio.html",
-    "/start", "/start/", "/start.html", "/ponuda", "/ponuda/", "/ponuda.html"],
+    "/start", "/start/", "/start.html"],
 };
 
 function istiTekst(a, b) {
@@ -20,7 +20,7 @@ function istiTekst(a, b) {
 
 export default function middleware(request) {
   const putanja = new URL(request.url).pathname;
-  const ponuda = /^\/(start|ponuda)(\/|\.html)?$/.test(putanja);
+  const ponuda = /^\/start(\/|\.html)?$/.test(putanja);
   const tajna = ponuda ? process.env.PONUDA_KLJUC : process.env.AB_KLJUC;
   if (!tajna) {
     return new Response("Stranica nije dostupna.", { status: 503 });
