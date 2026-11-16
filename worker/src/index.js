@@ -515,6 +515,7 @@ export class Soba extends DurableObject {
     if (m.t === "poruka") {
       const tekst = ocisti(m.tekst, 1000);
       if (!tekst) return;
+      if (sad < (await this.cfg()).start) return; // chat se otvara tek kad radionica pocne
       if (a.z && sad - a.z < 800) return; // najvise jedna poruka u sekundi
       a.z = sad;
       ws.serializeAttachment(a);
@@ -550,6 +551,7 @@ export class Soba extends DurableObject {
 
     if (m.t === "ruka") {
       const gore = !!m.gore;
+      if (gore && sad < (await this.cfg()).start) return; // ruka tek kad radionica pocne
       if (gore) this.sql.exec("UPDATE ucesnici SET ruka = ?, ruku_digao = COALESCE(ruku_digao, 0) + 1 WHERE uid = ? AND ruka IS NULL", sad, uid);
       else this.sql.exec("UPDATE ucesnici SET ruka = NULL WHERE uid = ?", uid);
       this.ucesniku(uid, { t: "ruka", gore });

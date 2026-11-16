@@ -371,3 +371,9 @@ video::-webkit-media-controls-start-playback-button, video::-webkit-media-contro
   .soba.chat-otvoren .panel { position: absolute; right: 0; top: 0; bottom: 0; width: min(340px, 55vw); z-index: 20; border-left: 1px solid var(--line); border-top: 0; box-shadow: -10px 0 40px rgba(0,0,0,.5); }
   .alatke { min-height: 52px; }
 }
+
+/* pre pocetka: bez chata i ruke, samo odbrojavanje */
+.soba.pre-pocetka .panel,
+.soba.pre-pocetka #alatka-ruka,
+.soba.pre-pocetka #alatka-chat,
+.soba.pre-pocetka .mob-chat { display: none !important; }

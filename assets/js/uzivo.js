@@ -249,6 +249,8 @@
       $("stanje-zatvoreno").hidden = stanje !== "zatvoreno";
       $("stanje-ceka").hidden = stanje !== "ceka";
       $("stanje-kraj").hidden = stanje !== "kraj";
+      // Pre pocetka nema chata ni ruke, samo odbrojavanje.
+      soba.classList.toggle("pre-pocetka", stanje === "zatvoreno" || stanje === "ceka");
       $("oznaka-uzivo").hidden = stanje !== "uzivo";
       $("vreme-trajanja").hidden = stanje !== "uzivo";
       $("govornik").hidden = stanje !== "uzivo";
@@ -603,7 +605,7 @@
     clearTimeout(o._t);
     o.hidden = true;
   }
-  $("obavestenje").addEventListener("click", () => postaviPanel(true));
+  $("obavestenje").addEventListener("click", () => { if (!soba.classList.contains("pre-pocetka")) postaviPanel(true); });
 
   function obavestiOPoruci(p) {
     zvucnik();
