@@ -1,7 +1,8 @@
 // Vercel Routing Middleware. /snimak, /studio, /start i /ponuda su zakljucani sifrom.
 // /start i /ponuda su privremeno iza sifre dok se ponuda ne pusti javno:
 // tada samo izbaci njihove putanje iz matcher-a.
-// Sifra je ista kao za /ab i /analiza (AB_KLJUC na Vercelu).
+// /snimak i /studio: ista sifra kao za /ab i /analiza (AB_KLJUC na Vercelu).
+// /start i /ponuda: posebna sifra (PONUDA_KLJUC na Vercelu).
 // Pregledac sam otvara prozor za korisnicko ime i sifru: ime moze biti bilo sta,
 // bitna je samo sifra. Pokriva i /snimak.html da se ne bi zaobislo.
 
@@ -18,7 +19,9 @@ function istiTekst(a, b) {
 }
 
 export default function middleware(request) {
-  const tajna = process.env.AB_KLJUC;
+  const putanja = new URL(request.url).pathname;
+  const ponuda = /^\/(start|ponuda)(\/|\.html)?$/.test(putanja);
+  const tajna = ponuda ? process.env.PONUDA_KLJUC : process.env.AB_KLJUC;
   if (!tajna) {
     return new Response("Stranica nije dostupna.", { status: 503 });
   }
@@ -35,7 +38,9 @@ export default function middleware(request) {
   return new Response("Potrebna je šifra.", {
     status: 401,
     headers: {
-      "WWW-Authenticate": 'Basic realm="Interno", charset="UTF-8"',
+      "WWW-Authenticate": ponuda
+        ? 'Basic realm="Ponuda", charset="UTF-8"'
+        : 'Basic realm="Interno", charset="UTF-8"',
       "Content-Type": "text/plain; charset=utf-8",
       "Cache-Control": "no-store",
       "X-Robots-Tag": "noindex, nofollow",
