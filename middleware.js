@@ -1,10 +1,13 @@
-// Vercel Routing Middleware. /snimak i /studio su zakljucani sifrom.
+// Vercel Routing Middleware. /snimak, /studio, /start i /start-light su zakljucani sifrom.
+// /start i /start-light su privremeno iza sifre dok se ponuda ne pusti javno:
+// tada samo izbaci njihove putanje iz matcher-a.
 // Sifra je ista kao za /ab i /analiza (AB_KLJUC na Vercelu).
 // Pregledac sam otvara prozor za korisnicko ime i sifru: ime moze biti bilo sta,
 // bitna je samo sifra. Pokriva i /snimak.html da se ne bi zaobislo.
 
 export const config = {
-  matcher: ["/snimak", "/snimak/", "/snimak.html", "/studio", "/studio/", "/studio.html"],
+  matcher: ["/snimak", "/snimak/", "/snimak.html", "/studio", "/studio/", "/studio.html",
+    "/start", "/start/", "/start.html", "/start-light", "/start-light/", "/start-light.html"],
 };
 
 function istiTekst(a, b) {
@@ -25,7 +28,7 @@ export default function middleware(request) {
     try {
       const dekodirano = atob(zaglavlje.slice(6));
       const sifra = dekodirano.slice(dekodirano.indexOf(":") + 1);
-      if (istiTekst(sifra, tajna)) return; // pusti dalje na snimak.html
+      if (istiTekst(sifra, tajna)) return; // pusti dalje na stranicu
     } catch {}
   }
 

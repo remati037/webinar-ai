@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InfoCash Metoda · Upis</title>
+  <meta name="description" content="InfoCash Metoda: program Vladimira Stankovića za prvi digitalni proizvod, od ideje do prvih kupaca.">
+  <meta name="robots" content="noindex, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sr_RS">
+  <meta property="og:site_name" content="Vladimir Stanković · AI Profit Lab">
+  <meta property="og:url" content="https://webinar.aiprofit.rs/start">
+  <meta property="og:title" content="InfoCash Metoda: od ideje do prve prodaje">
+  <meta property="og:description" content="Kompletan sistem za tvoj prvi digitalni proizvod. Ponuda sa radionice.">
+  <meta property="og:image" content="https://webinar.aiprofit.rs/assets/img/infocash-og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#0A0908">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- ============================================================
+       META PIXEL. ID 539402290072454. PageView + InitiateCheckout na klik.
+       ============================================================ -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '539402290072454');
+  fbq('track', 'PageView');
+  </script>
+
+  <style>
+    :root {
+      --bg: #0A0908;
+      --bg-2: #13110F;
+      --kartica: rgba(255,238,220,.035);
+      --linija: rgba(255,238,220,.1);
+      --tekst: #F2EBE1;
+      --siva: #A89E93;
+      --narandza: #F26A1F;
+      --narandza-svetla: #FF8B45;
+      --zelena: #5BD68A;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--tekst);
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(900px 520px at 50% -120px, rgba(242,106,31,.16), transparent 70%),
+        radial-gradient(700px 500px at 100% 60%, rgba(242,106,31,.05), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+    main, footer { position: relative; z-index: 1; }
+    a { color: inherit; }
+    .omot { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+    .nar { color: var(--narandza); }
+    .tacka { width: 8px; height: 8px; border-radius: 50%; background: var(--narandza); box-shadow: 0 0 10px var(--narandza); animation: pulsira 1.6s ease-in-out infinite; flex: none; }
+    @keyframes pulsira { 0%,100% { opacity: 1; } 50% { opacity: .35; } }
+    .pilula {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 12px;
+      border: 1px solid rgba(242,106,31,.4);
+      background: rgba(242,106,31,.08);
+      border-radius: 999px;
+      font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--narandza-svetla);
+    }
+
+    /* ---------- Traka sa rokom na vrhu ---------- */
+    .rok-traka {
+      position: sticky; top: 0; z-index: 30;
+      display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 4px 14px;
+      padding: 9px 16px;
+      background: var(--narandza);
+      color: #120A04;
+      font-size: 13.5px; font-weight: 600;
+      text-align: center;
+    }
+    .rok-traka b { font-weight: 800; font-variant-numeric: tabular-nums; }
+    .rok-traka .crta { opacity: .45; }
+    .rok-traka .tacka { background: #120A04; box-shadow: none; }
+    .rok-traka.isteklo { background: #3a3530; color: var(--tekst); }
+
+    /* ---------- Hero ---------- */
+    .hero { padding: clamp(20px, 3.4vw, 40px) 0 0; text-align: center; }
+    .hero h1 {
+      margin: 12px auto 0;
+      font-family: 'Anton', Impact, sans-serif; font-weight: 400;
+      text-transform: uppercase;
+      font-size: clamp(28px, 4.6vw, 54px);
+      line-height: 1.08;
+      text-wrap: balance;
+    }
+    .hero .pod { margin: 10px auto 0; max-width: 60ch; font-size: clamp(14.5px, 1.6vw, 17px); color: var(--siva); line-height: 1.55; }
+
+    /* ---------- Ponuda: dve kolone ---------- */
+    .ponuda {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 430px);
+      gap: clamp(16px, 2.4vw, 28px);
+      align-items: start;
+      margin-top: clamp(20px, 3vw, 34px);
+      text-align: left;
+    }
+    .ponuda .kasa { order: 2; }
+    .ponuda .sadrzaj { order: 1; }
+
+    .kasa {
+      position: sticky; top: 56px;
+      padding: clamp(18px, 2.6vw, 26px);
+      border: 1px solid rgba(242,106,31,.5);
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(242,106,31,.12), rgba(242,106,31,.02) 55%), var(--bg-2);
+      box-shadow: 0 30px 80px -30px rgba(242,106,31,.4);
+    }
+    .kasa-vrh { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 14px; color: var(--siva); }
+    .kasa-vrh s { color: var(--tekst); text-decoration-color: var(--narandza); text-decoration-thickness: 2px; font-weight: 600; }
+    .kasa-vrh .usteda { color: var(--zelena); font-weight: 700; }
+
+    /* Izbor plana */
+    .planovi { border: 0; display: grid; gap: 10px; margin-top: 14px; }
+    .planovi legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+    .plan {
+      position: relative;
+      display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px;
+      padding: 16px 16px;
+      border: 2px solid var(--linija);
+      border-radius: 10px;
+      background: rgba(10,9,8,.5);
+      cursor: pointer;
+      transition: border-color .15s ease, background .15s ease;
+    }
+    .plan:hover { border-color: rgba(242,106,31,.5); }
+    .plan input { position: absolute; opacity: 0; pointer-events: none; }
+    .krug { width: 22px; height: 22px; border-radius: 50%; border: 2px solid rgba(255,238,220,.35); display: grid; place-items: center; flex: none; }
+    .krug::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--narandza); transform: scale(0); transition: transform .15s ease; }
+    .plan:has(input:checked) { border-color: var(--narandza); background: rgba(242,106,31,.1); }
+    .plan:has(input:checked) .krug { border-color: var(--narandza); }
+    .plan:has(input:checked) .krug::after { transform: scale(1); }
+    .plan:has(input:focus-visible) { outline: 2px solid var(--tekst); outline-offset: 2px; }
+    .plan-tekst b { display: block; font-size: 16.5px; font-weight: 700; }
+    .plan-tekst small { display: block; margin-top: 2px; font-size: 13px; color: var(--siva); }
+    .plan-cena { font-family: 'Anton', Impact, sans-serif; font-size: clamp(30px, 3.4vw, 36px); line-height: 1; white-space: nowrap; }
+    .plan-cena.manja { font-size: clamp(24px, 2.8vw, 28px); }
+    .plan-oznaka {
+      position: absolute; top: -10px; right: 14px;
+      padding: 3px 9px; border-radius: 4px;
+      background: var(--zelena); color: #06210F;
+      font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    }
+
+    .dugme {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%;
+      margin-top: 14px;
+      padding: 19px 20px;
+      border-radius: 8px;
+      background: var(--narandza);
+      color: #120A04;
+      font-size: 17px; font-weight: 800; letter-spacing: .05em; text-transform: uppercase;
+      text-decoration: none;
+      box-shadow: 0 10px 30px -8px rgba(242,106,31,.7);
+      transition: transform .15s ease, background .15s ease, box-shadow .15s ease;
+    }
+    .dugme:hover { background: var(--narandza-svetla); transform: translateY(-1px); box-shadow: 0 14px 36px -8px rgba(242,106,31,.8); }
+    .dugme:focus-visible { outline: 2px solid var(--tekst); outline-offset: 3px; }
+    .dugme svg { width: 18px; height: 18px; flex: none; }
+    .dugme.drugo { background: transparent; color: var(--tekst); border: 1px solid rgba(255,238,220,.25); box-shadow: none; }
+    .dugme.drugo:hover { background: rgba(255,238,220,.06); }
+    .isteklo-sve .dugme:not(.drugo) { pointer-events: none; background: #3a3530; color: var(--siva); box-shadow: none; }
+
+    .poverenje { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; margin-top: 12px; font-size: 12.5px; color: var(--siva); }
+    .poverenje span { display: inline-flex; align-items: center; gap: 6px; }
+    .poverenje svg { width: 14px; height: 14px; flex: none; }
+
+    .mesta-traka { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--linija); }
+    .mesta-red { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; font-size: 13px; }
+    .mesta-red b { color: var(--narandza-svetla); }
+    .mesta-bar { height: 6px; margin-top: 8px; border-radius: 99px; background: rgba(255,238,220,.08); overflow: hidden; }
+    .mesta-bar i { display: block; height: 100%; width: 0; border-radius: inherit; background: linear-gradient(90deg, var(--narandza), var(--narandza-svetla)); transition: width .8s ease; }
+
+    /* ---------- Lista: šta dobijaš ---------- */
+    .lista-naslov { font-size: 12px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--siva); margin-bottom: 10px; }
+    .stavke { display: grid; gap: 8px; }
+    .stavka {
+      display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center;
+      padding: 14px 16px;
+      background: var(--kartica);
+      border: 1px solid var(--linija);
+      border-radius: 8px;
+    }
+    .kvacica { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: rgba(91,214,138,.12); color: var(--zelena); }
+    .kvacica svg { width: 14px; height: 14px; }
+    .stavka h3 { font-size: 15.5px; font-weight: 600; line-height: 1.3; }
+    .stavka p { margin-top: 3px; font-size: 13.5px; color: var(--siva); line-height: 1.5; }
+    .vrednost { text-align: right; white-space: nowrap; }
+    .vrednost b { display: block; font-family: 'Anton', Impact, sans-serif; font-weight: 400; font-size: 19px; color: var(--zelena); line-height: 1; }
+    .vrednost span { display: block; margin-top: 3px; font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--siva); }
+    .stavka.bonus { border-color: rgba(242,106,31,.35); background: rgba(242,106,31,.06); }
+    .stavka.bonus .kvacica { background: rgba(242,106,31,.15); color: var(--narandza); }
+    .oznaka { display: inline-block; margin-right: 6px; padding: 2px 7px; border-radius: 4px; background: var(--narandza); color: #120A04; font-size: 10.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; vertical-align: 2px; }
+
+    .brzi {
+      margin-top: 14px;
+      padding: clamp(16px, 2.4vw, 22px);
+      border: 1px dashed rgba(242,106,31,.6);
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(242,106,31,.12), rgba(242,106,31,.03));
+    }
+    .brzi-zaglavlje { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+    .brzi-zaglavlje h2 { font-family: 'Anton', Impact, sans-serif; font-weight: 400; text-transform: uppercase; font-size: clamp(21px, 2.6vw, 26px); line-height: 1.1; }
+    .brzi > p { margin-top: 6px; font-size: 14px; color: var(--siva); line-height: 1.55; }
+    .brzi .stavke { margin-top: 12px; }
+    .brzi .stavka { background: rgba(10,9,8,.55); border-color: rgba(242,106,31,.25); }
+    .brzi .stavka .kvacica { background: rgba(242,106,31,.15); color: var(--narandza); }
+    .brzi .vrednost b { color: var(--narandza-svetla); }
+    .brzi.popunjeno { opacity: .55; filter: grayscale(.6); }
+
+    .zbir {
+      display: flex; justify-content: space-between; align-items: center; gap: 14px; flex-wrap: wrap;
+      margin-top: 14px; padding: 16px 18px;
+      border-radius: 8px;
+      background: rgba(255,238,220,.06);
+      border: 1px solid var(--linija);
+    }
+    .zbir span { font-size: 12.5px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--siva); }
+    .zbir strong { font-family: 'Anton', Impact, sans-serif; font-weight: 400; font-size: clamp(28px, 3.6vw, 36px); line-height: 1; }
+    .zbir em { font-style: normal; display: block; margin-top: 4px; font-size: 13.5px; color: var(--siva); }
+    .zbir em b { color: var(--narandza-svetla); }
+    .zbir a { color: var(--narandza-svetla); font-weight: 700; }
+
+    /* ---------- Sekcije ---------- */
+    section.blok { padding: clamp(60px, 8vw, 100px) 0 0; }
+    .naslov-sekcije {
+      font-family: 'Anton', Impact, sans-serif; font-weight: 400; text-transform: uppercase;
+      font-size: clamp(28px, 4.4vw, 50px); line-height: 1.1;
+      text-align: center; text-wrap: balance;
+    }
+    .podnaslov { margin: 12px auto 0; max-width: 56ch; text-align: center; font-size: 16px; color: var(--siva); line-height: 1.6; }
+
+    .moduli { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-top: 30px; }
+    .modul { padding: 20px 22px; background: var(--kartica); border: 1px solid var(--linija); border-radius: 8px; }
+    .modul .br { font-family: 'Anton', Impact, sans-serif; font-size: 28px; line-height: 1; color: var(--narandza); }
+    .modul h3 { margin-top: 10px; font-size: 18px; font-weight: 700; }
+    .modul .resava { margin-top: 6px; font-size: 13.5px; color: var(--siva); }
+    .modul .izlazis { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--linija); font-size: 14.5px; line-height: 1.55; color: var(--narandza-svetla); }
+
+    .rezultati { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-top: 30px; }
+    .rezultat.siroko { grid-column: 1 / -1; }
+    .rezultat { margin: 0; background: #fff; }
+    @media (max-width: 520px) { .rezultati { grid-template-columns: 1fr; } }
+    .rezultat { border: 1px solid var(--linija); border-radius: 10px; background: var(--bg-2); overflow: hidden; }
+    .rezultat img { display: block; width: 100%; height: auto; }
+    /* Privremeni okvir dok ne stignu prave slike. Zameni ceo <div class="mesto-slike"> sa <img>. */
+    .mesto-slike {
+      aspect-ratio: 16 / 9;
+      display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 6px;
+      padding: 20px;
+      background:
+        repeating-linear-gradient(135deg, rgba(255,238,220,.025) 0 12px, transparent 12px 24px),
+        linear-gradient(180deg, rgba(242,106,31,.08), transparent);
+      text-align: center;
+    }
+    .mesto-slike .iznos { font-family: 'Anton', Impact, sans-serif; font-size: clamp(34px, 4.4vw, 44px); line-height: 1; color: var(--zelena); }
+    .mesto-slike .opis { font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--siva); }
+    .mesto-slike .napomena { margin-top: 8px; font-size: 11.5px; color: rgba(168,158,147,.6); }
+    .rezultat figcaption { padding: 12px 16px; border-top: 1px solid var(--linija); font-size: 13.5px; color: var(--siva); }
+    .rezultat figcaption b { color: var(--tekst); font-weight: 600; }
+
+    .razgovor {
+      max-width: 760px; margin: 0 auto;
+      padding: clamp(26px, 4vw, 40px) clamp(20px, 4vw, 40px);
+      border: 1px solid var(--linija); border-radius: 12px;
+      background: var(--kartica);
+      text-align: center;
+    }
+    .razgovor p { margin: 12px auto 0; max-width: 58ch; font-size: 15.5px; color: var(--siva); line-height: 1.65; }
+    .razgovor .dugme { max-width: 340px; margin: 22px auto 0; padding: 14px 20px; font-size: 14px; }
+
+    .faq { max-width: 760px; margin: 28px auto 0; }
+    .faq details { border-bottom: 1px solid var(--linija); }
+    .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 0; font-size: 16.5px; font-weight: 600; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; font-size: 24px; font-weight: 400; color: var(--narandza); transition: transform .2s ease; }
+    .faq details[open] summary::after { transform: rotate(45deg); }
+    .faq details p { padding: 0 0 20px; max-width: 62ch; font-size: 15.5px; line-height: 1.65; color: var(--siva); }
+
+    /* Završni CTA: dva dugmeta, po jedno za svaki plan */
+    .kraj { text-align: center; padding-bottom: clamp(70px, 9vw, 110px); }
+    .kraj-dugmad { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 640px; margin: 26px auto 0; }
+    .kraj-dugmad .dugme { margin: 0; flex-direction: column; gap: 2px; }
+    .kraj-dugmad .dugme small { font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: none; opacity: .8; }
+    .kraj .poverenje { margin-top: 14px; }
+
+    footer { padding: 28px 0 40px; border-top: 1px solid var(--linija); text-align: center; font-size: 13px; color: var(--siva); }
+    footer a { color: var(--siva); }
+
+    /* Lepljiva traka na telefonu */
+    .mob-traka {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+      display: none; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(10,9,8,.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid var(--linija);
+      transform: translateY(110%);
+      transition: transform .25s ease;
+    }
+    .mob-traka.vidljiva { transform: none; }
+    .mob-traka .levo b { display: block; font-family: 'Anton', Impact, sans-serif; font-weight: 400; font-size: 24px; line-height: 1; }
+    .mob-traka .levo span { font-size: 12px; color: var(--siva); }
+    .mob-traka .dugme { width: auto; margin: 0; padding: 14px 20px; font-size: 14px; }
+
+    @media (max-width: 860px) {
+      .ponuda { grid-template-columns: 1fr; }
+      .ponuda .kasa { order: 1; position: static; }
+      .ponuda .sadrzaj { order: 2; }
+      .mob-traka { display: flex; }
+      footer { padding-bottom: 100px; }
+    }
+    @media (max-width: 480px) {
+      .rok-traka { font-size: 12.5px; padding: 8px 12px; }
+      .rok-traka .sakrij-mob { display: none; }
+      .hero .pod { display: none; }
+      .plan { padding: 14px 12px; gap: 10px; }
+      .stavka { grid-template-columns: auto 1fr; padding: 13px; gap: 12px; }
+      .stavka .vrednost { grid-column: 2; text-align: left; display: flex; gap: 6px; align-items: baseline; }
+      .vrednost b { font-size: 17px; }
+      .vrednost span { margin-top: 0; }
+      .kraj-dugmad { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=539402290072454&ev=PageView&noscript=1"
+  alt=""></noscript>
+
+<!-- Traka sa rokom, uvek vidljiva na vrhu -->
+<div class="rok-traka" data-rok-traka role="timer" aria-live="off">
+  <span class="tacka" aria-hidden="true"></span>
+  <span data-rok-tekst>Ponuda ističe za <b data-rok>0d 00:00:00</b></span>
+  <span class="crta sakrij-mob">|</span>
+  <span class="sakrij-mob">Brzi bonusi: još <b data-mesta-ostalo>10</b> od 10 mesta</span>
+</div>
+
+<main>
+  <!-- ============================================================
+       HERO + KASA
+       ============================================================ -->
+  <section class="hero">
+    <div class="omot">
+      <span class="pilula">Ponuda sa radionice · InfoCash Metoda</span>
+      <h1>Tvoj prvi digitalni proizvod <span class="nar">za 30 dana</span></h1>
+      <p class="pod">6 modula, šabloni, zajednica i pozivi uživo. Pristup dobijaš na mejl odmah posle uplate.</p>
+
+      <div class="ponuda">
+        <!-- Kasa: izbor plana i dugme -->
+        <aside class="kasa" data-kasa>
+          <div class="kasa-vrh">
+            <span>Ukupna vrednost <s>3.434 €</s></span>
+            <span class="usteda">−86%</span>
+          </div>
+
+          <fieldset class="planovi">
+            <legend>Izaberi način plaćanja</legend>
+            <label class="plan">
+              <input type="radio" name="plan" value="jednokratno" checked>
+              <span class="krug" aria-hidden="true"></span>
+              <span class="plan-tekst"><b>Jednokratno</b><small>Uštediš 43 €</small></span>
+              <span class="plan-cena">497 €</span>
+              <span class="plan-oznaka">Najisplativije</span>
+            </label>
+            <label class="plan">
+              <input type="radio" name="plan" value="rate">
+              <span class="krug" aria-hidden="true"></span>
+              <span class="plan-tekst"><b>2 rate</b><small>270 € danas, 270 € za mesec dana</small></span>
+              <span class="plan-cena manja">2 × 270 €</span>
+            </label>
+          </fieldset>
+
+          <a class="dugme" href="#" data-checkout>
+            <span>Upiši se · <span data-cena-dugme>497 €</span></span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+
+          <div class="poverenje">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Sigurno plaćanje karticom</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg>Pristup odmah na mejl</span>
+          </div>
+
+          <div class="mesta-traka">
+            <div class="mesta-red"><span>Brzi bonusi (1.200 €) za prvih 10</span><span>Još <b data-mesta-ostalo>10</b> od 10</span></div>
+            <div class="mesta-bar"><i data-mesta-bar></i></div>
+          </div>
+        </aside>
+
+        <!-- Šta sve dobijaš -->
+        <div class="sadrzaj">
+          <div class="lista-naslov">Šta sve dobijaš</div>
+          <div class="stavke">
+            <div class="stavka">
+              <span class="kvacica"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span>
+              <div><h3>InfoCash Metoda program</h3><p>Šest modula, od ideje do prvih 10 kupaca. Radni list uz svaku lekciju.</p></div>
+              <div class="vrednost"><b>500 €</b><span>vrednost</span></div>
+            </div>
+            <div class="stavka">
+              <span class="kvacica"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span>
+              <div><h3>AI Profit Lab · 12 meseci</h3><p>Zajednica, praktične edukacije i novosti iz AI sveta. Redovna cena 57 € mesečno.</p></div>
+              <div class="vrednost"><b>684 €</b><span>vrednost</span></div>
+            </div>
+            <div class="stavka">
+              <span class="kvacica"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span>
+              <div><h3>Šabloni za prodaju</h3><p>Prodajna stranica, tekst za oglase, mejl sekvenca. Kopiraš i menjaš svoje podatke.</p></div>
+              <div class="vrednost"><b>150 €</b><span>vrednost</span></div>
+            </div>
+            <div class="stavka">
+              <span class="kvacica"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></span>
+              <div><h3>3 grupna poziva sa Vladimirom</h3><p>Uživo pregled tvoje niše, ponude i cene.</p></div>
+              <div class="vrednost"><b>900 €</b><span>vrednost</span></div>
+            </div>
+
+          <!-- Brzi bonusi: prvih 10. Broj mesta se menja u skripti na dnu (BRZI_BONUS_PRODATO). -->
+          <div class="brzi" data-brzi>
+            <div class="brzi-zaglavlje">
+              <h2>Brzi bonusi <span class="nar">za prvih 10</span></h2>
+              <span class="pilula"><span class="tacka" aria-hidden="true"></span><span data-brzi-tekst>Još 10 mesta</span></span>
+            </div>
+            <p>Samo za prvih deset upisanih. Posle toga program ostaje isti, ali bez ova dva bonusa.</p>
+            <div class="stavke">
+              <div class="stavka">
+                <span class="kvacica"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+                <div><h3>VIP networking koktel u Beogradu</h3><p>Uživo, sa ljudima koji već grade digitalne proizvode.</p></div>
+                <div class="vrednost"><b>800 €</b><span>vrednost</span></div>
+              </div>
+              <div class="stavka">
+                <span class="kvacica"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+                <div><h3>Lični pregled tvog prodajnog funnela</h3><p>Vladimir prolazi tvoj funnel i kaže šta konkretno da promeniš.</p></div>
+                <div class="vrednost"><b>400 €</b><span>vrednost</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="zbir">
+            <div><span>Ukupna vrednost</span><em>Ti plaćaš <b>497 €</b> ili 2 × 270 €. <a href="#" data-na-kasu>Upiši se</a></em></div>
+            <strong>3.434 €</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       REZULTATI: slike sa brojkama.
+       Za svaku karticu zameni <div class="mesto-slike">...</div> sa
+       <img src="/assets/img/rezultat-1.webp" alt="..." width="..." height="..." loading="lazy">
+       ============================================================ -->
+  <section class="blok">
+    <div class="omot">
+      <h2 class="naslov-sekcije">Šta digitalni proizvodi <span class="nar">zaista zarađuju</span></h2>
+      <p class="podnaslov">Screenshotovi iz panela prodaje digitalnih proizvoda.</p>
+      <div class="rezultati">
+        <figure class="rezultat siroko"><img src="/assets/img/rezultat.jpeg" alt="Pregled prodaje: 1.457 porudžbina, 67.726 € prihoda, 10.830 € od order bumpova" width="1600" height="400" loading="lazy"></figure>
+        <figure class="rezultat"><img src="/assets/img/rezultat-panel.jpg" alt="Panel prodaje: 1.457 porudžbina, 67.726 € prihoda, prosečna porudžbina 46 €" width="1600" height="848" loading="lazy"></figure>
+        <figure class="rezultat"><div class="mesto-slike"><div class="napomena">Ovde ide screenshot 3</div></div></figure>
+        <figure class="rezultat"><div class="mesto-slike"><div class="napomena">Ovde ide screenshot 4</div></div></figure>
+        <figure class="rezultat"><div class="mesto-slike"><div class="napomena">Ovde ide screenshot 5</div></div></figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MODULI
+       ============================================================ -->
+  <section class="blok">
+    <div class="omot">
+      <h2 class="naslov-sekcije">6 modula, <span class="nar">6 rešenih problema</span></h2>
+      <p class="podnaslov">Svaki modul rešava jednu kočnicu i završava se nečim gotovim, ne beleškama.</p>
+      <div class="moduli">
+        <div class="modul"><div class="br">01</div><h3>Ideja i niša</h3><p class="resava">Rešava: nemam ideju ili ih imam previše</p><p class="izlazis">Izlaziš sa jasnom nišom i preciznim profilom idealnog kupca.</p></div>
+        <div class="modul"><div class="br">02</div><h3>Validacija</h3><p class="resava">Rešava: praviš mesecima bez dokaza da se prodaje</p><p class="izlazis">Izlaziš sa dokazom da ljudi plaćaju za taj problem, pre prve napisane strane.</p></div>
+        <div class="modul"><div class="br">03</div><h3>Izrada uz AI</h3><p class="resava">Rešava: ne znam odakle da počnem sa sadržajem</p><p class="izlazis">Izlaziš sa gotovim proizvodom za 7 do 10 dana.</p></div>
+        <div class="modul"><div class="br">04</div><h3>Ponuda i cena</h3><p class="resava">Rešava: proizvod stoji i ne prodaje se</p><p class="izlazis">Izlaziš sa ponudom, cenom, order bumpom i upsellom koji dižu prosečnu kupovinu.</p></div>
+        <div class="modul"><div class="br">05</div><h3>Prodajni sistem</h3><p class="resava">Rešava: nemam publiku ni listu</p><p class="izlazis">Izlaziš sa prodajnom stranicom, mejl sekvencom i prvim saobraćajem.</p></div>
+        <div class="modul"><div class="br">06</div><h3>Prvih 10 kupaca</h3><p class="resava">Rešava: lansiranje bez plana i bez roka</p><p class="izlazis">Izlaziš sa planom lansiranja po danima i prvim uplatama.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PITANJA
+       ============================================================ -->
+  <section class="blok">
+    <div class="omot">
+      <div class="razgovor">
+        <h2 class="naslov-sekcije" style="font-size:clamp(26px,3.6vw,40px)">Zanima te program, ali još <span class="nar">imaš pitanja?</span></h2>
+        <p>Piši nam i proveri da li program odgovara tvojoj situaciji. Pitaj sve što ti je ostalo nejasno posle radionice.</p>
+        <a class="dugme drugo" href="#" data-pitanja>Postavi pitanje</a>
+      </div>
+
+      <div class="faq">
+        <details>
+          <summary>Treba li mi publika da bih krenuo?</summary>
+          <p>Ne. Modul 05 je upravo o tome: prodajna stranica, mejl sekvenca i prvi saobraćaj. Kurs „Sve tajne Instagram marketinga“ doneo je 10.000 € za mesec dana sa svega nekoliko hiljada pratilaca.</p>
+        </details>
+        <details>
+          <summary>Koliko vremena mi treba nedeljno?</summary>
+          <p>Tri sata nedeljno. Prva prodaja je cilj za 30 dana, prvih 10 kupaca za 60.</p>
+        </details>
+        <details>
+          <summary>Kako funkcioniše plaćanje na rate?</summary>
+          <p>Plaćaš 270 € danas i još 270 € za mesec dana. Pristup dobijaš odmah, isti kao uz jednokratno plaćanje. Jednokratno plaćanje od 497 € je 43 € povoljnije.</p>
+        </details>
+        <details>
+          <summary>Šta se dešava čim platim?</summary>
+          <p>Za minut stiže mejl sa pristupnim podacima. Ulaziš u platformu i AI Profit Lab zajednicu isti dan i krećeš sa Modulom 01.</p>
+        </details>
+        <details>
+          <summary>Kako dobijam brze bonuse?</summary>
+          <p>Ako si među prvih deset, javljamo ti se mejlom u roku od 48 sati sa pozivnicom za koktel i uputstvom za pregled funnela.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ZAVRŠNI CTA
+       ============================================================ -->
+  <section class="blok kraj">
+    <div class="omot">
+      <h2 class="naslov-sekcije">Spreman si? <span class="nar">Kreni odmah.</span></h2>
+      <div class="kraj-dugmad">
+        <a class="dugme" href="#" data-checkout data-plan="jednokratno">Jednokratno 497 €<small>Uštediš 43 €</small></a>
+        <a class="dugme drugo" href="#" data-checkout data-plan="rate">2 rate po 270 €<small>270 € danas, 270 € za mesec</small></a>
+      </div>
+      <div class="poverenje">
+        <span>Sigurno plaćanje karticom</span>
+        <span>Pristup odmah na mejl</span>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="omot">Vladimir Stanković · <a href="https://vladsdigital.com" rel="noopener">vladsdigital.com</a> · © 2026</div>
+</footer>
+
+<div class="mob-traka" data-mob-traka>
+  <div class="levo"><b data-mob-cena>497 €</b><span data-mob-opis>Jednokratno</span></div>
+  <a class="dugme" href="#" data-checkout>Upiši se</a>
+</div>
+
+<script>
+(function () {
+  // ============================================================
+  // PODEŠAVANJA
+  // ============================================================
+  var CHECKOUT_JEDNOKRATNO = "#"; // link za 497 € jednokratno
+  var CHECKOUT_RATE = "#";        // link za 2 rate po 270 €
+  var LINK_PITANJA = "#";         // link za pitanja (mejl, WhatsApp, Calendly...)
+  var ROK = "2026-11-19T23:59:00+01:00"; // kraj ponude
+  var BRZI_BONUS_UKUPNO = 10;
+  var BRZI_BONUS_PRODATO = 0;     // ručno povećavaj kako se mesta popunjavaju
+
+  var PLANOVI = {
+    jednokratno: { link: CHECKOUT_JEDNOKRATNO, vrednost: 497, cena: "497 €", opis: "Jednokratno" },
+    rate:        { link: CHECKOUT_RATE,        vrednost: 270, cena: "2 × 270 €", opis: "2 rate" },
+  };
+  var izabran = "jednokratno";
+
+  // ---------- Izbor plana ----------
+  function osvezi() {
+    var p = PLANOVI[izabran];
+    document.querySelectorAll("a[data-checkout]").forEach(function (a) {
+      var plan = a.getAttribute("data-plan") || izabran;
+      a.href = PLANOVI[plan].link;
+    });
+    document.querySelectorAll("[data-cena-dugme]").forEach(function (el) { el.textContent = p.cena; });
+    var mc = document.querySelector("[data-mob-cena]"), mo = document.querySelector("[data-mob-opis]");
+    if (mc) mc.textContent = p.cena;
+    if (mo) mo.textContent = p.opis;
+  }
+  document.querySelectorAll('input[name="plan"]').forEach(function (r) {
+    r.addEventListener("change", function () { if (r.checked) { izabran = r.value; osvezi(); } });
+  });
+  osvezi();
+
+  // ---------- Meta InitiateCheckout ----------
+  document.querySelectorAll("a[data-checkout]").forEach(function (a) {
+    a.addEventListener("click", function () {
+      if (typeof window.fbq !== "function") return;
+      var plan = a.getAttribute("data-plan") || izabran;
+      window.fbq("track", "InitiateCheckout", {
+        content_name: "InfoCash Metoda",
+        value: PLANOVI[plan].vrednost,
+        currency: "EUR",
+      });
+    });
+  });
+  document.querySelectorAll("a[data-pitanja]").forEach(function (a) { a.href = LINK_PITANJA; });
+  document.querySelectorAll("a[data-na-kasu]").forEach(function (a) {
+    a.addEventListener("click", function (e) {
+      e.preventDefault();
+      var k = document.querySelector("[data-kasa]");
+      if (k) window.scrollTo({ top: k.getBoundingClientRect().top + window.scrollY - 70, behavior: "smooth" });
+    });
+  });
+
+  // ---------- Brzi bonusi ----------
+  var ostalo = Math.max(0, BRZI_BONUS_UKUPNO - BRZI_BONUS_PRODATO);
+  document.querySelectorAll("[data-mesta-ostalo]").forEach(function (el) { el.textContent = ostalo; });
+  var tekst = document.querySelector("[data-brzi-tekst]");
+  if (tekst) tekst.textContent = ostalo > 0 ? (ostalo === 1 ? "Još 1 mesto" : "Još " + ostalo + " mesta") : "Popunjeno";
+  var bar = document.querySelector("[data-mesta-bar]");
+  if (bar) requestAnimationFrame(function () { bar.style.width = (BRZI_BONUS_PRODATO / BRZI_BONUS_UKUPNO * 100) + "%"; });
+  if (ostalo === 0) {
+    var brzi = document.querySelector("[data-brzi]");
+    if (brzi) brzi.classList.add("popunjeno");
+  }
+
+  // ---------- Odbrojavanje ----------
+  var kraj = new Date(ROK).getTime();
+  var dv = function (n) { return n < 10 ? "0" + n : String(n); };
+  var rokEl = document.querySelector("[data-rok]");
+  var t;
+  function tik() {
+    var ms = kraj - Date.now();
+    if (ms <= 0) {
+      clearInterval(t);
+      document.body.classList.add("isteklo-sve");
+      var traka = document.querySelector("[data-rok-traka]");
+      if (traka) traka.classList.add("isteklo");
+      var rt = document.querySelector("[data-rok-tekst]");
+      if (rt) rt.textContent = "Ponuda je istekla";
+      return;
+    }
+    var s = Math.floor(ms / 1000);
+    var d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), sek = s % 60;
+    if (rokEl) rokEl.textContent = (d > 0 ? d + "d " : "") + dv(h) + ":" + dv(m) + ":" + dv(sek);
+  }
+  t = setInterval(tik, 1000);
+  tik();
+
+  // ---------- Traka na telefonu: kad kasa izađe iz ekrana ----------
+  var mob = document.querySelector("[data-mob-traka]");
+  var kasa = document.querySelector("[data-kasa]");
+  var krajSek = document.querySelector(".kraj");
+  if (mob && kasa && "IntersectionObserver" in window) {
+    var vidljivo = new Set();
+    var io = new IntersectionObserver(function (unosi) {
+      unosi.forEach(function (u) { u.isIntersecting ? vidljivo.add(u.target) : vidljivo.delete(u.target); });
+      mob.classList.toggle("vidljiva", vidljivo.size === 0);
+    });
+    io.observe(kasa);
+    if (krajSek) io.observe(krajSek);
+  }
+})();
+</script>
+</body>
+</html>
