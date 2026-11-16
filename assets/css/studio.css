@@ -71,13 +71,6 @@ h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .05em; color: v
 .kontrole { border-left: 1px solid var(--line); background: #fff; overflow-y: auto; padding: 12px; display: grid; gap: 12px; align-content: start; }
 .blok { border: 1px solid var(--line); border-radius: 10px; padding: 12px; display: grid; gap: 8px; }
 .blok-ruke { border-color: #f3dc9a; background: #fffbea; }
-.ruke { display: grid; gap: 6px; max-height: 240px; overflow-y: auto; }
-.ruka { display: flex; align-items: center; gap: 8px; background: #fff; border: 1px solid #f3dc9a; border-radius: 8px; padding: 7px 8px; }
-.ruka div { flex: 1; min-width: 0; }
-.ruka strong { display: block; font-size: 13.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ruka span { font-size: 12px; color: var(--muted); }
-.ruka button { font-size: 12.5px; padding: 5px 9px; border-radius: 6px; background: var(--siva); font-weight: 600; }
-.ruka button.pisi { background: var(--plava); color: #fff; }
 #broj-ruku { font-variant-numeric: tabular-nums; }
 .blok-ponuda { border-color: #f6c3a5; background: #fff8f3; }
 .objave { display: grid; gap: 6px; max-height: 200px; overflow-y: auto; }

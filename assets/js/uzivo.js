@@ -745,7 +745,6 @@
     const gore = !rukaGore;
     if (!posalji({ t: "ruka", gore })) { obavesti("Veza", "Nema veze. Pokušaj ponovo za par sekundi."); return; }
     postaviRuku(gore);
-    if (gore) obavesti("Ruka je podignuta ✋", "Tim radionice vidi da imaš pitanje. Možeš i da ga napišeš u chatu.", "ruka");
   });
 
   // ---------- jedan tab ----------

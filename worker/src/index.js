@@ -329,8 +329,8 @@ export class Soba extends DurableObject {
     ctx.setWebSocketAutoResponse(new WebSocketRequestResponsePair("ping", "pong"));
   }
 
-  podignuteRuke() {
-    return this.sql.exec("SELECT uid, ime, email, ruka FROM ucesnici WHERE ruka IS NOT NULL ORDER BY ruka").toArray();
+  brojRuku() {
+    return this.sql.exec("SELECT COUNT(*) AS n FROM ucesnici WHERE ruka IS NOT NULL").one().n;
   }
 
   async cfg() {
@@ -447,7 +447,7 @@ export class Soba extends DurableObject {
     const reakcije = this.sql.exec("SELECT e, SUM(broj) AS n FROM reakcije GROUP BY e").toArray();
     return {
       t: "init", sad: Date.now(), cfg: await this.cfg(), trajanje: await this.trajanje(),
-      razgovori, ankete, objave, reakcije, online: this.brojOnline(), ruke: this.podignuteRuke(),
+      razgovori, ankete, objave, reakcije, online: this.brojOnline(), ruke: this.brojRuku(),
       ukupno: this.sql.exec("SELECT COUNT(*) AS n FROM ucesnici").one().n,
     };
   }
@@ -555,7 +555,7 @@ export class Soba extends DurableObject {
       if (gore) this.sql.exec("UPDATE ucesnici SET ruka = ?, ruku_digao = COALESCE(ruku_digao, 0) + 1 WHERE uid = ? AND ruka IS NULL", sad, uid);
       else this.sql.exec("UPDATE ucesnici SET ruka = NULL WHERE uid = ?", uid);
       this.ucesniku(uid, { t: "ruka", gore });
-      this.studiju({ t: "ruke", ruke: this.podignuteRuke(), novi: gore ? uid : null });
+      this.studiju({ t: "ruke", broj: this.brojRuku() });
       return;
     }
 
@@ -586,16 +586,6 @@ export class Soba extends DurableObject {
       const u = this.ucesnikZaStudio(m.uid);
       const online = this.ctx.getWebSockets(`u:${m.uid}`).length > 0;
       this.posalji(ws, { t: "razgovor", uid: m.uid, poruke, u, online });
-      return;
-    }
-
-    if (m.t === "spusti_ruku") {
-      const uidovi = m.sve ? this.podignuteRuke().map((r) => r.uid) : [m.uid];
-      for (const u of uidovi) {
-        this.sql.exec("UPDATE ucesnici SET ruka = NULL WHERE uid = ?", u);
-        this.ucesniku(u, { t: "ruka", gore: false, tim: true });
-      }
-      this.studiju({ t: "ruke", ruke: this.podignuteRuke() });
       return;
     }
 

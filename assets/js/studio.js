@@ -24,7 +24,7 @@
   let ankete = [];
   const reakcije = {};
   let stats = null;
-  let ruke = [];
+  let ruke = 0;
   const sad = () => Date.now() + pomak;
 
   // ---------- prijava ----------
@@ -83,7 +83,7 @@
         objave = m.objave; ankete = m.ankete;
         for (const r of m.reakcije) reakcije[r.e] = r.n;
         $("st-online").textContent = m.online; $("st-ukupno").textContent = m.ukupno;
-        ruke = m.ruke || [];
+        ruke = Number(m.ruke) || 0;
         nacrtajListu(); nacrtajObjave(); nacrtajAnkete(); nacrtajReakcije(); nacrtajRuke(); popuniCfg();
         if (izabran) posalji({ t: "razgovor", uid: izabran });
         break;
@@ -112,7 +112,7 @@
       case "anketa": ankete.forEach((a) => (a.zatvorena = 1)); ankete.unshift(m.anketa); nacrtajAnkete(); break;
       case "anketa_zatvorena": { const a = ankete.find((x) => x.id === m.id); if (a) a.zatvorena = 1; nacrtajAnkete(); break; }
       case "glasovi": { const a = ankete.find((x) => x.id === m.anketa); if (a) a.rezultati = m.rezultati; nacrtajAnkete(); break; }
-      case "ruke": ruke = m.ruke || []; nacrtajRuke(); if (m.novi) zvuk(); break;
+      case "ruke": ruke = Number(m.broj) || 0; nacrtajRuke(); break;
       case "reakcija": reakcije[m.e] = (reakcije[m.e] || 0) + 1; nacrtajReakcije(); break;
       case "klik": { const r = razgovori.get(m.uid); if (r) r.klik = (r.klik || 0) + 1; break; }
       case "cfg": pomak = m.sad - Date.now(); cfg = m.cfg; popuniCfg(); break;
@@ -292,32 +292,8 @@
   }
 
   function nacrtajRuke() {
-    $("broj-ruku").textContent = ruke.length;
-    $("spusti-sve").hidden = ruke.length < 2;
-    const k = $("ruke");
-    k.textContent = "";
-    if (!ruke.length) { k.append(el("p", "mali", "Niko trenutno nema podignutu ruku.")); return; }
-    for (const r of ruke) {
-      const d = el("div", "ruka");
-      const info = el("div");
-      const min = Math.max(0, Math.round((sad() - r.ruka) / 60000));
-      info.append(el("strong", null, r.ime || r.email), el("span", null, min ? `pre ${min} min` : "upravo"));
-      const pisi = el("button", "pisi", "Piši");
-      pisi.type = "button";
-      pisi.onclick = () => {
-        if (!razgovori.has(r.uid)) razgovori.set(r.uid, { uid: r.uid, ime: r.ime, email: r.email, neprocitano: 0, poslednja_poruka: sad(), poslednja: "✋ podigao/la ruku" });
-        izaberi(r.uid);
-        $("tekst-odgovor").value = `Zdravo ${String(r.ime || "").split(" ")[0]}, videli smo da si podigao/la ruku. Koje je tvoje pitanje?`;
-      };
-      const spusti = el("button", null, "Spusti");
-      spusti.type = "button";
-      spusti.onclick = () => posalji({ t: "spusti_ruku", uid: r.uid });
-      d.append(info, pisi, spusti);
-      k.append(d);
-    }
+    $("broj-ruku").textContent = ruke;
   }
-  $("spusti-sve").addEventListener("click", () => { if (confirm("Spustiti sve podignute ruke?")) posalji({ t: "spusti_ruku", sve: true }); });
-  setInterval(() => ruke.length && nacrtajRuke(), 30000);
 
   function nacrtajReakcije() {
     const k = $("reakcije");
