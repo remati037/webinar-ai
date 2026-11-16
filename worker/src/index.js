@@ -7,6 +7,8 @@
 //   GET  /stream/ULAZNICA/live.m3u8 "live" playlista: samo ono sto je vec emitovano
 //   GET  /stream/ULAZNICA/s/IME.ts  deo videa, samo ako je njegovo vreme proslo
 //   GET  /studio/stats?k=KLJUC      analitika gledanja
+//   GET  /snimak/index.m3u8         ceo snimak na zahtev (za /ponuda), bez ulaznice
+//   GET  /snimak/s/IME.m4s          deo snimka, bez provere vremena
 //
 // Sve stanje je u jednom Durable Object-u (Soba), sa SQLite bazom.
 // Konekcije koriste hibernaciju: dok niko nista ne salje, Soba spava i ne kosta.
@@ -192,6 +194,33 @@ async function deoVidea(env, ime) {
   return new Response(bajtovi, { headers: { ...CORS, "Content-Type": tip, "Cache-Control": "private, max-age=3600" } });
 }
 
+// ---------- snimak na zahtev (za /ponuda) ----------
+// Isti delovi iz R2, ali cela playlista odjednom: gledalac premotava kako hoce.
+
+async function playlistaSnimka(env) {
+  const video = await ucitajVideo(env);
+  if (!video) return new Response("nema", { status: 404, headers: CORS });
+  let out = `#EXTM3U\n#EXT-X-VERSION:${video.init ? 7 : 3}\n#EXT-X-TARGETDURATION:${video.target}\n#EXT-X-PLAYLIST-TYPE:VOD\n#EXT-X-MEDIA-SEQUENCE:0\n`;
+  if (video.init) out += `#EXT-X-MAP:URI="s/${video.init}?v=${video.verzija}"\n`;
+  for (const s of video.segmenti) out += `#EXTINF:${s.dur.toFixed(3)},\ns/${s.uri}?v=${video.verzija}\n`;
+  out += "#EXT-X-ENDLIST\n";
+  return new Response(out, {
+    headers: { ...CORS, "Content-Type": "application/vnd.apple.mpegurl", "Cache-Control": "public, max-age=60" },
+  });
+}
+
+async function deoSnimka(env, ime) {
+  const video = await ucitajVideo(env);
+  if (!video) return new Response("nema", { status: 404, headers: CORS });
+  if (ime !== video.init && !video.segmenti.some((s) => s.uri === ime)) return new Response("nema", { status: 404, headers: CORS });
+  const obj = await env.VIDEO.get(`video/${ime}`);
+  if (!obj) return new Response("nema", { status: 404, headers: CORS });
+  const tip = /\.ts$/.test(ime) ? "video/mp2t" : "video/mp4";
+  return new Response(obj.body, {
+    headers: { ...CORS, "Content-Type": tip, "Content-Length": String(obj.size), "Cache-Control": "public, max-age=86400" },
+  });
+}
+
 const MEMORIJA_DELOVA = 14; // ~14 delova po 2-3 MB, daleko ispod 128 MB po instanci
 const _delovi = new Map();  // kljuc -> ArrayBuffer, poslednji korisceni su na kraju
 
@@ -269,6 +298,10 @@ export default {
         if (m[2] === "live.m3u8") return playlista(env);
         return deoVidea(env, m[3]);
       }
+
+      if (p === "/snimak/index.m3u8") return playlistaSnimka(env);
+      const ms = p.match(/^\/snimak\/s\/([\w.-]+\.(?:ts|m4s|mp4))$/);
+      if (ms) return deoSnimka(env, ms[1]);
 
       if (p === "/") return new Response("ok", { headers: CORS });
       return new Response("nema", { status: 404, headers: CORS });

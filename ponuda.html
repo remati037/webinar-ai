@@ -81,6 +81,35 @@
     }
     .pod { margin: 10px auto 0; max-width: 52ch; font-size: clamp(15px, 1.6vw, 17px); color: var(--siva); }
 
+    /* Video sa radionice */
+    .snimak {
+      position: relative; max-width: 880px;
+      margin: clamp(20px, 3vw, 28px) auto 0;
+      aspect-ratio: 16 / 9;
+      background: #111 url(/assets/img/vlada-studio-960.webp) center / cover no-repeat;
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 18px 50px -24px rgba(28,25,22,.45);
+    }
+    .snimak video { display: block; width: 100%; height: 100%; background: transparent; object-fit: contain; }
+    .snimak-pusti {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+      border: 0; cursor: pointer;
+      background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.45));
+      color: #fff; font: inherit; font-size: 15px; font-weight: 600;
+    }
+    .snimak-pusti i {
+      display: grid; place-items: center;
+      width: 76px; height: 76px; border-radius: 50%;
+      background: var(--narandza); box-shadow: 0 10px 30px -8px rgba(232,96,28,.7);
+      transition: transform .15s ease, background .15s ease;
+    }
+    .snimak-pusti:hover i { transform: scale(1.06); background: var(--narandza-tamna); }
+    .snimak-pusti:focus-visible { outline: 3px solid var(--narandza); outline-offset: -3px; }
+    .snimak-pusti svg { width: 30px; height: 30px; margin-left: 4px; }
+    .snimak.igra { background-image: none; }
+    .snimak.igra .snimak-pusti { display: none; }
+
     /* Ponuda: lista + kasa */
     .ponuda {
       display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
@@ -238,7 +267,8 @@
       .rezultati.dva, .moduli { grid-template-columns: 1fr; }
     }
     @media (max-width: 480px) {
-      .pod { display: none; }
+      .snimak { border-radius: 12px; }
+      .snimak-pusti i { width: 60px; height: 60px; }
       .lista li { grid-template-columns: 22px 1fr; }
       .lista .v { grid-column: 2; padding-top: 0; }
     }
@@ -265,6 +295,15 @@
       <div class="nadnaslov">InfoCash Metoda · ponuda sa radionice</div>
       <h1>Tvoj prvi digitalni proizvod <span class="nar">za 30 dana</span></h1>
       <p class="pod">6 modula, AI Video Editor, zajednica i pozivi uživo. Pristup stiže na mejl odmah posle uplate.</p>
+
+      <!-- Snimak radionice: HLS iz R2 preko workera (/snimak/index.m3u8) -->
+      <div class="snimak" data-snimak>
+        <video playsinline preload="none" controlslist="nodownload" disablepictureinpicture></video>
+        <button type="button" class="snimak-pusti" data-snimak-pusti aria-label="Pusti snimak radionice">
+          <i><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l11-6.86a1 1 0 0 0 0-1.7l-11-6.86A1 1 0 0 0 8 5.14Z"/></svg></i>
+          Pogledaj snimak radionice
+        </button>
+      </div>
 
       <div class="ponuda">
         <!-- Šta dobijaš -->
@@ -408,6 +447,37 @@
   <a class="dugme" href="#" data-checkout data-plan="jednokratno">Upiši se</a>
 </div>
 
+<script src="/assets/js/vendor/hls.light.min.js" defer></script>
+<script>
+// Snimak radionice: učitava se tek na klik, pa stranica ostaje brza.
+(function () {
+  var API = /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
+    ? "http://localhost:8787" : "https://vebinar-stream.vladimirst95.workers.dev";
+  var okvir = document.querySelector("[data-snimak]");
+  if (!okvir) return;
+  var video = okvir.querySelector("video");
+  var dugme = okvir.querySelector("[data-snimak-pusti]");
+  var izvor = API + "/snimak/index.m3u8";
+  dugme.addEventListener("click", function () {
+    okvir.classList.add("igra");
+    video.controls = true;
+    if (window.Hls && Hls.isSupported()) {
+      var hls = new Hls({ maxBufferLength: 30 });
+      hls.on(Hls.Events.ERROR, function (_, d) {
+        if (!d.fatal) return;
+        if (d.type === Hls.ErrorTypes.NETWORK_ERROR) hls.startLoad();
+        else if (d.type === Hls.ErrorTypes.MEDIA_ERROR) hls.recoverMediaError();
+      });
+      hls.loadSource(izvor);
+      hls.attachMedia(video);
+    } else {
+      video.src = izvor;
+    }
+    var p = video.play();
+    if (p && p.catch) p.catch(function () {});
+  });
+})();
+</script>
 <script>
 (function () {
   // ============================================================
