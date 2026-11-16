@@ -406,13 +406,36 @@
   // Nema pauze: ako bilo sta zaustavi video (slusalice, tastatura, sistem), nastavlja se.
   video.addEventListener("pause", () => { if (prenosPokrenut && !cekaPocetak && !napustio) setTimeout(() => { if (prenosPokrenut && !cekaPocetak && video.paused) video.play().catch(() => {}); }, 300); });
   video.addEventListener("ratechange", () => { if (video.playbackRate !== 1) video.playbackRate = 1; });
-  // Zakljucan telefon ili drugi tab pauziraju video. Po povratku nastavlja, a ako je
-  // zaostao vise od pola minuta, vraca se na trenutak "uzivo".
-  document.addEventListener("visibilitychange", () => {
+  // Koliko sekundi slika kasni za stvarnim "sada" (po vremenu iz playliste).
+  function zaostatak() {
+    let t = null;
+    if (hls) { if (hls.playingDate) t = hls.playingDate.getTime(); }
+    else if (video.getStartDate) {
+      const d = video.getStartDate();
+      if (d && !isNaN(d.getTime())) t = d.getTime() + video.currentTime * 1000;
+    }
+    return t == null ? null : (sad() - t) / 1000;
+  }
+
+  // Zakljucan telefon ili drugi tab pauziraju video. Po povratku video skace na
+  // trenutak "uzivo", da niko ne gleda ono sto je propustio dok je ekran bio ugasen.
+  function vratiNaUzivo() {
     if (document.hidden || !prenosPokrenut || cekaPocetak || napustio) return;
-    if (hls && hls.latency && hls.targetLatency && hls.latency - hls.targetLatency > 30) { ponovoZa(0); return; }
+    const z = zaostatak();
+    if (z == null) {
+      if (hls && hls.latency && hls.targetLatency && hls.latency - hls.targetLatency > 30) { ponovoZa(0); return; }
+    } else if (z > 2) {
+      const s = video.seekable;
+      const ivica = s.length ? s.end(s.length - 1) : 0;
+      const cilj = video.currentTime + z;
+      if (cilj < ivica - 0.5) { try { video.currentTime = cilj; } catch { ponovoZa(0); return; } }
+      else { ponovoZa(0); return; }
+    }
     if (video.paused) video.play().catch(() => { $("zvuk-kapija").hidden = false; });
-  });
+  }
+  document.addEventListener("visibilitychange", vratiNaUzivo);
+  window.addEventListener("pageshow", vratiNaUzivo);
+  if (LOKALNO) window.__uzivo.zaostatak = zaostatak;
   if ("mediaSession" in navigator) {
     for (const a of ["pause", "seekbackward", "seekforward", "seekto", "previoustrack", "nexttrack"]) {
       try { navigator.mediaSession.setActionHandler(a, a === "pause" ? () => video.play() : () => {}); } catch {}
