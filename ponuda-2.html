@@ -1,0 +1,1123 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>InfoCash Metoda · Snimak i ponuda</title>
+  <meta name="description" content="InfoCash Metoda: program Vladimira Stankovića za prvi digitalni proizvod, od ideje do prvih kupaca.">
+  <meta name="robots" content="noindex, follow">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sr_RS">
+  <meta property="og:site_name" content="Vladimir Stanković · AI Profit Lab">
+  <meta property="og:title" content="InfoCash Metoda: od ideje do prve prodaje">
+  <meta property="og:description" content="Snimak radionice i kompletan sistem za tvoj prvi digitalni proizvod.">
+  <meta property="og:image" content="https://webinar.aiprofit.rs/assets/img/infocash-og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="theme-color" content="#FAF8F5">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- META PIXEL. ID 539402290072454. PageView + InitiateCheckout na klik. -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '539402290072454');
+  fbq('track', 'PageView');
+  </script>
+
+  <!-- POSTHOG (EU). Isti projekat kao /ponuda. Stranica se razlikuje po $pathname (/ponuda-2) i svojstvu "stranica". -->
+  <script>
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  posthog.init('phc_y95YTLhWa5Uf2HmPMqE3TxHSPEaYChSHPgstD56x8CJX', {
+    api_host: 'https://eu.i.posthog.com',
+    person_profiles: 'identified_only',
+    enable_heatmaps: true,
+  });
+  posthog.register({ stranica: 'ponuda-2' });
+  </script>
+
+  <style>
+    :root {
+      --bg: #FAF8F5;
+      --belo: #FFFFFF;
+      --tekst: #1C1916;
+      --siva: #6E665E;
+      --linija: #E9E4DD;
+      --narandza: #E8601C;
+      --narandza-tamna: #CF5112;
+      --narandza-svetla: #FFF1E8;
+      --zelena: #1E8A4C;
+      --zelena-svetla: #E6F4EC;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--tekst);
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px; line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; }
+    img { max-width: 100%; }
+    .omot { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+    .uzi { max-width: 720px; }
+    .nar { color: var(--narandza); }
+
+    /* Rok na vrhu */
+    .rok-traka {
+      position: sticky; top: 0; z-index: 30;
+      padding: 10px 16px;
+      background: #C2361B; color: #fff;
+      font-size: 15px; font-weight: 600; text-align: center;
+    }
+    .rok-traka b { display: inline-block; margin-left: 4px; padding: 1px 8px; border-radius: 6px; background: rgba(0,0,0,.25); font-size: 17px; font-weight: 800; font-variant-numeric: tabular-nums; color: #fff; }
+    .tacka { display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: #fff; vertical-align: 2px; animation: puls 1.4s ease-in-out infinite; }
+    @keyframes puls { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: .35; transform: scale(.75); } }
+
+    /* Odbrojavanje u kockicama */
+    .odbroj { display: flex; justify-content: center; gap: 8px; }
+    .odbroj div { min-width: 68px; padding: 10px 6px 8px; background: var(--tekst); color: #fff; border-radius: 12px; text-align: center; }
+    .odbroj b { display: block; font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+    .odbroj span { display: block; margin-top: 4px; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #CFC6BB; }
+    .odbroj.srednji div { min-width: 56px; padding: 8px 4px 6px; border-radius: 10px; }
+    .odbroj.srednji b { font-size: 24px; }
+    .odbroj.srednji span { font-size: 10px; }
+    .odbroj.mali { gap: 5px; }
+    .odbroj.mali div { min-width: 44px; padding: 5px 3px 4px; border-radius: 8px; background: #C2361B; }
+    .odbroj.mali b { font-size: 20px; }
+    .odbroj.mali span { margin-top: 2px; font-size: 9px; color: #FFD9CC; }
+
+    /* Blok hitnosti */
+    .hitno { max-width: 560px; margin: 22px auto 0; padding: 18px 16px; background: #FFF4EF; border: 1.5px solid #F3C2AE; border-radius: 16px; text-align: center; }
+    .hitno-naslov { margin-bottom: 12px; font-size: 15px; font-weight: 700; color: #B4301A; }
+    .hitno-naslov .tacka { background: #C2361B; }
+    .hitno-pod { margin-top: 12px; font-size: 14px; color: var(--siva); }
+    .hitno-pod b { color: #B4301A; }
+
+    /* Traka sa pozivom usred stranice */
+    .poziv { margin-top: clamp(64px, 9vw, 104px); padding: clamp(28px, 4vw, 44px) 16px; background: var(--tekst); color: #fff; text-align: center; }
+    .poziv h2 { font-size: clamp(22px, 3vw, 30px); font-weight: 800; letter-spacing: -.02em; line-height: 1.2; text-wrap: balance; }
+    .poziv p { max-width: 52ch; margin: 8px auto 0; color: #CFC6BB; }
+    .poziv .odbroj { margin-top: 20px; }
+    .poziv .odbroj div { background: #C2361B; }
+    .poziv .odbroj span { color: #FFD9CC; }
+    .poziv .dugme { max-width: 400px; margin: 20px auto 0; }
+
+    /* Hero */
+    .hero { padding: clamp(24px, 4vw, 48px) 0 0; text-align: center; }
+    .nadnaslov { font-size: 13px; font-weight: 600; color: var(--narandza); letter-spacing: .02em; }
+    h1 {
+      margin: 8px auto 0; max-width: 30ch;
+      font-size: clamp(28px, 4.4vw, 48px);
+      font-weight: 800; line-height: 1.12; letter-spacing: -.025em;
+      text-wrap: balance;
+    }
+    .pod { margin: 12px auto 0; max-width: 58ch; font-size: clamp(15px, 1.6vw, 17px); color: var(--siva); }
+    .pod b { color: var(--tekst); font-weight: 600; }
+
+    /* Video sa radionice */
+    .snimak {
+      position: relative; max-width: 880px;
+      margin: clamp(20px, 3vw, 28px) auto 0;
+      aspect-ratio: 16 / 9;
+      background: #111 url(/assets/img/vlada-studio-960.webp) center / cover no-repeat;
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 18px 50px -24px rgba(28,25,22,.45);
+    }
+    .snimak video { display: block; width: 100%; height: 100%; background: transparent; object-fit: contain; }
+    .snimak-pusti {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+      border: 0; cursor: pointer;
+      background: linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.45));
+      color: #fff; font: inherit; font-size: 15px; font-weight: 600;
+    }
+    .snimak-pusti i {
+      display: grid; place-items: center;
+      width: 76px; height: 76px; border-radius: 50%;
+      background: var(--narandza); box-shadow: 0 10px 30px -8px rgba(232,96,28,.7);
+      transition: transform .15s ease, background .15s ease;
+    }
+    .snimak-pusti:hover i { transform: scale(1.06); background: var(--narandza-tamna); }
+    .snimak-pusti:focus-visible { outline: 3px solid var(--narandza); outline-offset: -3px; }
+    .snimak-pusti svg { width: 30px; height: 30px; margin-left: 4px; }
+    .snimak.igra { background-image: none; }
+    .snimak.igra .snimak-pusti { display: none; }
+    .snimak-opis { max-width: 640px; margin: 14px auto 0; font-size: 14.5px; color: var(--siva); }
+
+    .hero-cta { display: flex; flex-direction: column; align-items: center; margin-top: 16px; }
+    .hero-cta .dugme { width: auto; min-width: 280px; margin: 0; padding: 16px 28px; }
+    .hero-cta small { margin-top: 8px; font-size: 13px; color: var(--siva); }
+
+    /* Brojke */
+    .brojke {
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+      max-width: 880px; margin: clamp(32px, 5vw, 48px) auto 0;
+      border-top: 1px solid var(--linija); border-bottom: 1px solid var(--linija);
+    }
+    .brojke div { padding: 18px 12px; }
+    .brojke div + div { border-left: 1px solid var(--linija); }
+    .brojke b { display: block; font-size: clamp(24px, 3vw, 30px); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
+    .brojke span { display: block; margin-top: 4px; font-size: 13.5px; color: var(--siva); }
+    .brojke-napomena { margin-top: 10px; font-size: 13px; color: var(--siva); }
+
+    /* Dugmad */
+    .dugme {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; margin-top: 14px; padding: 17px 20px;
+      border-radius: 12px;
+      background: var(--narandza); color: #fff;
+      font-size: 17px; font-weight: 700;
+      text-decoration: none;
+      transition: background .15s ease;
+    }
+    .dugme:hover { background: var(--narandza-tamna); }
+    .dugme:focus-visible { outline: 2px solid var(--tekst); outline-offset: 3px; }
+    .dugme svg { width: 18px; height: 18px; }
+    .isteklo-sve .dugme { pointer-events: none; background: #CFC6BB; }
+
+    /* Sekcije */
+    section.blok { padding: clamp(64px, 9vw, 104px) 0 0; }
+    #ponuda { scroll-margin-top: -24px; }
+    .oznaka { display: block; text-align: center; font-size: 13px; font-weight: 600; color: var(--narandza); letter-spacing: .02em; margin-bottom: 8px; }
+    h2.naslov { font-size: clamp(26px, 3.6vw, 38px); font-weight: 800; letter-spacing: -.02em; line-height: 1.15; text-align: center; text-wrap: balance; }
+    .podnaslov { margin: 12px auto 0; max-width: 58ch; text-align: center; color: var(--siva); }
+    .tekst p { margin-top: 14px; color: #3E3832; font-size: 16.5px; }
+    .tekst p:first-child { margin-top: 0; }
+    .tekst b { color: var(--tekst); }
+    .poenta {
+      max-width: 640px; margin: 28px auto 0;
+      text-align: center; font-size: clamp(17px, 2vw, 19px); font-weight: 600; text-wrap: balance;
+    }
+    .poenta.sivo { font-weight: 400; color: var(--siva); font-size: 16px; }
+
+    /* Poređenje modela */
+    .tabela-omot { margin-top: 28px; overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--linija); border-radius: 14px; background: var(--belo); }
+    .tabela { width: 100%; min-width: 620px; border-collapse: collapse; font-size: 15px; }
+    .tabela th, .tabela td { padding: 14px 16px; text-align: left; border-bottom: 1px solid var(--linija); vertical-align: top; }
+    .tabela tr:last-child td { border-bottom: 0; }
+    .tabela thead th { font-size: 14px; font-weight: 700; background: #F6F2ED; }
+    .tabela tbody th { font-weight: 600; color: var(--siva); font-size: 14px; width: 22%; }
+    .tabela .dig { background: var(--narandza-svetla); font-weight: 600; }
+    .tabela thead .dig { color: var(--narandza-tamna); }
+
+    /* Primer: panel */
+    .primer {
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: clamp(20px, 4vw, 48px); align-items: center; margin-top: 32px;
+    }
+    .primer-brojke { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 22px; }
+    .primer-brojke div { padding: 14px 12px; background: var(--belo); border: 1px solid var(--linija); border-radius: 12px; text-align: center; }
+    .primer-brojke b { display: block; font-size: 22px; font-weight: 800; letter-spacing: -.02em; }
+    .primer-brojke span { font-size: 13px; color: var(--siva); }
+    .primer h3 { font-size: 17px; font-weight: 700; margin-top: 18px; }
+    .primer h3:first-child { margin-top: 0; }
+    .primer p { margin-top: 4px; color: var(--siva); }
+    .screenshot {
+      background: var(--belo);
+      border: 1px solid var(--linija);
+      border-radius: 14px;
+      box-shadow: 0 10px 30px -18px rgba(28,25,22,.25);
+      overflow: hidden;
+    }
+    .screenshot img { display: block; width: 100%; height: auto; }
+    .screenshot + .screenshot { margin-top: 12px; }
+
+    /* Priča */
+    .prica { display: grid; grid-template-columns: 300px minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; margin-top: 36px; }
+    .prica-foto { position: sticky; top: 64px; }
+    .prica-foto img { display: block; width: 100%; height: auto; border-radius: 16px; }
+    .prica-foto figcaption { margin-top: 10px; font-size: 14px; color: var(--siva); }
+    .prica-foto figcaption b { display: block; color: var(--tekst); font-size: 15px; }
+    .koraci-price { list-style: none; margin-top: 22px; }
+    .koraci-price li { padding: 16px 0 16px 18px; border-left: 2px solid var(--linija); position: relative; }
+    .koraci-price li::before { content: ""; position: absolute; left: -6px; top: 22px; width: 10px; height: 10px; border-radius: 50%; background: var(--narandza); }
+    .koraci-price b { display: block; font-size: 14px; font-weight: 700; color: var(--narandza-tamna); }
+    .koraci-price p { margin-top: 4px; color: #3E3832; }
+    .citat { margin-top: 22px; padding: 18px 20px; background: var(--belo); border: 1px solid var(--linija); border-radius: 14px; font-size: 17px; font-weight: 600; }
+
+    /* Grafikon tržišta */
+    .grafikon { margin-top: 28px; padding: clamp(18px, 3vw, 28px); background: var(--belo); border: 1px solid var(--linija); border-radius: 16px; }
+    .grafikon-vrh { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+    .grafikon-vrh b { display: block; font-size: 16px; }
+    .grafikon-vrh span { font-size: 13.5px; color: var(--siva); }
+    .rast { text-align: right; }
+    .rast b { font-size: 26px; font-weight: 800; color: var(--zelena); letter-spacing: -.02em; }
+    .stubici { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 6px; align-items: end; height: 240px; margin-top: 22px; }
+    .stub { position: relative; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; }
+    .stub i { display: block; height: var(--h); min-height: 4px; background: #F0C9B3; border-radius: 6px 6px 2px 2px; }
+    .stub.ti i { background: var(--narandza); }
+    .stub em { font-style: normal; font-size: 12px; font-weight: 600; text-align: center; margin-bottom: 4px; color: var(--siva); }
+    .stub.ti em { color: var(--narandza-tamna); }
+    .stub.ti::before { content: "Ti si ovde"; position: absolute; left: 50%; transform: translateX(-50%); bottom: calc(var(--h) + 26px); white-space: nowrap; font-size: 11.5px; font-weight: 700; color: #fff; background: var(--tekst); padding: 3px 7px; border-radius: 6px; }
+    .godine { display: grid; grid-template-columns: repeat(11, minmax(0, 1fr)); gap: 6px; margin-top: 6px; font-size: 12px; color: var(--siva); text-align: center; }
+    .izvor { margin-top: 12px; font-size: 12.5px; color: #9C9389; }
+
+    /* Kartice */
+    .kartice { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+    .kartice.cetiri { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .kartica { padding: 22px; background: var(--belo); border: 1px solid var(--linija); border-radius: 16px; }
+    .kartica .br { font-size: 13px; font-weight: 700; color: var(--narandza); }
+    .kartica h3 { margin-top: 6px; font-size: 18px; font-weight: 700; letter-spacing: -.01em; }
+    .kartica p { margin-top: 6px; color: var(--siva); font-size: 15px; }
+
+    /* Moduli detaljno */
+    .moduli { list-style: none; margin-top: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .moduli li { display: grid; grid-template-columns: 40px 1fr; gap: 12px; padding: 20px; background: var(--belo); border: 1px solid var(--linija); border-radius: 16px; }
+    .moduli .br { font-size: 15px; font-weight: 700; color: var(--narandza); padding-top: 2px; }
+    .moduli b { display: block; font-size: 18px; font-weight: 700; }
+    .moduli .resava { display: block; margin-top: 6px; font-size: 14px; color: var(--siva); }
+    .moduli .resava em { font-style: normal; font-weight: 600; color: #B4432F; }
+    .moduli .izlazis { display: block; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--linija); font-size: 14.5px; }
+    .moduli .izlazis em { font-style: normal; font-weight: 600; color: var(--zelena); }
+
+    /* Cilj */
+    .cilj { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+    .cilj div { padding: 22px; background: var(--belo); border: 1px solid var(--linija); border-radius: 16px; }
+    .cilj div:last-child { background: var(--tekst); color: #fff; border-color: var(--tekst); }
+    .cilj div:last-child p { color: #CFC6BB; }
+    .cilj small { font-size: 13px; font-weight: 700; color: var(--narandza); }
+    .cilj b { display: block; margin-top: 4px; font-size: 22px; font-weight: 800; letter-spacing: -.02em; }
+    .cilj p { margin-top: 8px; font-size: 15px; color: var(--siva); }
+
+    /* Ponuda: detaljna lista + kasa */
+    .ponuda {
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 400px);
+      gap: clamp(20px, 4vw, 48px); align-items: start;
+      margin-top: 32px;
+    }
+    .kasa {
+      position: sticky; top: 56px;
+      padding: clamp(20px, 2.6vw, 26px);
+      background: var(--belo);
+      border: 1px solid var(--linija);
+      border-radius: 16px;
+      box-shadow: 0 12px 40px -18px rgba(28,25,22,.18);
+    }
+    .cenovnik { text-align: center; }
+    .vrednost-red { font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--siva); }
+    .stara {
+      position: relative; display: inline-block;
+      margin-top: 2px;
+      font-size: clamp(30px, 3.6vw, 36px); font-weight: 700; letter-spacing: -.02em;
+      color: #9C9389;
+    }
+    .stara::after {
+      content: ""; position: absolute; left: -6px; right: -6px; top: 52%;
+      height: 3px; border-radius: 3px;
+      background: #D93A2B;
+      transform: rotate(-8deg);
+    }
+    .danas { margin-top: 10px; font-size: 14px; font-weight: 600; color: var(--tekst); }
+    .nova { font-size: clamp(56px, 7vw, 68px); font-weight: 800; letter-spacing: -.04em; line-height: 1; color: var(--tekst); }
+    .nova-opis { margin-top: 6px; font-size: 14px; color: var(--siva); }
+    .ustedis {
+      display: inline-block; margin-top: 12px;
+      padding: 5px 12px; border-radius: 99px;
+      background: var(--zelena-svetla); color: var(--zelena);
+      font-size: 14px; font-weight: 700;
+    }
+    .rate-link { display: block; margin-top: 12px; text-align: center; font-size: 14px; color: var(--siva); }
+    .rate-link a { color: var(--siva); text-underline-offset: 3px; }
+    .rate-link a:hover { color: var(--tekst); }
+    .poverenje { margin-top: 10px; font-size: 13px; color: var(--siva); text-align: center; }
+    .mesta { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--linija); font-size: 13.5px; color: var(--siva); }
+    .mesta b { color: var(--tekst); }
+    .mesta-bar { height: 5px; margin-top: 8px; border-radius: 99px; background: var(--linija); overflow: hidden; }
+    .mesta-bar i { display: block; height: 100%; width: 0; background: var(--narandza); border-radius: inherit; transition: width .8s ease; }
+
+    .stavke { list-style: none; }
+    .stavka { padding: 20px 0; border-bottom: 1px solid var(--linija); }
+    .stavka:first-child { padding-top: 0; }
+    .stavka-vrh { display: grid; grid-template-columns: 22px 1fr auto; gap: 12px; align-items: start; }
+    .stavka-vrh svg { width: 20px; height: 20px; margin-top: 3px; color: var(--zelena); }
+    .stavka-vrh b { font-size: 17px; font-weight: 700; letter-spacing: -.01em; }
+    .stavka-vrh .v { font-size: 14px; font-weight: 600; color: var(--siva); white-space: nowrap; padding-top: 2px; }
+    .stavka p { margin: 6px 0 0 34px; color: #3E3832; font-size: 15px; }
+    .stavka ul { list-style: none; margin: 8px 0 0 34px; }
+    .stavka ul li { position: relative; padding-left: 16px; margin-top: 4px; font-size: 14.5px; color: var(--siva); }
+    .stavka ul li::before { content: ""; position: absolute; left: 0; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: #CFC6BB; }
+
+    .bonusi { margin-top: 22px; padding: 20px 20px 4px; background: var(--narandza-svetla); border-radius: 16px; }
+    .bonusi-vrh { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px; }
+    .bonusi-vrh h3 { font-size: 18px; font-weight: 700; }
+    .bonusi-vrh span { padding: 3px 10px; border-radius: 99px; background: #C2361B; color: #fff; font-size: 13px; font-weight: 700; animation: puls-ton 1.8s ease-in-out infinite; }
+    @keyframes puls-ton { 0%, 100% { box-shadow: 0 0 0 0 rgba(194,54,27,.45); } 50% { box-shadow: 0 0 0 6px rgba(194,54,27,0); } }
+    .kasa-rok { margin: -4px 0 18px; padding-bottom: 16px; border-bottom: 1px solid var(--linija); text-align: center; }
+    .kasa-rok p { margin-bottom: 8px; font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: #B4301A; }
+    .kraj .odbroj { margin-top: 22px; }
+    .bonusi-uvod { margin-top: 4px; font-size: 14px; color: var(--siva); }
+    .bonusi .stavke { margin-top: 12px; }
+    .bonusi .stavka { border-color: rgba(232,96,28,.15); }
+    .bonusi .stavka:last-child { border-bottom: 0; }
+    .bonusi .stavka-vrh svg { color: var(--narandza); }
+    .bonusi.popunjeno { opacity: .5; }
+
+    .zbir { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-top: 16px; padding: 0 4px; font-size: 15px; color: var(--siva); }
+    .zbir strong { font-size: 22px; color: var(--tekst); }
+    .zbir-stara { color: #9C9389; text-decoration-color: #D93A2B; text-decoration-thickness: 2px; font-weight: 600; }
+
+    /* Vremenska linija */
+    .linija { list-style: none; margin-top: 28px; }
+    .linija li { display: grid; grid-template-columns: 150px 1fr; gap: 20px; padding: 16px 0; border-bottom: 1px solid var(--linija); }
+    .linija li:last-child { border-bottom: 0; }
+    .linija b { font-size: 15px; font-weight: 700; color: var(--narandza-tamna); }
+    .linija p { color: #3E3832; }
+
+    /* Za koga nije */
+    .nije { list-style: none; margin-top: 24px; }
+    .nije li { display: grid; grid-template-columns: 24px 1fr; gap: 12px; padding: 16px 0; border-bottom: 1px solid var(--linija); }
+    .nije li:last-child { border-bottom: 0; }
+    .nije svg { width: 20px; height: 20px; margin-top: 2px; color: #C0392B; }
+    .nije b { display: block; font-size: 16.5px; font-weight: 600; }
+    .nije small { display: block; margin-top: 2px; font-size: 15px; color: var(--siva); }
+
+    /* FAQ */
+    .faq { margin-top: 24px; }
+    .faq details { border-bottom: 1px solid var(--linija); }
+    .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 16px; padding: 18px 0; font-size: 16.5px; font-weight: 600; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; font-size: 22px; line-height: 1; color: var(--siva); transition: transform .2s ease; }
+    .faq details[open] summary::after { transform: rotate(45deg); }
+    .faq details p { padding: 0 0 18px; color: var(--siva); }
+    .faq-kontakt { margin-top: 20px; text-align: center; font-size: 15px; color: var(--siva); }
+    .faq-kontakt a { color: var(--narandza); font-weight: 600; }
+
+    /* Kraj */
+    section.kraj { text-align: center; padding-bottom: clamp(72px, 9vw, 110px); }
+    .kraj-tekst { max-width: 58ch; margin: 14px auto 0; color: var(--siva); }
+    .kraj-cena { margin-top: 18px; font-size: 22px; color: var(--siva); }
+    .kraj-cena b { margin-left: 8px; font-size: 34px; font-weight: 800; color: var(--tekst); letter-spacing: -.03em; }
+    .kraj-dugme { max-width: 400px; margin: 14px auto 0; }
+
+    footer { padding: 26px 0 36px; border-top: 1px solid var(--linija); text-align: center; font-size: 13px; color: var(--siva); }
+
+    /* Sticky traka za kupovinu: dole, na svim ekranima */
+    .mob-traka {
+      position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+      padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+      background: rgba(255,255,255,.96); backdrop-filter: blur(10px);
+      border-top: 1px solid var(--linija);
+      box-shadow: 0 -8px 30px -18px rgba(28,25,22,.25);
+      transform: translateY(110%); transition: transform .25s ease;
+    }
+    .mob-traka-unutra { display: flex; align-items: center; justify-content: space-between; gap: 16px; max-width: 1048px; margin: 0 auto; }
+    .traka-tajmer { display: flex; align-items: center; gap: 12px; }
+    .traka-tajmer p { font-size: 14px; font-weight: 700; color: #B4301A; line-height: 1.2; }
+    .mob-traka.vidljiva { transform: none; }
+    .mob-traka b { display: block; font-size: 20px; font-weight: 800; line-height: 1.1; }
+    .mob-traka span { font-size: 12px; color: var(--siva); }
+    .mob-traka .traka-stara { margin-left: 4px; font-size: 14px; font-weight: 600; color: #9C9389; text-decoration-color: #D93A2B; text-decoration-thickness: 2px; }
+    .mob-traka .traka-cena span { display: block; margin-top: 2px; }
+    .mob-traka .dugme { width: auto; margin: 0; padding: 13px 22px; font-size: 15px; }
+    footer { padding-bottom: 96px; }
+    @media (min-width: 861px) {
+      .mob-traka .dugme { padding: 14px 28px; font-size: 16px; }
+    }
+
+    @media (max-width: 860px) {
+      .ponuda, .primer, .prica { grid-template-columns: 1fr; }
+      .kasa { position: static; }
+      .prica-foto { position: static; max-width: 260px; margin: 0 auto; text-align: center; }
+      .kartice, .cilj { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .moduli, .kartice.cetiri { grid-template-columns: 1fr; }
+      .brojke { grid-template-columns: 1fr 1fr; }
+      .brojke div:nth-child(3) { border-left: 0; }
+      .brojke div:nth-child(n+3) { border-top: 1px solid var(--linija); }
+      .linija li { grid-template-columns: 1fr; gap: 4px; }
+      .stubici { height: 200px; gap: 3px; }
+      .godine { gap: 3px; font-size: 10px; }
+      .stub em { font-size: 10px; }
+      .hero-cta .dugme { width: 100%; min-width: 0; }
+      .odbroj { gap: 6px; }
+      .odbroj div { min-width: 0; flex: 1; max-width: 76px; }
+      .odbroj b { font-size: 28px; }
+      .rok-traka { font-size: 14px; }
+      /* Sticky traka na telefonu: tajmer gore, cena i dugme dole */
+      .mob-traka-unutra { flex-wrap: wrap; gap: 8px 12px; }
+      .traka-tajmer { order: -1; width: 100%; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px solid var(--linija); }
+      .traka-tajmer .odbroj div { flex: none; min-width: 44px; }
+      .traka-tajmer .odbroj b { font-size: 20px; }
+      footer { padding-bottom: 150px; }
+    }
+    @media (max-width: 480px) {
+      .snimak { border-radius: 12px; }
+      .snimak-pusti i { width: 60px; height: 60px; }
+      .stavka-vrh { grid-template-columns: 22px 1fr; }
+      .stavka-vrh .v { grid-column: 2; padding-top: 0; }
+      .primer-brojke b { font-size: 18px; }
+      .godine span:nth-child(even) { visibility: hidden; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; animation: none !important; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=539402290072454&ev=PageView&noscript=1" alt=""></noscript>
+
+<div class="rok-traka" data-rok-traka role="timer" aria-live="off">
+  <span data-rok-tekst><i class="tacka" aria-hidden="true"></i>Ponuda ističe za <b data-rok>0d 00:00:00</b></span>
+</div>
+
+<main>
+  <!-- ============================================================
+       HERO + SNIMAK
+       ============================================================ -->
+  <section class="hero" data-sekcija="1 hero i snimak">
+    <div class="omot">
+      <div class="nadnaslov">Pažnja: za sve koji imaju znanje, a još ga nisu pretvorili u novac</div>
+      <h1>Pomoći ću ti da prodaš svoj prvi digitalni proizvod <span class="nar">za 30 dana</span></h1>
+      <p class="pod">Pokazaću ti InfoCash metodu, redosled po kom sam od 2020. prodao <b>preko 50.000 digitalnih proizvoda</b>. Radi i kad nemaš ideju, publiku ni tehničko znanje, i ne traži ulaganje u zalihe ni skupu opremu.</p>
+
+      <!-- Snimak radionice: HLS iz R2 preko workera (/snimak/index.m3u8) -->
+      <div class="snimak" data-snimak>
+        <video playsinline preload="none" controlslist="nodownload" disablepictureinpicture></video>
+        <button type="button" class="snimak-pusti" data-snimak-pusti aria-label="Pusti snimak radionice">
+          <i><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.14v13.72a1 1 0 0 0 1.52.85l11-6.86a1 1 0 0 0 0-1.7l-11-6.86A1 1 0 0 0 8 5.14Z"/></svg></i>
+          Pogledaj snimak radionice
+        </button>
+      </div>
+      <p class="snimak-opis">Kako da nađeš nišu ako nemaš ideju, kako da je proveriš pre nego što potrošiš mesec dana na izradu i kako da dođeš do prvih 10 kupaca bez publike i bez budžeta.</p>
+
+      <div class="hitno">
+        <p class="hitno-naslov"><i class="tacka" aria-hidden="true"></i>Ponuda važi do nedelje 22.11. u ponoć</p>
+        <div class="odbroj" data-odbroj aria-hidden="true"><div><b data-d>0</b><span>dana</span></div><div><b data-h>00</b><span>sati</span></div><div><b data-m>00</b><span>min</span></div><div><b data-s>00</b><span>sek</span></div></div>
+        <p class="hitno-pod">Brzi bonusi: ostalo još <b data-mesta-ostalo>1</b> od 10 mesta</p>
+      </div>
+
+      <div class="hero-cta">
+        <a class="dugme" href="#ponuda" data-na-ponudu>
+          Pogledaj šta dobijaš
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </a>
+        <small>497 € umesto 3.100 € · ili 2 rate po 270 €</small>
+      </div>
+
+      <div class="brojke">
+        <div><b>2020.</b><span>prvi digitalni proizvod</span></div>
+        <div><b>50.000+</b><span>prodatih proizvoda od tada</span></div>
+        <div><b>6</b><span>oblasti: marketing, biznis, fitnes, kuvanje, ljubimci, investiranje</span></div>
+        <div><b>10.000 €</b><span>prvi mesec, sa par hiljada pratilaca</span></div>
+      </div>
+      <p class="brojke-napomena">Sve na srpskom govornom području. Ne globalno.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MODEL: poređenje
+       ============================================================ -->
+  <section class="blok" data-sekcija="2 model poredjenje">
+    <div class="omot">
+      <span class="oznaka">Model</span>
+      <h2 class="naslov">Zašto su digitalni proizvodi najbolji online biznis model</h2>
+      <p class="podnaslov">Radio sam sva tri modela. Fizičke proizvode i danas prodajem. Zato ovo poređenje nije teorija, nego račun.</p>
+      <div class="tabela-omot">
+        <table class="tabela">
+          <thead>
+            <tr><th></th><th>Fizički proizvod</th><th>Usluga</th><th class="dig">Digitalni proizvod</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>Marža</th><td>20 do 40%</td><td>50 do 70%</td><td class="dig">90%+</td></tr>
+            <tr><th>Početni kapital</th><td>Zalihe, ambalaža, magacin</td><td>Skoro nula</td><td class="dig">Skoro nula</td></tr>
+            <tr><th>Isporuka</th><td>Kurir, povrati, reklamacije</td><td>Tvoje vreme, svaki put</td><td class="dig">Automatska, jednom napraviš</td></tr>
+            <tr><th>Sto kupaca više znači</th><td>Sto pakovanja više</td><td>Sto sati više</td><td class="dig">Ništa više</td></tr>
+            <tr><th>Šta ograničava rast</th><td>Novac zaključan u zalihama</td><td>Broj tvojih sati</td><td class="dig">Poverenje publike</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="poenta">Jedini model gde stoti kupac košta isto koliko i prvi. I jedini gde je granica rasta nešto što se gradi, a ne nešto što se kupuje.</p>
+      <p class="poenta sivo">Ali pošteno: ovo nije pasivan prihod. Ovo je posao koji se plaća unapred, a naplaćuje kasnije.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PRIMER: brojke iz panela
+       ============================================================ -->
+  <section class="blok" data-sekcija="3 primer rezultati">
+    <div class="omot">
+      <span class="oznaka">Jedan primer, brojke iz panela</span>
+      <h2 class="naslov">Jedan digitalni priručnik, 4 meseca, 67.726 €</h2>
+      <div class="primer">
+        <div>
+          <figure class="screenshot"><img src="/assets/img/rezultat-panel.jpg" alt="Panel prodaje: 1.457 porudžbina, 67.726 € prihoda, prosečna porudžbina 46 €" width="1600" height="848" loading="lazy"></figure>
+          <figure class="screenshot"><img src="/assets/img/rezultat-2.jpg" alt="Prodaja digitalnog proizvoda: 103 prodata primerka, 2.781 € neto prodaje" width="1600" height="287" loading="lazy"></figure>
+        </div>
+        <div>
+          <h3>Bez moje publike</h3>
+          <p>Ovaj proizvod se ne prodaje preko mojih kanala. 90% kupaca dolazi preko Facebook reklama, ljudima koji za mene nikad nisu čuli.</p>
+          <h3>Napravljen za par dana</h3>
+          <p>I proizvod i ceo funnel su sklopljeni za nekoliko dana, po istom redosledu koji dobijaš u InfoCash metodi.</p>
+          <div class="primer-brojke">
+            <div><b>1.457</b><span>porudžbina</span></div>
+            <div><b>46 €</b><span>prosečna korpa</span></div>
+            <div><b>67.726 €</b><span>za 4 meseca</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PRIČA: Vladimir
+       ============================================================ -->
+  <section class="blok" data-sekcija="4 prica vladimir">
+    <div class="omot">
+      <span class="oznaka">Svako može da snimi kurs. Malo ko ume da ga proda.</span>
+      <h2 class="naslov">Zašto je tržište puno mrtvih kurseva</h2>
+      <div class="prica">
+        <figure class="prica-foto">
+          <img src="/assets/img/vladimir-stankovic-560.webp" alt="Vladimir Stanković" width="560" height="840" loading="lazy">
+          <figcaption><b>Vladimir Stanković</b>Od 2020. u digitalnim proizvodima. 50.000+ prodatih.</figcaption>
+        </figure>
+        <div class="tekst">
+          <p>Ulazna barijera je niska. Svako može da snimi kurs, napiše priručnik ili pokrene zajednicu. I zato je tržište puno kurseva koje niko nije kupio.</p>
+          <p>Znam ljude sa stotinama hiljada pratilaca koji su shvatili da je lakše reklamirati tuđi brend nego prodati nešto svoje. Digitalni proizvodi nisu stvar popularnosti, nego <b>sistema, pozicioniranja i ponude</b>.</p>
+          <ol class="koraci-price">
+            <li><b>2020 · prvi proizvod</b><p>Kurs „Sve tajne Instagram marketinga“ ostvario je 10.000 € prihoda za jedan mesec, i to sa svega nekoliko hiljada pratilaca. Ne zato što je publika bila velika, već zato što su ponuda i ljudi kojima je bila namenjena bili pravi.</p></li>
+            <li><b>Šest godina testiranja</b><p>Online kursevi, priručnici, membership zajednice, mastermind grupe, konferencije. Neke stvari su propale i koštale me mesece i ozbiljan novac. Neke su uradile milione. Ukupno preko 50.000 prodatih proizvoda, sve na srpskom.</p></li>
+            <li><b>Zašto tek sada pričam o ovome</b><p>O ovom sistemu do sada nisam pričao javno. Prodavao sam proizvode, ne metod. Sada ga prvi put dajem manjem broju ljudi koji hoće rezultat, ne teoriju.</p></li>
+          </ol>
+          <p class="citat">Nisam pametniji od tebe. Samo sam pogrešio dovoljno puta da znam kojim redosledom ovo ide.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TAJMING: tržište
+       ============================================================ -->
+  <section class="blok" data-sekcija="5 tajming trziste">
+    <div class="omot">
+      <span class="oznaka">Tajming</span>
+      <h2 class="naslov">Zašto sada, a ne za godinu dana</h2>
+      <p class="podnaslov">Tržište digitalnog edukativnog sadržaja je 2024. vredelo 24,5 milijardi dolara. Procena za 2034. je 249 milijardi. Deset puta za deset godina.</p>
+      <div class="grafikon" role="img" aria-label="Tržište digitalnog edukativnog sadržaja raste sa 24,5 milijardi dolara 2024. na 249 milijardi 2034, godišnji rast 26,1%">
+        <div class="grafikon-vrh">
+          <div><b>Tržište digitalnog edukativnog sadržaja</b><span>Veličina u milijardama $, 2024 do 2034</span></div>
+          <div class="rast"><span>Godišnji rast</span><b>26,1%</b></div>
+        </div>
+        <div class="stubici" aria-hidden="true">
+          <div class="stub" style="--h:8.7%"><em>24,5</em><i></i></div>
+          <div class="stub" style="--h:10.9%"><em>30,9</em><i></i></div>
+          <div class="stub ti" style="--h:13.8%"><em>39,0</em><i></i></div>
+          <div class="stub" style="--h:17.4%"><em>49,2</em><i></i></div>
+          <div class="stub" style="--h:21.9%"><em>62,0</em><i></i></div>
+          <div class="stub" style="--h:27.6%"><em>78,2</em><i></i></div>
+          <div class="stub" style="--h:34.8%"><em>98,5</em><i></i></div>
+          <div class="stub" style="--h:43.8%"><em>124</em><i></i></div>
+          <div class="stub" style="--h:55.5%"><em>157</em><i></i></div>
+          <div class="stub" style="--h:70.0%"><em>198</em><i></i></div>
+          <div class="stub" style="--h:88.0%"><em>249</em><i></i></div>
+        </div>
+        <div class="godine" aria-hidden="true"><span>2024</span><span>2025</span><span>2026</span><span>2027</span><span>2028</span><span>2029</span><span>2030</span><span>2031</span><span>2032</span><span>2033</span><span>2034</span></div>
+        <p class="izvor">Izvor: market.us, Digital Education Content Market, 2025.</p>
+      </div>
+      <div class="omot uzi tekst" style="margin-top:28px">
+        <p>Oni koji sistem postave danas, naplaćuju ga narednu deceniju. Oni koji čekaju da vide kako će ispasti, ulaze na tržište koje je punije i skuplje.</p>
+        <p>AI je sve dodatno ubrzao. Ono što je 2020. tražilo tim od deset ljudi, sada radiš sam, ako znaš šta radiš. Proizvodnja koja je trajala dva meseca sad traje nekoliko dana.</p>
+        <p>Ali ista stvar važi i za sve ostale. AI ne pravi proizvod umesto tebe. AI skida vreme između tvoje odluke i gotove stvari. <b>Odluka je i dalje tvoja i tu većina zapne.</b></p>
+        <p>Zato ovo nije kurs, nego mentorski program. Radimo zajedno na konkretnom rezultatu: tvoj proizvod, tvoj sistem prodaje, tvoja prva zarada.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PREPOZNAJ SE
+       ============================================================ -->
+  <section class="blok" data-sekcija="6 prepoznaj se">
+    <div class="omot">
+      <h2 class="naslov">Prepoznaj se u jednom od ova tri</h2>
+      <div class="kartice">
+        <div class="kartica"><span class="br">01</span><h3>Imaš znanje, nemaš proizvod</h3><p>Radiš nešto godinama, ljudi te pitaju za savet besplatno, a nikad to nisi spakovao u nešto što se plaća.</p></div>
+        <div class="kartica"><span class="br">02</span><h3>Imaš deset ideja i nijednu odluku</h3><p>Svaka ti zvuči dobro tri dana, pa je zameniš sledećom. Nijedna nije došla do prve prodaje.</p></div>
+        <div class="kartica"><span class="br">03</span><h3>Imaš proizvod koji stoji</h3><p>Napravio si ga, postavio i tišina. Ili ima upita, a nema uplata.</p></div>
+      </div>
+      <p class="poenta">Za sva tri problem je isti. Nije znanje, nije trud, nije publika. <span class="nar">Redosled.</span></p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PROGRAM: kako je osmišljen
+       ============================================================ -->
+  <section class="blok" data-sekcija="7 kako je osmisljen">
+    <div class="omot">
+      <span class="oznaka">Program</span>
+      <h2 class="naslov">Kako je osmišljena InfoCash Metoda</h2>
+      <p class="podnaslov">Sve što sam naučio na greškama i uspesima spakovao sam tako da neko bez ideje šta da radi može da iskopira moj sistem. Ne da ga razume, nego da ga iskopira. Razumevanje dođe kad vidiš prvu uplatu.</p>
+      <div class="kartice cetiri">
+        <div class="kartica"><span class="br">01</span><h3>Video lekcije</h3><p>Kratke i konkretne. Svaka se završava jednim malim korakom koji uradiš pre sledeće. Gledaš 15 minuta pa radiš.</p></div>
+        <div class="kartica"><span class="br">02</span><h3>Grupni Zoom pozivi sa mnom</h3><p>Tri live poziva. Doneseš svoju nišu, ponudu ili cenu i dobiješ odgovor na svoj slučaj, ne na prosečan.</p></div>
+        <div class="kartica"><span class="br">03</span><h3>Zajednica za podršku</h3><p>12 meseci pristupa AI Profit Lab platformi i zajednici: edukacije, praktični materijali i podrška dok radiš na svom proizvodu.</p></div>
+        <div class="kartica"><span class="br">04</span><h3>AI alati koje ja koristim</h3><p>AI Video Editor za rilsove i Facebook Scale skill za Claude. Alati koji skraćuju posao oko sadržaja i reklama.</p></div>
+      </div>
+      <p class="poenta sivo">Svaki korak te približava prvoj prodaji. Nema koraka koji postoji zato što „treba da se zna“.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MODULI: detaljno
+       ============================================================ -->
+  <section class="blok" data-sekcija="8 moduli">
+    <div class="omot">
+      <h2 class="naslov">6 modula, 6 rešenih problema</h2>
+      <p class="podnaslov">Svaki modul rešava jednu kočnicu i završava se nečim gotovim, ne beleškama.</p>
+      <ol class="moduli">
+        <li><span class="br">01</span><div><b>Ideja i niša</b><span class="resava"><em>Rešava:</em> nemam ideju ili ih imam previše</span><span class="izlazis"><em>Izlaziš sa</em> jasno definisanom nišom i preciznim profilom idealnog kupca.</span></div></li>
+        <li><span class="br">02</span><div><b>Validacija</b><span class="resava"><em>Rešava:</em> praviš mesecima bez dokaza da se prodaje</span><span class="izlazis"><em>Izlaziš sa</em> dokazom da ljudi plaćaju za taj problem, pre nego što si napisao prvu stranu.</span></div></li>
+        <li><span class="br">03</span><div><b>Izrada uz AI</b><span class="resava"><em>Rešava:</em> ne znam odakle da počnem sa sadržajem</span><span class="izlazis"><em>Izlaziš sa</em> gotovim proizvodom za 7 do 10 dana.</span></div></li>
+        <li><span class="br">04</span><div><b>Ponuda i cena</b><span class="resava"><em>Rešava:</em> proizvod stoji i ne prodaje se</span><span class="izlazis"><em>Izlaziš sa</em> ponudom, cenom, order bumpom i upsellom koji dižu prosečnu vrednost kupovine.</span></div></li>
+        <li><span class="br">05</span><div><b>Prodajni sistem</b><span class="resava"><em>Rešava:</em> nemam publiku ni listu</span><span class="izlazis"><em>Izlaziš sa</em> prodajnom stranicom, mejl sekvencom i prvim saobraćajem.</span></div></li>
+        <li><span class="br">06</span><div><b>Prvih 10 kupaca</b><span class="resava"><em>Rešava:</em> lansiranje bez plana i bez roka</span><span class="izlazis"><em>Izlaziš sa</em> planom lansiranja po danima i prvim uplatama.</span></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CILJ
+       ============================================================ -->
+  <!-- POZIV usred stranice -->
+  <div class="poziv" data-sekcija="9a poziv usred">
+    <h2>Ova ponuda se zatvara u nedelju u ponoć</h2>
+    <p>Posle toga upis po ceni od 497 € i brzi bonusi više ne važe.</p>
+    <div class="odbroj" data-odbroj aria-hidden="true"><div><b data-d>0</b><span>dana</span></div><div><b data-h>00</b><span>sati</span></div><div><b data-m>00</b><span>min</span></div><div><b data-s>00</b><span>sek</span></div></div>
+    <a class="dugme" href="#" data-checkout data-plan="jednokratno">Upiši se za 497 €</a>
+  </div>
+
+  <section class="blok" data-sekcija="9 cilj">
+    <div class="omot">
+      <span class="oznaka">Cilj</span>
+      <h2 class="naslov">Šta je cilj programa</h2>
+      <div class="cilj">
+        <div><small>30 dana</small><b>Prva prodaja</b><p>Niša, validacija, proizvod, ponuda. Prva uplata na računu. Ovo je deo koji program pokriva korak po korak, dan po dan.</p></div>
+        <div><small>60 dana</small><b>Prvih 10 kupaca</b><p>Prodajni sistem radi. Znaš ko kupuje, po kojoj ceni i odakle dolazi. Ovde većina programa staje. Ovaj ne.</p></div>
+        <div><small>12 meseci</small><b>10.000 € mesečno</b><p>Zato je pristup 12 meseci, a ne 6 nedelja. Dodaješ order bump, upsell, drugi proizvod, plaćeni saobraćaj.</p></div>
+      </div>
+      <p class="poenta sivo">10.000 € mesečno nije obećanje, nego cilj. Zavisi od tvoje niše, tvog rada i tvoje ponude. Ono što obećavam je da ćeš za 30 dana znati da li tvoja ideja ima kupca, umesto da to saznaš posle šest meseci pravljenja.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PONUDA: šta sve dobijaš (detaljno) + kasa
+       ============================================================ -->
+  <section class="blok" id="ponuda" data-sekcija="10 ponuda i kasa">
+    <div class="omot">
+      <span class="oznaka">Ponuda</span>
+      <h2 class="naslov">Šta sve dobijaš</h2>
+      <div class="ponuda">
+        <div>
+          <ul class="stavke">
+            <li class="stavka">
+              <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>InfoCash Akcelerator</b><span class="v">500 €</span></div>
+              <p>Šest modula, od ideje do prvih 10 kupaca. Kratke video lekcije i radni list uz svaku lekciju.</p>
+              <ul>
+                <li>Niša i profil idealnog kupca, pa dokaz da ljudi plaćaju</li>
+                <li>Gotov proizvod uz AI za 7 do 10 dana</li>
+                <li>Ponuda, cena, order bump i upsell</li>
+                <li>Prodajna stranica, mejl sekvenca i plan lansiranja po danima</li>
+              </ul>
+            </li>
+            <li class="stavka">
+              <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>AI Profit Lab · 12 meseci</b><span class="v">450 €</span></div>
+              <p>Pristup zajednici i platformi. Mesto gde pitaš kad zapneš, umesto da stojiš nedelju dana.</p>
+              <ul>
+                <li>Praktične edukacije i materijali</li>
+                <li>Novosti iz AI sveta i redovna ažuriranja sadržaja</li>
+                <li>Ljudi koji rade isto što i ti, u isto vreme</li>
+              </ul>
+            </li>
+            <li class="stavka">
+              <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>3 grupna live poziva sa Vladimirom</b><span class="v">500 €</span></div>
+              <p>Tri Zoom poziva uživo. Doneseš svoju nišu, ponudu ili cenu i dobiješ odgovor na svoj slučaj, ne na prosečan.</p>
+              <ul>
+                <li>Pregled tvoje niše i ponude</li>
+                <li>Koliko da naplatiš i zašto</li>
+                <li>Pitanja koja ti stoje između tebe i prve prodaje</li>
+              </ul>
+            </li>
+            <li class="stavka">
+              <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>AI Video Editor</b><span class="v">200 €</span></div>
+              <p>Ubaciš sirove klipove, dobiješ gotov rils u svom stilu. Sadržaj za saobraćaj bez montažera i bez sati u programu za montažu.</p>
+              <ul>
+                <li>Bira najbolje kadrove i seče prazan hod</li>
+                <li>Titlovi na srpskom, u tvom stilu</li>
+                <li>Više varijacija istog rilsa za testiranje</li>
+              </ul>
+            </li>
+            <li class="stavka">
+              <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>Facebook Scale skill za Claude</b><span class="v">300 €</span></div>
+              <p>Skill za skaliranje Facebook reklama uz Claude. Isti kanal preko kog dolazi 90% kupaca priručnika od 67.726 €.</p>
+              <ul>
+                <li>Vodi te kroz skaliranje kampanja korak po korak</li>
+                <li>Pomaže da odlučiš šta pojačavaš, a šta gasiš</li>
+              </ul>
+            </li>
+          </ul>
+
+          <!-- Brzi bonusi. Broj mesta: BRZI_BONUS_PRODATO u skripti na dnu. -->
+          <div class="bonusi" data-brzi>
+            <div class="bonusi-vrh">
+              <h3>Brzi bonusi samo tokom poziva</h3>
+              <span data-brzi-tekst>Još 1 mesto</span>
+            </div>
+            <p class="bonusi-uvod">Samo za prve kupce. Kad se mesta popune, bonusi se skidaju sa ponude.</p>
+            <ul class="stavke">
+              <li class="stavka">
+                <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>Koktel u Beogradu, 18.12.</b><span class="v">250 €</span></div>
+                <p>Prvih 10 kupaca. U sali su i eksperti iz sveta AI, gosti podkasta i ljudi koji već grade digitalne proizvode. Budući partneri, prvi kupci i oni koji ti kažu gde grešiš pre nego što potrošiš tri meseca.</p>
+              </li>
+              <li class="stavka">
+                <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>30 min 1 na 1 sa Vladimirom</b><span class="v">500 €</span></div>
+                <p>Prvih 5 kupaca. Pola sata samo o tvom proizvodu: niša, ponuda, sledeći korak.</p>
+              </li>
+              <li class="stavka">
+                <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>Analiza funnela i ponude</b><span class="v">400 €</span></div>
+                <p>Prvih 5 kupaca. Pregled tvoje prodajne stranice, ponude i cene, sa konkretnim izmenama.</p>
+              </li>
+            </ul>
+          </div>
+
+          <div class="zbir"><span>Ukupna vrednost <s class="zbir-stara">3.100 €</s></span><strong>Danas 497 €</strong></div>
+        </div>
+
+        <!-- Kasa -->
+        <aside class="kasa" data-kasa data-sekcija="11 kasa (cena)">
+          <div class="kasa-rok">
+            <p>Ponuda ističe za</p>
+            <div class="odbroj srednji" data-odbroj aria-hidden="true"><div><b data-d>0</b><span>dana</span></div><div><b data-h>00</b><span>sati</span></div><div><b data-m>00</b><span>min</span></div><div><b data-s>00</b><span>sek</span></div></div>
+          </div>
+          <div class="cenovnik">
+            <div class="vrednost-red">Ukupna vrednost</div>
+            <div class="stara">3.100 €</div>
+            <div class="danas">Danas plaćaš samo</div>
+            <div class="nova">497 €</div>
+            <div class="nova-opis">Jednokratno, pristup 12 meseci</div>
+            <span class="ustedis">Uštediš 2.603 €</span>
+          </div>
+
+          <a class="dugme" href="#" data-checkout data-plan="jednokratno">
+            Upiši se za 497 €
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <p class="poverenje">Sigurno plaćanje karticom · Pristup odmah na mejl</p>
+          <p class="rate-link"><a href="#" data-checkout data-plan="rate">Ili plati u 2 rate po 270 €</a></p>
+
+          <div class="mesta">
+            Brzi bonusi: još <b data-mesta-ostalo>1</b> od 10 mesta
+            <div class="mesta-bar"><i data-mesta-bar></i></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ŠTA SE DEŠAVA ČIM UĐEŠ
+       ============================================================ -->
+  <section class="blok" data-sekcija="12 sta se desava">
+    <div class="omot uzi">
+      <h2 class="naslov">Šta se dešava čim uđeš</h2>
+      <ol class="linija">
+        <li><b>Za minut</b><p>Mejl sa pristupnim podacima. Ulaziš u platformu i u AI Profit Lab zajednicu isti dan.</p></li>
+        <li><b>Prvi dan</b><p>Modul 01 i vežba od tri pitanja. Na kraju imaš jednu nišu i ime osobe kojoj prodaješ. Ako zapneš, pišeš u zajednicu.</p></li>
+        <li><b>Prva nedelja</b><p>Modul 02. Proveravaš da li ljudi plaćaju za taj problem, pre nego što napišeš jednu stranu.</p></li>
+        <li><b>2. i 3. nedelja</b><p>Modul 03 i 04. Praviš proizvod uz AI i postavljaš cenu. Proizvod postoji.</p></li>
+        <li><b>4. do 6. nedelja</b><p>Modul 05 i 06. Prodajna stranica, saobraćaj, lansiranje. Prva prodaja, pa prvih 10.</p></li>
+        <li><b>Do kraja 12 meseci</b><p>Zajednica i live pozivi. Drugi proizvod, order bump, upsell. Put do 10.000 € mesečno.</p></li>
+      </ol>
+      <p class="poenta">Tri sata nedeljno. Ako ih nemaš, to je informacija, ne izgovor.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ZA KOGA NIJE
+       ============================================================ -->
+  <section class="blok" data-sekcija="13 za koga nije">
+    <div class="omot uzi">
+      <h2 class="naslov">Za koga ovo nije</h2>
+      <ul class="nije">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><div><b>Ako tražiš pasivan prihod</b><small>Ovo je posao. Prvih mesec dana radiš, a ne naplaćuješ.</small></div></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><div><b>Ako očekuješ da AI uradi proizvod umesto tebe</b><small>AI skida vreme između tvoje odluke i gotove stvari. Odluku i iskustvo daješ ti, i to je 100% vrednosti.</small></div></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><div><b>Ako nemaš tri sata nedeljno</b><small>Manje od toga i program ti ne vredi ni evro.</small></div></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><div><b>Ako hoćeš da ti neko kaže koju nišu da uzmeš</b><small>Dajem ti alat i tri pitanja. Odluku donosiš ti.</small></div></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><div><b>Ako kupuješ kurs da bi odložio početak</b><small>Verovatno ih već imaš nekoliko. Ovaj neće biti drugačiji ako ne radiš.</small></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PITANJA
+       ============================================================ -->
+  <section class="blok" data-sekcija="14 cesta pitanja">
+    <div class="omot uzi">
+      <h2 class="naslov">Česta pitanja</h2>
+      <div class="faq">
+        <details>
+          <summary>Treba li mi publika da bih krenuo?</summary>
+          <p>Ne. Modul 05 je upravo o tome: prodajna stranica, mejlovi i prvi saobraćaj. Priručnik od 67.726 € se prodaje ljudima koji za mene nikad nisu čuli.</p>
+        </details>
+        <details>
+          <summary>Koliko vremena mi treba nedeljno?</summary>
+          <p>Tri sata nedeljno. Cilj je prva prodaja za 30 dana.</p>
+        </details>
+        <details>
+          <summary>Gde stoji moj proizvod i kako se naplaćuje?</summary>
+          <p>Ebook na jednoj stranici sa dugmetom. Kurs na platformi. Membership u zajednici. Naplata preko servisa za kartice. Ceo tehnički deo se rešava za jedan dan i pokriven je u Modulu 05. Ljude ne zaustavlja tehnika, zaustavlja ih to što nemaju ponudu.</p>
+        </details>
+        <details>
+          <summary>Moram li da se snimam?</summary>
+          <p>Ne. Možeš bez kamere: tekst, glas, snimak ekrana. Ne možeš bez identiteta. Anoniman proizvod se prodaje samo uz budžet za reklame.</p>
+        </details>
+        <details>
+          <summary>Balkan ili globalno?</summary>
+          <p>Balkan je manje tržište i manja konkurencija, tvoj jezik, brže poverenje. Globalno je deset puta više kupaca i sto puta više konkurencije. Prvi proizvod pravi na jeziku na kom misliš. Ja sam 50.000 proizvoda prodao na srpskom.</p>
+        </details>
+        <details>
+          <summary>Koliko treba do prve prodaje?</summary>
+          <p>Prva prodaja u 30 dana, prvih 10 kupaca u 30 do 60 dana, ako radiš. Ne mogu da garantujem tvoj rezultat jer ne radim umesto tebe. Mogu da ti garantujem da ćeš za 30 dana znati da li ideja ima kupca.</p>
+        </details>
+        <details>
+          <summary>Šta ako već imam proizvod koji se ne prodaje?</summary>
+          <p>Ako imaš upita a nema uplata, problem je u ponudi i ceni, to je Modul 04. Ako nemaš ni upite, problem je u tome kome se obraćaš, to je Modul 01.</p>
+        </details>
+        <details>
+          <summary>Koliko dugo imam pristup?</summary>
+          <p>12 meseci, i uz jednokratno plaćanje i uz plaćanje na rate.</p>
+        </details>
+        <details>
+          <summary>Kako funkcioniše plaćanje na rate?</summary>
+          <p>Plaćaš 270 € danas i još 270 € za mesec dana. Pristup dobijaš odmah, isti kao uz jednokratno plaćanje.</p>
+        </details>
+        <details>
+          <summary>Šta se dešava čim platim?</summary>
+          <p>Za minut stiže mejl sa pristupnim podacima i krećeš sa Modulom 01 isti dan.</p>
+        </details>
+        <details>
+          <summary>Kako dobijam brze bonuse?</summary>
+          <p>Ako si među prvih deset, javljamo ti se mejlom u roku od 48 sati sa pozivnicom za koktel i uputstvom za pregled funnela.</p>
+        </details>
+        <details>
+          <summary>Šta ako ne stignem da gledam odmah?</summary>
+          <p>Materijal te čeka. Cena ne čeka.</p>
+        </details>
+      </div>
+      <p class="faq-kontakt">Imaš drugo pitanje? <a href="#" data-pitanja>Piši nam</a></p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       KRAJ
+       ============================================================ -->
+  <section class="blok kraj" data-sekcija="15 kraj (poslednji poziv)">
+    <div class="omot">
+      <h2 class="naslov">Između znanja i rada stoji <span class="nar">redosled</span></h2>
+      <p class="kraj-tekst">Realno, zatvorićeš ovu stranicu pun ideja i za tri dana se vratiti tamo gde si bio. Ne zato što si lenj, nego zato što se redosled najteže sklopi sam. InfoCash Metoda ti daje taj redosled.</p>
+      <div class="odbroj" data-odbroj aria-hidden="true"><div><b data-d>0</b><span>dana</span></div><div><b data-h>00</b><span>sati</span></div><div><b data-m>00</b><span>min</span></div><div><b data-s>00</b><span>sek</span></div></div>
+      <p class="kraj-cena"><s class="zbir-stara">3.100 €</s> <b>497 €</b></p>
+      <a class="dugme kraj-dugme" href="#" data-checkout data-plan="jednokratno">Upiši se za 497 €</a>
+      <p class="poverenje">Sigurno plaćanje karticom · Pristup odmah na mejl</p>
+      <p class="rate-link"><a href="#" data-checkout data-plan="rate">Ili plati u 2 rate po 270 €</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="omot">Vladimir Stanković · <a href="https://vladsdigital.com" rel="noopener">vladsdigital.com</a> · © 2026</div>
+</footer>
+
+<div class="mob-traka" data-mob-traka>
+  <div class="mob-traka-unutra">
+    <div class="traka-cena"><b>497 € <s class="traka-stara">3.100 €</s></b><span>ili 2 rate po 270 €</span></div>
+    <div class="traka-tajmer" data-rok-mali>
+      <p>Ponuda<br>ističe za</p>
+      <div class="odbroj mali" data-odbroj aria-hidden="true"><div><b data-d>0</b><span>dana</span></div><div><b data-h>00</b><span>sati</span></div><div><b data-m>00</b><span>min</span></div><div><b data-s>00</b><span>sek</span></div></div>
+    </div>
+    <a class="dugme" href="#" data-checkout data-plan="jednokratno">Upiši se za 497 €</a>
+  </div>
+</div>
+
+<script src="/assets/js/vendor/hls.light.min.js" defer></script>
+<script>
+// Snimak radionice: učitava se tek na klik, pa stranica ostaje brza.
+(function () {
+  var API = /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
+    ? "http://localhost:8787" : "https://vebinar-stream.vladimirst95.workers.dev";
+  var okvir = document.querySelector("[data-snimak]");
+  if (!okvir) return;
+  var video = okvir.querySelector("video");
+  var dugme = okvir.querySelector("[data-snimak-pusti]");
+  var izvor = API + "/snimak/index.m3u8";
+  dugme.addEventListener("click", function () {
+    okvir.classList.add("igra");
+    video.controls = true;
+    if (window.Hls && Hls.isSupported()) {
+      var hls = new Hls({ maxBufferLength: 30 });
+      hls.on(Hls.Events.ERROR, function (_, d) {
+        if (!d.fatal) return;
+        if (d.type === Hls.ErrorTypes.NETWORK_ERROR) hls.startLoad();
+        else if (d.type === Hls.ErrorTypes.MEDIA_ERROR) hls.recoverMediaError();
+      });
+      hls.loadSource(izvor);
+      hls.attachMedia(video);
+    } else {
+      video.src = izvor;
+    }
+    var p = video.play();
+    if (p && p.catch) p.catch(function () {});
+  });
+})();
+</script>
+<script>
+(function () {
+  // ============================================================
+  // PODEŠAVANJA. Ista kao na /ponuda: kad menjaš tamo, menjaj i ovde.
+  // ============================================================
+  var CHECKOUT_JEDNOKRATNO = "https://buy.stripe.com/bJe7sM0HAarE8Fu9u75kk0l"; // link za 497 € jednokratno
+  var CHECKOUT_RATE = "https://buy.stripe.com/9B69AU75YbvIf3ScGj5kk0m"; // link za 2 rate po 270 €
+  var LINK_PITANJA = "#";         // link za pitanja (mejl, WhatsApp...)
+  var ROK = "2026-11-23T00:00:00+01:00"; // kraj ponude: ponoć posle nedelje 22.11.
+  var BRZI_BONUS_UKUPNO = 10;
+  var BRZI_BONUS_PRODATO = 9;     // ručno povećavaj kako se mesta popunjavaju
+
+  var PLANOVI = {
+    jednokratno: { link: CHECKOUT_JEDNOKRATNO, vrednost: 497 },
+    rate:        { link: CHECKOUT_RATE,        vrednost: 270 },
+  };
+  document.querySelectorAll("a[data-checkout]").forEach(function (a) {
+    a.href = PLANOVI[a.getAttribute("data-plan")].link;
+  });
+
+  // Meta InitiateCheckout + PostHog checkout_klik
+  document.querySelectorAll("a[data-checkout]").forEach(function (a) {
+    a.addEventListener("click", function () {
+      if (window.posthog && typeof window.posthog.capture === "function") {
+        window.posthog.capture("checkout_klik", {
+          plan: a.getAttribute("data-plan"),
+          vrednost: PLANOVI[a.getAttribute("data-plan")].vrednost,
+          valuta: "EUR",
+        });
+      }
+      if (typeof window.fbq !== "function") return;
+      window.fbq("track", "InitiateCheckout", {
+        content_name: "InfoCash Metoda",
+        value: PLANOVI[a.getAttribute("data-plan")].vrednost,
+        currency: "EUR",
+      });
+    });
+  });
+  document.querySelectorAll("a[data-pitanja]").forEach(function (a) { a.href = LINK_PITANJA; });
+
+  // Brzi bonusi
+  var ostalo = Math.max(0, BRZI_BONUS_UKUPNO - BRZI_BONUS_PRODATO);
+  document.querySelectorAll("[data-mesta-ostalo]").forEach(function (el) { el.textContent = ostalo; });
+  var tekst = document.querySelector("[data-brzi-tekst]");
+  if (tekst) tekst.textContent = ostalo > 0 ? (ostalo === 1 ? "Još 1 mesto" : "Još " + ostalo + " mesta") : "Popunjeno";
+  var bar = document.querySelector("[data-mesta-bar]");
+  if (bar) requestAnimationFrame(function () { bar.style.width = (BRZI_BONUS_PRODATO / BRZI_BONUS_UKUPNO * 100) + "%"; });
+  if (ostalo === 0) { var b = document.querySelector("[data-brzi]"); if (b) b.classList.add("popunjeno"); }
+
+  // Odbrojavanje
+  var kraj = new Date(ROK).getTime();
+  var dv = function (n) { return n < 10 ? "0" + n : String(n); };
+  var rokEli = document.querySelectorAll("[data-rok]");
+  var t;
+  function tik() {
+    var ms = kraj - Date.now();
+    if (ms <= 0) {
+      clearInterval(t);
+      document.body.classList.add("isteklo-sve");
+      document.querySelectorAll("[data-rok-tekst], [data-rok-mali]").forEach(function (el) { el.textContent = "Ponuda je istekla"; });
+      document.querySelectorAll("[data-odbroj] b").forEach(function (el) { el.textContent = "00"; });
+      return;
+    }
+    var s = Math.floor(ms / 1000);
+    var d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), sek = s % 60;
+    var tekstRok = (d > 0 ? d + "d " : "") + dv(h) + ":" + dv(m) + ":" + dv(sek);
+    rokEli.forEach(function (el) { el.textContent = tekstRok; });
+    document.querySelectorAll("[data-odbroj]").forEach(function (o) {
+      o.querySelector("[data-d]").textContent = d;
+      o.querySelector("[data-h]").textContent = dv(h);
+      o.querySelector("[data-m]").textContent = dv(m);
+      o.querySelector("[data-s]").textContent = dv(sek);
+    });
+  }
+  t = setInterval(tik, 1000);
+  tik();
+
+  // Sticky traka za kupovinu: stalno dole, sklanja se samo dok su kasa ili kraj na ekranu
+  var mob = document.querySelector("[data-mob-traka]");
+  var kasa = document.querySelector("[data-kasa]");
+  var krajSek = document.querySelector(".kraj");
+  if (mob) mob.classList.add("vidljiva");
+  if (mob && kasa && "IntersectionObserver" in window) {
+    var vidljivo = new Set();
+    var io = new IntersectionObserver(function (unosi) {
+      unosi.forEach(function (u) { u.isIntersecting ? vidljivo.add(u.target) : vidljivo.delete(u.target); });
+      mob.classList.toggle("vidljiva", vidljivo.size === 0);
+    });
+    io.observe(kasa);
+    if (krajSek) io.observe(krajSek);
+  }
+})();
+</script>
+<script>
+// PostHog: koje sekcije su viđene, koliko snimka je odgledano, koja pitanja su otvorena.
+(function () {
+  function salji(ime, svojstva) {
+    if (window.posthog && typeof window.posthog.capture === "function") window.posthog.capture(ime, svojstva);
+  }
+  var sekcije = document.querySelectorAll("[data-sekcija]");
+  if ("IntersectionObserver" in window) {
+    var vidjeno = {};
+    var io = new IntersectionObserver(function (unosi) {
+      unosi.forEach(function (u) {
+        var ime = u.target.getAttribute("data-sekcija");
+        var udeo = u.intersectionRect.height / Math.min(u.boundingClientRect.height, window.innerHeight);
+        if (!vidjeno[ime] && u.isIntersecting && udeo >= 0.4) {
+          vidjeno[ime] = true;
+          salji("sekcija_vidjena", { sekcija: ime });
+        }
+      });
+    }, { threshold: [0, 0.2, 0.4, 0.6, 0.8, 1] });
+    sekcije.forEach(function (s) { io.observe(s); });
+  }
+  var video = document.querySelector("[data-snimak] video");
+  if (video) {
+    var pusten = false, pragovi = [10, 25, 50, 75, 90], poslato = {};
+    video.addEventListener("play", function () {
+      if (!pusten) { pusten = true; salji("snimak_pusten", {}); }
+    });
+    video.addEventListener("timeupdate", function () {
+      if (!video.duration || !isFinite(video.duration)) return;
+      var pct = video.currentTime / video.duration * 100;
+      pragovi.forEach(function (p) {
+        if (pct >= p && !poslato[p]) { poslato[p] = true; salji("snimak_napredak", { procenat: p, minut: Math.round(video.currentTime / 60) }); }
+      });
+    });
+  }
+  var naPonudu = document.querySelector("[data-na-ponudu]");
+  if (naPonudu) naPonudu.addEventListener("click", function () { salji("klik_na_ponudu", {}); });
+  document.querySelectorAll("details").forEach(function (d) {
+    d.addEventListener("toggle", function () {
+      if (d.open) salji("pitanje_otvoreno", { pitanje: d.querySelector("summary").textContent.trim() });
+    });
+  });
+})();
+</script>
+</body>
+</html>
