@@ -426,6 +426,102 @@
       .mob-traka .dugme { padding: 14px 28px; font-size: 16px; }
     }
 
+    /* ===== Dodato iz prezentacije sa radionice ===== */
+    h3.naslov { font-weight: 800; letter-spacing: -.02em; line-height: 1.2; text-align: center; text-wrap: balance; }
+    .hero-cta .sekundarno { margin-top: 10px; font-size: 14.5px; font-weight: 600; color: var(--siva); text-underline-offset: 3px; }
+    .hero-cta .sekundarno:hover { color: var(--tekst); }
+    .placanje { margin-top: 8px; font-size: 13px; color: var(--siva); }
+
+    /* Tri klika */
+    .klikovi { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 28px; counter-reset: k; }
+    .klikovi li { display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: center; padding: 14px 16px; background: var(--belo); border: 1px solid var(--linija); border-radius: 14px; font-size: 15px; font-weight: 600; }
+    .klikovi li::before { counter-increment: k; content: counter(k); display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--narandza-svetla); color: var(--narandza-tamna); font-weight: 800; }
+    .klikovi-napomena { margin-top: 10px; text-align: center; font-size: 14px; color: var(--siva); }
+
+    /* Dokazi */
+    .dokazi { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+    .dokaz { display: flex; flex-direction: column; padding: 18px; background: var(--belo); border: 1px solid var(--linija); border-radius: 16px; }
+    .dokaz .screenshot { box-shadow: none; border-radius: 10px; }
+    .dokaz-broj { margin-top: 14px; font-size: clamp(26px, 3vw, 32px); font-weight: 800; letter-spacing: -.02em; line-height: 1.1; }
+    .dokaz h3 { margin-top: 2px; font-size: 16.5px; font-weight: 700; }
+    .dokaz p { margin-top: 6px; font-size: 14.5px; color: var(--siva); }
+    .dokaz-oznake { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .dokaz-oznake span { padding: 4px 10px; border-radius: 99px; background: #F3EEE8; font-size: 12.5px; font-weight: 600; color: #4A433C; }
+
+    /* Ebook mašina */
+    .masina { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: 28px; background: var(--belo); border: 1px solid var(--linija); border-radius: 16px; overflow: hidden; }
+    .masina div { position: relative; padding: 22px 20px; text-align: center; }
+    .masina div + div { border-left: 1px solid var(--linija); }
+    .masina small { font-size: 12.5px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--siva); }
+    .masina b { display: block; margin-top: 4px; font-size: 26px; font-weight: 800; letter-spacing: -.02em; }
+    .masina span { display: block; margin-top: 4px; font-size: 14px; color: var(--siva); }
+    .masina div:last-child { background: var(--zelena-svetla); }
+    .masina div:last-child b { color: var(--zelena); }
+
+    .sredina-cta { display: flex; flex-direction: column; align-items: center; margin-top: 28px; }
+    .sredina-cta .dugme { width: auto; min-width: 300px; margin: 0; }
+
+    /* Isti novac, tri biznisa */
+    .tri-biznisa { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+    .tri-biznisa div { padding: 22px; background: var(--belo); border: 1px solid var(--linija); border-radius: 16px; }
+    .tri-biznisa small { font-size: 13px; font-weight: 700; color: var(--siva); }
+    .tri-biznisa b { display: block; margin-top: 4px; font-size: 24px; font-weight: 800; letter-spacing: -.02em; }
+    .tri-biznisa p { margin-top: 6px; font-size: 14.5px; color: var(--siva); }
+    .tri-biznisa .los b { color: #B4432F; }
+    .tri-biznisa .dobar { border-color: #A8D5BA; background: var(--zelena-svetla); }
+    .tri-biznisa .dobar b { color: var(--zelena); }
+
+    /* Istina / nije istina */
+    .istina { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px; }
+    .istina > div { padding: 22px; border-radius: 16px; background: var(--belo); border: 1px solid var(--linija); }
+    .istina h3 { font-size: 15px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+    .istina .da h3 { color: var(--zelena); }
+    .istina .ne h3 { color: #B4432F; }
+    .istina ul { list-style: none; margin-top: 10px; }
+    .istina li { padding: 8px 0; border-bottom: 1px solid var(--linija); font-size: 15.5px; }
+    .istina li:last-child { border-bottom: 0; }
+    .istina .ne li { color: var(--siva); text-decoration: line-through; text-decoration-color: #D93A2B; }
+
+    /* AI: 2 meseca u 2 dana */
+    .ai-poredjenje { display: grid; grid-template-columns: 1fr auto 1fr; gap: 16px; align-items: center; max-width: 640px; margin: 28px auto 0; text-align: center; }
+    .ai-poredjenje div { padding: 20px; border-radius: 16px; background: var(--belo); border: 1px solid var(--linija); }
+    .ai-poredjenje small { font-size: 13px; font-weight: 600; color: var(--siva); }
+    .ai-poredjenje b { display: block; font-size: clamp(30px, 4vw, 40px); font-weight: 800; letter-spacing: -.03em; }
+    .ai-poredjenje .staro b { color: #9C9389; text-decoration: line-through; text-decoration-color: #D93A2B; text-decoration-thickness: 3px; }
+    .ai-poredjenje .novo { background: var(--tekst); color: #fff; border-color: var(--tekst); }
+    .ai-poredjenje .novo small { color: #CFC6BB; }
+    .ai-poredjenje i { font-style: normal; font-size: 24px; color: var(--narandza); }
+
+    /* Greške na startu */
+    .greske { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+    .greske li { display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: start; padding: 16px 18px; background: #FFF6F3; border: 1px solid #F3D3C8; border-radius: 14px; font-weight: 600; }
+    .greske span { font-size: 14px; font-weight: 800; color: #B4432F; }
+
+    /* Foto pored teksta */
+    .foto-red { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 18px; }
+    .foto-red img { display: block; width: 100%; height: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 14px; }
+
+    /* Koktel slika u bonusu */
+    .bonus-foto { display: block; width: calc(100% - 34px); max-width: 420px; margin: 10px 0 0 34px; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; }
+
+    /* Kraj */
+    .kraj-lista { list-style: none; max-width: 420px; margin: 22px auto 0; text-align: left; }
+    .kraj-lista li { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--linija); font-size: 15px; }
+    .kraj-lista li span { color: var(--siva); white-space: nowrap; }
+
+    @media (max-width: 860px) {
+      .dokazi, .tri-biznisa, .istina { grid-template-columns: 1fr; }
+      .klikovi { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .masina { grid-template-columns: 1fr; }
+      .masina div + div { border-left: 0; border-top: 1px solid var(--linija); }
+      .greske { grid-template-columns: 1fr; }
+      .ai-poredjenje { grid-template-columns: 1fr; }
+      .ai-poredjenje i { transform: rotate(90deg); }
+      .sredina-cta .dugme { width: 100%; min-width: 0; }
+    }
+
     @media (max-width: 860px) {
       .ponuda, .primer, .prica { grid-template-columns: 1fr; }
       .kasa { position: static; }
@@ -483,7 +579,7 @@
     <div class="omot">
       <div class="nadnaslov">Pažnja: za sve koji imaju znanje, a još ga nisu pretvorili u novac</div>
       <h1>Pomoći ću ti da prodaš svoj prvi digitalni proizvod <span class="nar">za 30 dana</span></h1>
-      <p class="pod">Pokazaću ti InfoCash metodu, redosled po kom sam od 2020. prodao <b>preko 50.000 digitalnih proizvoda</b>. Radi i kad nemaš ideju, publiku ni tehničko znanje, i ne traži ulaganje u zalihe ni skupu opremu.</p>
+      <p class="pod">Pokazaću ti InfoCash metodu, redosled po kom sam od 2020. prodao <b>preko 100.000 digitalnih proizvoda</b>. Radi i kad nemaš ideju, publiku ni tehničko znanje, i ne traži ulaganje u zalihe ni skupu opremu.</p>
 
       <!-- Snimak radionice: HLS iz R2 preko workera (/snimak/index.m3u8) -->
       <div class="snimak" data-snimak>
@@ -493,7 +589,7 @@
           Pogledaj snimak radionice
         </button>
       </div>
-      <p class="snimak-opis">Kako da nađeš nišu ako nemaš ideju, kako da je proveriš pre nego što potrošiš mesec dana na izradu i kako da dođeš do prvih 10 kupaca bez publike i bez budžeta.</p>
+      <p class="snimak-opis">90 minuta: gde ljudi zaista ostavljaju pare, kako da proveriš ideju pre nego što je napraviš i plan za prvi proizvod koji staje u 10 dana.</p>
 
       <div class="hitno">
         <p class="hitno-naslov"><i class="tacka" aria-hidden="true"></i>Ponuda važi do nedelje 22.11. u ponoć</p>
@@ -502,292 +598,83 @@
       </div>
 
       <div class="hero-cta">
-        <a class="dugme" href="#ponuda" data-na-ponudu>
-          Pogledaj šta dobijaš
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        <a class="dugme" href="#" data-checkout data-plan="jednokratno">
+          Upiši se za 497 €
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
         </a>
-        <small>497 € umesto 3.100 € · ili 2 rate po 270 €</small>
+        <p class="placanje">Kartica, Google Pay ili Apple Pay · Pristup odmah na mejl</p>
+        <a class="sekundarno" href="#ponuda" data-na-ponudu>ili prvo pogledaj šta sve dobijaš ↓</a>
       </div>
 
       <div class="brojke">
-        <div><b>2020.</b><span>prvi digitalni proizvod</span></div>
-        <div><b>50.000+</b><span>prodatih proizvoda od tada</span></div>
-        <div><b>6</b><span>oblasti: marketing, biznis, fitnes, kuvanje, ljubimci, investiranje</span></div>
+        <div><b>100.000</b><span>prodatih digitalnih proizvoda od 2020.</span></div>
+        <div><b>143.778 €</b><span>prihod sa jedne ponude</span></div>
+        <div><b>67.726 €</b><span>jedan ebook, za 4 meseca</span></div>
         <div><b>10.000 €</b><span>prvi mesec, sa par hiljada pratilaca</span></div>
       </div>
-      <p class="brojke-napomena">Sve na srpskom govornom području. Ne globalno.</p>
     </div>
   </section>
 
   <!-- ============================================================
-       MODEL: poređenje
+       PONUDA: šta sve dobijaš + kasa (odmah posle hero dela)
        ============================================================ -->
-  <section class="blok" data-sekcija="2 model poredjenje">
+  <section class="blok" id="ponuda" data-sekcija="2 ponuda i kasa">
     <div class="omot">
-      <span class="oznaka">Model</span>
-      <h2 class="naslov">Zašto su digitalni proizvodi najbolji online biznis model</h2>
-      <p class="podnaslov">Radio sam sva tri modela. Fizičke proizvode i danas prodajem. Zato ovo poređenje nije teorija, nego račun.</p>
-      <div class="tabela-omot">
-        <table class="tabela">
-          <thead>
-            <tr><th></th><th>Fizički proizvod</th><th>Usluga</th><th class="dig">Digitalni proizvod</th></tr>
-          </thead>
-          <tbody>
-            <tr><th>Marža</th><td>20 do 40%</td><td>50 do 70%</td><td class="dig">90%+</td></tr>
-            <tr><th>Početni kapital</th><td>Zalihe, ambalaža, magacin</td><td>Skoro nula</td><td class="dig">Skoro nula</td></tr>
-            <tr><th>Isporuka</th><td>Kurir, povrati, reklamacije</td><td>Tvoje vreme, svaki put</td><td class="dig">Automatska, jednom napraviš</td></tr>
-            <tr><th>Sto kupaca više znači</th><td>Sto pakovanja više</td><td>Sto sati više</td><td class="dig">Ništa više</td></tr>
-            <tr><th>Šta ograničava rast</th><td>Novac zaključan u zalihama</td><td>Broj tvojih sati</td><td class="dig">Poverenje publike</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p class="poenta">Jedini model gde stoti kupac košta isto koliko i prvi. I jedini gde je granica rasta nešto što se gradi, a ne nešto što se kupuje.</p>
-      <p class="poenta sivo">Ali pošteno: ovo nije pasivan prihod. Ovo je posao koji se plaća unapred, a naplaćuje kasnije.</p>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       PRIMER: brojke iz panela
-       ============================================================ -->
-  <section class="blok" data-sekcija="3 primer rezultati">
-    <div class="omot">
-      <span class="oznaka">Jedan primer, brojke iz panela</span>
-      <h2 class="naslov">Jedan digitalni priručnik, 4 meseca, 67.726 €</h2>
-      <div class="primer">
-        <div>
-          <figure class="screenshot"><img src="/assets/img/rezultat-panel.jpg" alt="Panel prodaje: 1.457 porudžbina, 67.726 € prihoda, prosečna porudžbina 46 €" width="1600" height="848" loading="lazy"></figure>
-          <figure class="screenshot"><img src="/assets/img/rezultat-2.jpg" alt="Prodaja digitalnog proizvoda: 103 prodata primerka, 2.781 € neto prodaje" width="1600" height="287" loading="lazy"></figure>
-        </div>
-        <div>
-          <h3>Bez moje publike</h3>
-          <p>Ovaj proizvod se ne prodaje preko mojih kanala. 90% kupaca dolazi preko Facebook reklama, ljudima koji za mene nikad nisu čuli.</p>
-          <h3>Napravljen za par dana</h3>
-          <p>I proizvod i ceo funnel su sklopljeni za nekoliko dana, po istom redosledu koji dobijaš u InfoCash metodi.</p>
-          <div class="primer-brojke">
-            <div><b>1.457</b><span>porudžbina</span></div>
-            <div><b>46 €</b><span>prosečna korpa</span></div>
-            <div><b>67.726 €</b><span>za 4 meseca</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       PRIČA: Vladimir
-       ============================================================ -->
-  <section class="blok" data-sekcija="4 prica vladimir">
-    <div class="omot">
-      <span class="oznaka">Svako može da snimi kurs. Malo ko ume da ga proda.</span>
-      <h2 class="naslov">Zašto je tržište puno mrtvih kurseva</h2>
-      <div class="prica">
-        <figure class="prica-foto">
-          <img src="/assets/img/vladimir-stankovic-560.webp" alt="Vladimir Stanković" width="560" height="840" loading="lazy">
-          <figcaption><b>Vladimir Stanković</b>Od 2020. u digitalnim proizvodima. 50.000+ prodatih.</figcaption>
-        </figure>
-        <div class="tekst">
-          <p>Ulazna barijera je niska. Svako može da snimi kurs, napiše priručnik ili pokrene zajednicu. I zato je tržište puno kurseva koje niko nije kupio.</p>
-          <p>Znam ljude sa stotinama hiljada pratilaca koji su shvatili da je lakše reklamirati tuđi brend nego prodati nešto svoje. Digitalni proizvodi nisu stvar popularnosti, nego <b>sistema, pozicioniranja i ponude</b>.</p>
-          <ol class="koraci-price">
-            <li><b>2020 · prvi proizvod</b><p>Kurs „Sve tajne Instagram marketinga“ ostvario je 10.000 € prihoda za jedan mesec, i to sa svega nekoliko hiljada pratilaca. Ne zato što je publika bila velika, već zato što su ponuda i ljudi kojima je bila namenjena bili pravi.</p></li>
-            <li><b>Šest godina testiranja</b><p>Online kursevi, priručnici, membership zajednice, mastermind grupe, konferencije. Neke stvari su propale i koštale me mesece i ozbiljan novac. Neke su uradile milione. Ukupno preko 50.000 prodatih proizvoda, sve na srpskom.</p></li>
-            <li><b>Zašto tek sada pričam o ovome</b><p>O ovom sistemu do sada nisam pričao javno. Prodavao sam proizvode, ne metod. Sada ga prvi put dajem manjem broju ljudi koji hoće rezultat, ne teoriju.</p></li>
-          </ol>
-          <p class="citat">Nisam pametniji od tebe. Samo sam pogrešio dovoljno puta da znam kojim redosledom ovo ide.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       TAJMING: tržište
-       ============================================================ -->
-  <section class="blok" data-sekcija="5 tajming trziste">
-    <div class="omot">
-      <span class="oznaka">Tajming</span>
-      <h2 class="naslov">Zašto sada, a ne za godinu dana</h2>
-      <p class="podnaslov">Tržište digitalnog edukativnog sadržaja je 2024. vredelo 24,5 milijardi dolara. Procena za 2034. je 249 milijardi. Deset puta za deset godina.</p>
-      <div class="grafikon" role="img" aria-label="Tržište digitalnog edukativnog sadržaja raste sa 24,5 milijardi dolara 2024. na 249 milijardi 2034, godišnji rast 26,1%">
-        <div class="grafikon-vrh">
-          <div><b>Tržište digitalnog edukativnog sadržaja</b><span>Veličina u milijardama $, 2024 do 2034</span></div>
-          <div class="rast"><span>Godišnji rast</span><b>26,1%</b></div>
-        </div>
-        <div class="stubici" aria-hidden="true">
-          <div class="stub" style="--h:8.7%"><em>24,5</em><i></i></div>
-          <div class="stub" style="--h:10.9%"><em>30,9</em><i></i></div>
-          <div class="stub ti" style="--h:13.8%"><em>39,0</em><i></i></div>
-          <div class="stub" style="--h:17.4%"><em>49,2</em><i></i></div>
-          <div class="stub" style="--h:21.9%"><em>62,0</em><i></i></div>
-          <div class="stub" style="--h:27.6%"><em>78,2</em><i></i></div>
-          <div class="stub" style="--h:34.8%"><em>98,5</em><i></i></div>
-          <div class="stub" style="--h:43.8%"><em>124</em><i></i></div>
-          <div class="stub" style="--h:55.5%"><em>157</em><i></i></div>
-          <div class="stub" style="--h:70.0%"><em>198</em><i></i></div>
-          <div class="stub" style="--h:88.0%"><em>249</em><i></i></div>
-        </div>
-        <div class="godine" aria-hidden="true"><span>2024</span><span>2025</span><span>2026</span><span>2027</span><span>2028</span><span>2029</span><span>2030</span><span>2031</span><span>2032</span><span>2033</span><span>2034</span></div>
-        <p class="izvor">Izvor: market.us, Digital Education Content Market, 2025.</p>
-      </div>
-      <div class="omot uzi tekst" style="margin-top:28px">
-        <p>Oni koji sistem postave danas, naplaćuju ga narednu deceniju. Oni koji čekaju da vide kako će ispasti, ulaze na tržište koje je punije i skuplje.</p>
-        <p>AI je sve dodatno ubrzao. Ono što je 2020. tražilo tim od deset ljudi, sada radiš sam, ako znaš šta radiš. Proizvodnja koja je trajala dva meseca sad traje nekoliko dana.</p>
-        <p>Ali ista stvar važi i za sve ostale. AI ne pravi proizvod umesto tebe. AI skida vreme između tvoje odluke i gotove stvari. <b>Odluka je i dalje tvoja i tu većina zapne.</b></p>
-        <p>Zato ovo nije kurs, nego mentorski program. Radimo zajedno na konkretnom rezultatu: tvoj proizvod, tvoj sistem prodaje, tvoja prva zarada.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       PREPOZNAJ SE
-       ============================================================ -->
-  <section class="blok" data-sekcija="6 prepoznaj se">
-    <div class="omot">
-      <h2 class="naslov">Prepoznaj se u jednom od ova tri</h2>
-      <div class="kartice">
-        <div class="kartica"><span class="br">01</span><h3>Imaš znanje, nemaš proizvod</h3><p>Radiš nešto godinama, ljudi te pitaju za savet besplatno, a nikad to nisi spakovao u nešto što se plaća.</p></div>
-        <div class="kartica"><span class="br">02</span><h3>Imaš deset ideja i nijednu odluku</h3><p>Svaka ti zvuči dobro tri dana, pa je zameniš sledećom. Nijedna nije došla do prve prodaje.</p></div>
-        <div class="kartica"><span class="br">03</span><h3>Imaš proizvod koji stoji</h3><p>Napravio si ga, postavio i tišina. Ili ima upita, a nema uplata.</p></div>
-      </div>
-      <p class="poenta">Za sva tri problem je isti. Nije znanje, nije trud, nije publika. <span class="nar">Redosled.</span></p>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       PROGRAM: kako je osmišljen
-       ============================================================ -->
-  <section class="blok" data-sekcija="7 kako je osmisljen">
-    <div class="omot">
-      <span class="oznaka">Program</span>
-      <h2 class="naslov">Kako je osmišljena InfoCash Metoda</h2>
-      <p class="podnaslov">Sve što sam naučio na greškama i uspesima spakovao sam tako da neko bez ideje šta da radi može da iskopira moj sistem. Ne da ga razume, nego da ga iskopira. Razumevanje dođe kad vidiš prvu uplatu.</p>
-      <div class="kartice cetiri">
-        <div class="kartica"><span class="br">01</span><h3>Video lekcije</h3><p>Kratke i konkretne. Svaka se završava jednim malim korakom koji uradiš pre sledeće. Gledaš 15 minuta pa radiš.</p></div>
-        <div class="kartica"><span class="br">02</span><h3>Grupni Zoom pozivi sa mnom</h3><p>Tri live poziva. Doneseš svoju nišu, ponudu ili cenu i dobiješ odgovor na svoj slučaj, ne na prosečan.</p></div>
-        <div class="kartica"><span class="br">03</span><h3>Zajednica za podršku</h3><p>12 meseci pristupa AI Profit Lab platformi i zajednici: edukacije, praktični materijali i podrška dok radiš na svom proizvodu.</p></div>
-        <div class="kartica"><span class="br">04</span><h3>AI alati koje ja koristim</h3><p>AI Video Editor za rilsove i Facebook Scale skill za Claude. Alati koji skraćuju posao oko sadržaja i reklama.</p></div>
-      </div>
-      <p class="poenta sivo">Svaki korak te približava prvoj prodaji. Nema koraka koji postoji zato što „treba da se zna“.</p>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       MODULI: detaljno
-       ============================================================ -->
-  <section class="blok" data-sekcija="8 moduli">
-    <div class="omot">
-      <h2 class="naslov">6 modula, 6 rešenih problema</h2>
-      <p class="podnaslov">Svaki modul rešava jednu kočnicu i završava se nečim gotovim, ne beleškama.</p>
-      <ol class="moduli">
-        <li><span class="br">01</span><div><b>Ideja i niša</b><span class="resava"><em>Rešava:</em> nemam ideju ili ih imam previše</span><span class="izlazis"><em>Izlaziš sa</em> jasno definisanom nišom i preciznim profilom idealnog kupca.</span></div></li>
-        <li><span class="br">02</span><div><b>Validacija</b><span class="resava"><em>Rešava:</em> praviš mesecima bez dokaza da se prodaje</span><span class="izlazis"><em>Izlaziš sa</em> dokazom da ljudi plaćaju za taj problem, pre nego što si napisao prvu stranu.</span></div></li>
-        <li><span class="br">03</span><div><b>Izrada uz AI</b><span class="resava"><em>Rešava:</em> ne znam odakle da počnem sa sadržajem</span><span class="izlazis"><em>Izlaziš sa</em> gotovim proizvodom za 7 do 10 dana.</span></div></li>
-        <li><span class="br">04</span><div><b>Ponuda i cena</b><span class="resava"><em>Rešava:</em> proizvod stoji i ne prodaje se</span><span class="izlazis"><em>Izlaziš sa</em> ponudom, cenom, order bumpom i upsellom koji dižu prosečnu vrednost kupovine.</span></div></li>
-        <li><span class="br">05</span><div><b>Prodajni sistem</b><span class="resava"><em>Rešava:</em> nemam publiku ni listu</span><span class="izlazis"><em>Izlaziš sa</em> prodajnom stranicom, mejl sekvencom i prvim saobraćajem.</span></div></li>
-        <li><span class="br">06</span><div><b>Prvih 10 kupaca</b><span class="resava"><em>Rešava:</em> lansiranje bez plana i bez roka</span><span class="izlazis"><em>Izlaziš sa</em> planom lansiranja po danima i prvim uplatama.</span></div></li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       CILJ
-       ============================================================ -->
-  <!-- POZIV usred stranice -->
-  <div class="poziv" data-sekcija="9a poziv usred">
-    <h2>Ova ponuda se zatvara u nedelju u ponoć</h2>
-    <p>Posle toga upis po ceni od 497 € i brzi bonusi više ne važe.</p>
-    <div class="odbroj" data-odbroj aria-hidden="true"><div><b data-d>0</b><span>dana</span></div><div><b data-h>00</b><span>sati</span></div><div><b data-m>00</b><span>min</span></div><div><b data-s>00</b><span>sek</span></div></div>
-    <a class="dugme" href="#" data-checkout data-plan="jednokratno">Upiši se za 497 €</a>
-  </div>
-
-  <section class="blok" data-sekcija="9 cilj">
-    <div class="omot">
-      <span class="oznaka">Cilj</span>
-      <h2 class="naslov">Šta je cilj programa</h2>
-      <div class="cilj">
-        <div><small>30 dana</small><b>Prva prodaja</b><p>Niša, validacija, proizvod, ponuda. Prva uplata na računu. Ovo je deo koji program pokriva korak po korak, dan po dan.</p></div>
-        <div><small>60 dana</small><b>Prvih 10 kupaca</b><p>Prodajni sistem radi. Znaš ko kupuje, po kojoj ceni i odakle dolazi. Ovde većina programa staje. Ovaj ne.</p></div>
-        <div><small>12 meseci</small><b>10.000 € mesečno</b><p>Zato je pristup 12 meseci, a ne 6 nedelja. Dodaješ order bump, upsell, drugi proizvod, plaćeni saobraćaj.</p></div>
-      </div>
-      <p class="poenta sivo">10.000 € mesečno nije obećanje, nego cilj. Zavisi od tvoje niše, tvog rada i tvoje ponude. Ono što obećavam je da ćeš za 30 dana znati da li tvoja ideja ima kupca, umesto da to saznaš posle šest meseci pravljenja.</p>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       PONUDA: šta sve dobijaš (detaljno) + kasa
-       ============================================================ -->
-  <section class="blok" id="ponuda" data-sekcija="10 ponuda i kasa">
-    <div class="omot">
-      <span class="oznaka">Ponuda</span>
-      <h2 class="naslov">Šta sve dobijaš</h2>
+      <span class="oznaka">InfoCash Akcelerator</span>
+      <h2 class="naslov">Ti radiš na svojoj ideji. Ja gledam šta radiš.</h2>
+      <p class="podnaslov">Nije kurs koji gledaš sam. Prolaziš iste korake kao na radionici, na svojoj ideji, do prvih 10 kupaca.</p>
       <div class="ponuda">
         <div>
           <ul class="stavke">
             <li class="stavka">
               <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>InfoCash Akcelerator</b><span class="v">500 €</span></div>
-              <p>Šest modula, od ideje do prvih 10 kupaca. Kratke video lekcije i radni list uz svaku lekciju.</p>
+              <p>Lekcije i live konsultacije. Prolaziš korak po korak, na svojoj ideji, do prvih 10 kupaca.</p>
               <ul>
-                <li>Niša i profil idealnog kupca, pa dokaz da ljudi plaćaju</li>
-                <li>Gotov proizvod uz AI za 7 do 10 dana</li>
+                <li>Niša i validacija: proveriš da ljudi plaćaju pre nego što praviš</li>
+                <li>Proizvod uz AI, prva verzija za 10 dana</li>
                 <li>Ponuda, cena, order bump i upsell</li>
-                <li>Prodajna stranica, mejl sekvenca i plan lansiranja po danima</li>
+                <li>Mejlovi i Facebook reklame, pa prvih 10 kupaca</li>
+                <li><b>Plus 10+ lekcija</b> u kojima pravim novi proizvod od nule, dok gledaš kako nastaje</li>
               </ul>
             </li>
             <li class="stavka">
               <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>AI Profit Lab · 12 meseci</b><span class="v">450 €</span></div>
-              <p>Pristup zajednici i platformi. Mesto gde pitaš kad zapneš, umesto da stojiš nedelju dana.</p>
-              <ul>
-                <li>Praktične edukacije i materijali</li>
-                <li>Novosti iz AI sveta i redovna ažuriranja sadržaja</li>
-                <li>Ljudi koji rade isto što i ti, u isto vreme</li>
-              </ul>
+              <p>Sve AI lekcije i zajednica ljudi koji rade isto što i ti. Kad zapneš, imaš gde da pitaš, umesto da stojiš nedelju dana.</p>
             </li>
             <li class="stavka">
-              <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>3 grupna live poziva sa Vladimirom</b><span class="v">500 €</span></div>
-              <p>Tri Zoom poziva uživo. Doneseš svoju nišu, ponudu ili cenu i dobiješ odgovor na svoj slučaj, ne na prosečan.</p>
-              <ul>
-                <li>Pregled tvoje niše i ponude</li>
-                <li>Koliko da naplatiš i zašto</li>
-                <li>Pitanja koja ti stoje između tebe i prve prodaje</li>
-              </ul>
+              <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>3 grupna live poziva sa mnom</b><span class="v">500 €</span></div>
+              <p>Doneseš svoju nišu, ponudu ili reklamu i radimo na njoj uživo. Odgovor na tvoj slučaj, ne na prosečan.</p>
             </li>
             <li class="stavka">
               <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>AI Video Editor</b><span class="v">200 €</span></div>
-              <p>Ubaciš sirove klipove, dobiješ gotov rils u svom stilu. Sadržaj za saobraćaj bez montažera i bez sati u programu za montažu.</p>
-              <ul>
-                <li>Bira najbolje kadrove i seče prazan hod</li>
-                <li>Titlovi na srpskom, u tvom stilu</li>
-                <li>Više varijacija istog rilsa za testiranje</li>
-              </ul>
+              <p>Program za rilsove uz Claude. Ne treba ti nijedan drugi softver za montažu, samo plaćeni Claude nalog.</p>
             </li>
             <li class="stavka">
               <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>Facebook Scale skill za Claude</b><span class="v">300 €</span></div>
-              <p>Skill za skaliranje Facebook reklama uz Claude. Isti kanal preko kog dolazi 90% kupaca priručnika od 67.726 €.</p>
-              <ul>
-                <li>Vodi te kroz skaliranje kampanja korak po korak</li>
-                <li>Pomaže da odlučiš šta pojačavaš, a šta gasiš</li>
-              </ul>
+              <p>Skill sa kojim Claude pušta i vodi tvoje Meta reklame po sistemu koji koristim na svojim nalozima. Isti kanal preko kog dolazi 90% kupaca ebooka od 67.726 €.</p>
             </li>
           </ul>
 
           <!-- Brzi bonusi. Broj mesta: BRZI_BONUS_PRODATO u skripti na dnu. -->
           <div class="bonusi" data-brzi>
             <div class="bonusi-vrh">
-              <h3>Brzi bonusi samo tokom poziva</h3>
+              <h3>Brzi bonusi samo za najbrže</h3>
               <span data-brzi-tekst>Još 1 mesto</span>
             </div>
-            <p class="bonusi-uvod">Samo za prve kupce. Kad se mesta popune, bonusi se skidaju sa ponude.</p>
+            <p class="bonusi-uvod">Kad se mesta popune, bonusi se skidaju sa ponude.</p>
             <ul class="stavke">
               <li class="stavka">
-                <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>Koktel u Beogradu, 18.12.</b><span class="v">250 €</span></div>
-                <p>Prvih 10 kupaca. U sali su i eksperti iz sveta AI, gosti podkasta i ljudi koji već grade digitalne proizvode. Budući partneri, prvi kupci i oni koji ti kažu gde grešiš pre nego što potrošiš tri meseca.</p>
+                <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>Koktel u Beogradu, 18. decembar</b><span class="v">250 €</span></div>
+                <p>Prvih 10 kupaca. Veče sa mnom i članovima AI Profit Laba: budući partneri, prvi kupci i ljudi koji su par koraka ispred tebe.</p>
+                <img class="bonus-foto" src="/assets/img/vlada-koktel-1200.webp" alt="Vladimir govori na koktelu sa članovima AI Profit Laba" width="1200" height="801" loading="lazy">
               </li>
               <li class="stavka">
-                <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>30 min 1 na 1 sa Vladimirom</b><span class="v">500 €</span></div>
-                <p>Prvih 5 kupaca. Pola sata samo o tvom proizvodu: niša, ponuda, sledeći korak.</p>
+                <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>30 min 1 na 1 sa mnom</b><span class="v">500 €</span></div>
+                <p>Prvih 5 kupaca. Lično ti pregledam ideju i plan.</p>
               </li>
               <li class="stavka">
                 <div class="stavka-vrh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg><b>Analiza funnela i ponude</b><span class="v">400 €</span></div>
-                <p>Prvih 5 kupaca. Pregled tvoje prodajne stranice, ponude i cene, sa konkretnim izmenama.</p>
+                <p>Prvih 5 kupaca. Kompletna analiza tvog funnela i ponude, sa konkretnim izmenama.</p>
               </li>
             </ul>
           </div>
@@ -796,7 +683,7 @@
         </div>
 
         <!-- Kasa -->
-        <aside class="kasa" data-kasa data-sekcija="11 kasa (cena)">
+        <aside class="kasa" data-kasa data-sekcija="3 kasa (cena)">
           <div class="kasa-rok">
             <p>Ponuda ističe za</p>
             <div class="odbroj srednji" data-odbroj aria-hidden="true"><div><b data-d>0</b><span>dana</span></div><div><b data-h>00</b><span>sati</span></div><div><b data-m>00</b><span>min</span></div><div><b data-s>00</b><span>sek</span></div></div>
@@ -814,7 +701,7 @@
             Upiši se za 497 €
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </a>
-          <p class="poverenje">Sigurno plaćanje karticom · Pristup odmah na mejl</p>
+          <p class="poverenje">Kartica, Google Pay ili Apple Pay · Pristup odmah na mejl</p>
           <p class="rate-link"><a href="#" data-checkout data-plan="rate">Ili plati u 2 rate po 270 €</a></p>
 
           <div class="mesta">
@@ -823,22 +710,255 @@
           </div>
         </aside>
       </div>
+
+      <ol class="klikovi" aria-label="Kako da uđeš">
+        <li>Klikni na dugme za upis</li>
+        <li>Izaberi ceo iznos ili 2 rate</li>
+        <li>Plati karticom, Google ili Apple Payom</li>
+      </ol>
+      <p class="klikovi-napomena">Pristup stiže odmah na mejl i krećeš isti dan.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       DOKAZI: brojke, ne priče
+       ============================================================ -->
+  <section class="blok" data-sekcija="4 dokazi">
+    <div class="omot">
+      <span class="oznaka">Od 2020. do danas</span>
+      <h2 class="naslov">Brojke, ne priče</h2>
+      <p class="podnaslov">Pravi screenshotovi iz panela prodaje. Stavio sam donju cifru.</p>
+      <div class="dokazi">
+        <div class="dokaz">
+          <figure class="screenshot"><img src="/assets/img/rezultat-kesmasina.webp" alt="FunnelKit pregled: 1.262 narudžbine, 143.778 € prihoda, 16.697 € od order bumpova, 5.381 € od upsellova" width="1600" height="436" loading="lazy"></figure>
+          <div class="dokaz-broj">143.778 €</div>
+          <h3>Jedna ponuda: Kešmašina</h3>
+          <p>Ponuda složena po formuli rezultat, rok i garancija. Dobra ponuda prodaje i sa slabim marketingom.</p>
+          <div class="dokaz-oznake"><span>1.262 narudžbine</span><span>16.697 € od order bumpova</span></div>
+        </div>
+        <div class="dokaz">
+          <figure class="screenshot"><img src="/assets/img/rezultat-panel.jpg" alt="Panel prodaje: 1.457 porudžbina, 67.726 € prihoda, prosečna porudžbina 46 €" width="1600" height="848" loading="lazy"></figure>
+          <div class="dokaz-broj">67.726 €</div>
+          <h3>Jedan ebook, van moje niše</h3>
+          <p>Ekspert dao koncept, AI napisao i dizajnirao, kreative uz Claude, pa Facebook reklame. Nije prodat preko mog profila.</p>
+          <div class="dokaz-oznake"><span>2 dana do prve prodaje</span><span>4 meseca</span><span>90% kupaca sa reklama</span></div>
+        </div>
+        <div class="dokaz">
+          <figure class="screenshot"><img src="/assets/img/rezultat-2.jpg" alt="Prodaja ebooka: 103 prodata primerka, 2.781 € neto" width="1600" height="287" loading="lazy"></figure>
+          <div class="dokaz-broj">500 € dnevno</div>
+          <h3>Ebook napravljen na lekciji u akceleratoru</h3>
+          <p>Napravio sam ga uživo, samo da pokažem kako nastaje digitalni proizvod. Danas prodaje sam, na autopilotu. Nije dovoljno za Lambo, ali radi dok spavaš.</p>
+          <div class="dokaz-oznake"><span>Napravljen u akceleratoru</span><span>Vidiš ceo proces</span></div>
+        </div>
+        <div class="dokaz">
+          <figure class="screenshot"><img src="/assets/img/rezultat-order-bump.webp" alt="FunnelKit: 840 narudžbina, 40.454 € prihoda, 7.458 € od order bumpa, 2.233 € od upsella" width="1600" height="455" loading="lazy"></figure>
+          <div class="dokaz-broj">7.458 €</div>
+          <h3>Samo od order bumpa</h3>
+          <p>Na ebooku si na nuli. Novac se pravi posle, na onome što kupac doda u korpu.</p>
+          <div class="dokaz-oznake"><span>840 narudžbina</span><span>2.233 € od upsella</span></div>
+        </div>
+      </div>
+
+      <h3 class="naslov" style="font-size:clamp(22px,2.8vw,28px);margin-top:56px">Gde se zapravo pravi novac: ebook mašina</h3>
+      <div class="masina">
+        <div><small>Ulaz</small><b>27 €</b><span>ebook, niska barijera</span></div>
+        <div><small>Order bump</small><b>20 do 40%</b><span>kupaca ga doda u korpu</span></div>
+        <div><small>Upsell</small><b>2 do 5×</b><span>skuplji od ebooka</span></div>
+      </div>
+
+      <div class="sredina-cta">
+        <a class="dugme" href="#" data-checkout data-plan="jednokratno">Hoću da napravim svoju mašinu · 497 €</a>
+        <p class="placanje">Ili 2 rate po 270 € · Pristup odmah na mejl</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       ZAŠTO DIGITALNO
+       ============================================================ -->
+  <section class="blok" data-sekcija="5 zasto digitalno">
+    <div class="omot">
+      <span class="oznaka">Zašto baš digitalno</span>
+      <h2 class="naslov">Isti novac, tri biznisa</h2>
+      <p class="podnaslov">Radio sam sva tri. Razlika je koliko dugo čekaš da ti se novac vrati.</p>
+      <div class="tri-biznisa">
+        <div class="los"><small>Knjiga</small><b>1,5 mil. din.</b><p>Uložiš unapred, pa mesecima čekaš.</p></div>
+        <div class="los"><small>Suplementi</small><b>~100.000 €</b><p>Godinu dana kasnije, još se nije vratilo.</p></div>
+        <div class="dobar"><small>Ebook</small><b>1. prodaja</b><p>Reklama se vraća odmah, od prve prodaje.</p></div>
+      </div>
+
+      <div class="tabela-omot">
+        <table class="tabela">
+          <thead>
+            <tr><th></th><th>Fizički proizvod</th><th>Usluga</th><th class="dig">Digitalni proizvod</th></tr>
+          </thead>
+          <tbody>
+            <tr><th>Koliko ti ostane od 100 €</th><td>20 do 40 €</td><td>Zavisi od tvojih sati</td><td class="dig">60 do 90 €</td></tr>
+            <tr><th>Početni kapital</th><td>Zalihe, ambalaža, magacin</td><td>Skoro nula</td><td class="dig">Skoro nula</td></tr>
+            <tr><th>Isporuka</th><td>Kurir, povrati, reklamacije</td><td>Tvoje vreme, svaki put</td><td class="dig">Automatska, jednom napraviš</td></tr>
+            <tr><th>Sto kupaca više znači</th><td>Sto pakovanja više</td><td>Sto sati više</td><td class="dig">Ništa više</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="poenta sivo">60% kad plaćaš reklame, do 90% organski. Jedini model gde stoti kupac košta isto koliko i prvi.</p>
+
+      <h3 class="naslov" style="font-size:clamp(22px,2.8vw,28px);margin-top:56px">Da se razumemo: ovo nije pasivni prihod</h3>
+      <div class="istina">
+        <div class="da">
+          <h3>Istina</h3>
+          <ul>
+            <li>Na početku uložiš vreme</li>
+            <li>Reklame gledaš svako jutro</li>
+            <li>Prvih 10 kupaca za 2 nedelje od starta reklama</li>
+          </ul>
+        </div>
+        <div class="ne">
+          <h3>Nije istina</h3>
+          <ul>
+            <li>15 minuta dnevno</li>
+            <li>Lambo do kraja godine</li>
+            <li>Bez ikakvog rada</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TAJMING: AI + tržište
+       ============================================================ -->
+  <section class="blok" data-sekcija="6 tajming ai trziste">
+    <div class="omot">
+      <span class="oznaka">Šta je AI promenio</span>
+      <h2 class="naslov">Lansiranje je trajalo 2 meseca. Sad traje 2 dana.</h2>
+      <div class="ai-poredjenje">
+        <div class="staro"><small>Ranije</small><b>~60 dana</b></div>
+        <i aria-hidden="true">→</i>
+        <div class="novo"><small>Uz AI</small><b>2 dana</b></div>
+      </div>
+      <p class="podnaslov">Istraživanje, pisanje, dizajn, landing, mejlovi. Dizajn je ranije koštao oko 2.000 €, danas ga radi Claude. Ebook od 67.726 € je spakovan za dva dana.</p>
+
+      <div class="grafikon" role="img" aria-label="Tržište digitalnog edukativnog sadržaja raste sa 24,5 milijardi dolara 2024. na 249 milijardi 2034, godišnji rast 26,1%">
+        <div class="grafikon-vrh">
+          <div><b>Tržište digitalne edukacije raste 26% svake godine</b><span>Veličina u milijardama $, 2024 do 2034</span></div>
+          <div class="rast"><span>Godišnji rast</span><b>26,1%</b></div>
+        </div>
+        <div class="stubici" aria-hidden="true">
+          <div class="stub" style="--h:8.7%"><em>24,5</em><i></i></div>
+          <div class="stub" style="--h:10.9%"><em>30,9</em><i></i></div>
+          <div class="stub ti" style="--h:13.8%"><em>39,0</em><i></i></div>
+          <div class="stub" style="--h:17.4%"><em>49,2</em><i></i></div>
+          <div class="stub" style="--h:21.9%"><em>62,0</em><i></i></div>
+          <div class="stub" style="--h:27.6%"><em>78,2</em><i></i></div>
+          <div class="stub" style="--h:34.8%"><em>98,5</em><i></i></div>
+          <div class="stub" style="--h:43.8%"><em>124</em><i></i></div>
+          <div class="stub" style="--h:55.5%"><em>157</em><i></i></div>
+          <div class="stub" style="--h:70.0%"><em>198</em><i></i></div>
+          <div class="stub" style="--h:88.0%"><em>249</em><i></i></div>
+        </div>
+        <div class="godine" aria-hidden="true"><span>2024</span><span>2025</span><span>2026</span><span>2027</span><span>2028</span><span>2029</span><span>2030</span><span>2031</span><span>2032</span><span>2033</span><span>2034</span></div>
+        <p class="izvor">Izvor: Market.us, projekcija do 2034.</p>
+      </div>
+      <p class="poenta">AI ne pravi proizvod umesto tebe. Skida vreme između tvoje odluke i gotove stvari. Odluka je i dalje tvoja i tu većina zapne.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PREPOZNAJ SE + GREŠKE
+       ============================================================ -->
+  <section class="blok" data-sekcija="7 prepoznaj se i greske">
+    <div class="omot">
+      <h2 class="naslov">Prepoznaj se u jednom od ova tri</h2>
+      <div class="kartice">
+        <div class="kartica"><span class="br">01</span><h3>Imaš znanje, nemaš proizvod</h3><p>Radiš nešto godinama, ljudi te pitaju za savet besplatno, a nikad to nisi spakovao u nešto što se plaća.</p></div>
+        <div class="kartica"><span class="br">02</span><h3>Imaš deset ideja i nijednu odluku</h3><p>Svaka ti zvuči dobro tri dana, pa je zameniš sledećom. Nijedna nije došla do prve prodaje.</p></div>
+        <div class="kartica"><span class="br">03</span><h3>Imaš proizvod koji stoji</h3><p>Napravio si ga, postavio i tišina. Ili ima upita, a nema uplata.</p></div>
+      </div>
+      <p class="poenta">Za sva tri problem je isti. Nije znanje, nije trud, nije publika. <span class="nar">Redosled.</span></p>
+
+      <div class="omot uzi" style="padding:0">
+        <h3 class="naslov" style="font-size:clamp(22px,2.8vw,28px);margin-top:56px">4 greške gde svi padnu na startu</h3>
+        <ol class="greske">
+          <li><span>01</span>Kreću od membershipa</li>
+          <li><span>02</span>Mesec dana snimaju veliki kurs</li>
+          <li><span>03</span>Prvo kupuju opremu i prave platformu</li>
+          <li><span>04</span>Biraju temu koja zanima njih, ne kupca</li>
+        </ol>
+        <p class="poenta sivo">U akceleratoru kreneš od ebooka ili kratkog proizvoda koji staje u 10 dana. Ne staje u 10 dana? Smanjuješ.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       MODULI
+       ============================================================ -->
+  <section class="blok" data-sekcija="8 moduli">
+    <div class="omot">
+      <span class="oznaka">Program</span>
+      <h2 class="naslov">Korak po korak, do prvih 10 kupaca</h2>
+      <p class="podnaslov">Svaki korak rešava jednu kočnicu i završava se nečim gotovim, ne beleškama.</p>
+      <ol class="moduli">
+        <li><span class="br">01</span><div><b>Ideja i niša</b><span class="resava"><em>Rešava:</em> nemam ideju ili ih imam previše</span><span class="izlazis"><em>Izlaziš sa</em> nišom u oblasti gde ljudi već ostavljaju pare: zdravlje, novac ili odnosi.</span></div></li>
+        <li><span class="br">02</span><div><b>Validacija</b><span class="resava"><em>Rešava:</em> praviš mesecima bez dokaza da se prodaje</span><span class="izlazis"><em>Izlaziš sa</em> pravim signalom da ljudi plaćaju. Lista čekanja nije validacija: od 1.000 ljudi kupi samo 20 do 50.</span></div></li>
+        <li><span class="br">03</span><div><b>Proizvod uz AI</b><span class="resava"><em>Rešava:</em> ne znam odakle da počnem sa sadržajem</span><span class="izlazis"><em>Izlaziš sa</em> prvom verzijom za 10 dana: priručnik, video od 40 minuta ili radionica uživo.</span></div></li>
+        <li><span class="br">04</span><div><b>Ponuda i cena</b><span class="resava"><em>Rešava:</em> proizvod stoji i ne prodaje se</span><span class="izlazis"><em>Izlaziš sa</em> ponudom po formuli rezultat, rok i garancija, plus order bump i upsell.</span></div></li>
+        <li><span class="br">05</span><div><b>Mejlovi i Facebook reklame</b><span class="resava"><em>Rešava:</em> nemam publiku ni listu</span><span class="izlazis"><em>Izlaziš sa</em> prodajnom stranicom, mejl sekvencom i reklamama koje plaćaju same sebe.</span></div></li>
+        <li><span class="br">06</span><div><b>Prvih 10 kupaca</b><span class="resava"><em>Rešava:</em> lansiranje bez plana i bez roka</span><span class="izlazis"><em>Izlaziš sa</em> planom lansiranja po danima i prvim uplatama.</span></div></li>
+      </ol>
+      <p class="poenta">Plus 10+ lekcija u kojima pravim novi proizvod od nule, dok ti gledaš kako nastaje.</p>
+    </div>
+  </section>
+
+  <!-- POZIV usred stranice -->
+  <div class="poziv" data-sekcija="9 poziv usred">
+    <h2>Ova ponuda se zatvara u nedelju u ponoć</h2>
+    <p>Posle toga upis po ceni od 497 € i brzi bonusi više ne važe.</p>
+    <div class="odbroj" data-odbroj aria-hidden="true"><div><b data-d>0</b><span>dana</span></div><div><b data-h>00</b><span>sati</span></div><div><b data-m>00</b><span>min</span></div><div><b data-s>00</b><span>sek</span></div></div>
+    <a class="dugme" href="#" data-checkout data-plan="jednokratno">Upiši se za 497 €</a>
+  </div>
+
+  <!-- ============================================================
+       PRIČA: Vladimir
+       ============================================================ -->
+  <section class="blok" data-sekcija="10 prica vladimir">
+    <div class="omot">
+      <span class="oznaka">Ko ti ovo pokazuje</span>
+      <h2 class="naslov">2020, lockdown. Par hiljada pratilaca. 10.000 € prvog meseca.</h2>
+      <div class="prica">
+        <figure class="prica-foto">
+          <img src="/assets/img/vladimir-stankovic-560.webp" alt="Vladimir Stanković" width="560" height="840" loading="lazy">
+          <figcaption><b>Vladimir Stanković</b>Od 2020. u digitalnim proizvodima. Autor knjige 55 Biznis priča.</figcaption>
+        </figure>
+        <div class="tekst">
+          <p>Prvi kurs, o Instagram marketingu. Nisam imao veliku publiku. Imao sam <b>tačnu publiku</b> i ponudu napravljenu od onoga što su mi ljudi pisali u porukama.</p>
+          <ol class="koraci-price">
+            <li><b>Šest godina testiranja</b><p>Online kursevi, ebookovi, membership zajednice, mastermind grupe, konferencije. Neke stvari su propale i koštale me mesece i ozbiljan novac. Neke su uradile milione. Ukupno preko 100.000 prodatih digitalnih proizvoda.</p></li>
+            <li><b>Desetine lansiranja</b><p>Zato znam da lista čekanja nije validacija, da membership nije za start i da platforma ne prodaje. Tema prodaje.</p></li>
+            <li><b>Zašto ovo radim sada</b><p>Sad znaš šta da radiš. Problem je što ćeš to raditi sam i zaglaviti se na prvoj stvari koja nije bila u ovih 90 minuta. Zato radimo zajedno.</p></li>
+          </ol>
+          <div class="foto-red">
+            <img src="/assets/img/vlada-bina-1000.webp" alt="Vladimir na bini Biznis priča" width="1000" height="667" loading="lazy">
+            <img src="/assets/img/vlada-knjiga-700.webp" alt="Vladimir potpisuje knjigu 55 Biznis priča" width="700" height="1051" loading="lazy">
+          </div>
+          <p class="citat">Nisam pametniji od tebe. Samo sam pogrešio dovoljno puta da znam kojim redosledom ovo ide.</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- ============================================================
        ŠTA SE DEŠAVA ČIM UĐEŠ
        ============================================================ -->
-  <section class="blok" data-sekcija="12 sta se desava">
+  <section class="blok" data-sekcija="11 sta se desava">
     <div class="omot uzi">
       <h2 class="naslov">Šta se dešava čim uđeš</h2>
       <ol class="linija">
         <li><b>Za minut</b><p>Mejl sa pristupnim podacima. Ulaziš u platformu i u AI Profit Lab zajednicu isti dan.</p></li>
-        <li><b>Prvi dan</b><p>Modul 01 i vežba od tri pitanja. Na kraju imaš jednu nišu i ime osobe kojoj prodaješ. Ako zapneš, pišeš u zajednicu.</p></li>
-        <li><b>Prva nedelja</b><p>Modul 02. Proveravaš da li ljudi plaćaju za taj problem, pre nego što napišeš jednu stranu.</p></li>
-        <li><b>2. i 3. nedelja</b><p>Modul 03 i 04. Praviš proizvod uz AI i postavljaš cenu. Proizvod postoji.</p></li>
-        <li><b>4. do 6. nedelja</b><p>Modul 05 i 06. Prodajna stranica, saobraćaj, lansiranje. Prva prodaja, pa prvih 10.</p></li>
-        <li><b>Do kraja 12 meseci</b><p>Zajednica i live pozivi. Drugi proizvod, order bump, upsell. Put do 10.000 € mesečno.</p></li>
+        <li><b>Prvi dan</b><p>Biraš nišu i proveravaš je kroz četiri pitanja. Ako zapneš, pišeš u zajednicu.</p></li>
+        <li><b>Prva nedelja</b><p>Validacija. Proveravaš da li ljudi plaćaju za taj problem, pre nego što napišeš jednu stranu.</p></li>
+        <li><b>Do 10. dana</b><p>Prva verzija proizvoda uz AI. Ponuda i cena.</p></li>
+        <li><b>Posle toga</b><p>Prodajna stranica, mejlovi i reklame. Prvih 10 kupaca za 2 nedelje od starta reklama.</p></li>
+        <li><b>12 meseci</b><p>Zajednica i live pozivi. Drugi proizvod, order bump, upsell i skaliranje reklama.</p></li>
       </ol>
       <p class="poenta">Tri sata nedeljno. Ako ih nemaš, to je informacija, ne izgovor.</p>
     </div>
@@ -847,14 +967,13 @@
   <!-- ============================================================
        ZA KOGA NIJE
        ============================================================ -->
-  <section class="blok" data-sekcija="13 za koga nije">
+  <section class="blok" data-sekcija="12 za koga nije">
     <div class="omot uzi">
       <h2 class="naslov">Za koga ovo nije</h2>
       <ul class="nije">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><div><b>Ako tražiš pasivan prihod</b><small>Ovo je posao. Prvih mesec dana radiš, a ne naplaćuješ.</small></div></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><div><b>Ako očekuješ da AI uradi proizvod umesto tebe</b><small>AI skida vreme između tvoje odluke i gotove stvari. Odluku i iskustvo daješ ti, i to je 100% vrednosti.</small></div></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><div><b>Ako tražiš brzu lovu bez rada</b><small>Slobodno zatvori stranicu. Prvih mesec dana radiš, a ne naplaćuješ.</small></div></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><div><b>Ako očekuješ da AI uradi proizvod umesto tebe</b><small>AI skida vreme između tvoje odluke i gotove stvari. Odluku i iskustvo daješ ti.</small></div></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><div><b>Ako nemaš tri sata nedeljno</b><small>Manje od toga i program ti ne vredi ni evro.</small></div></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><div><b>Ako hoćeš da ti neko kaže koju nišu da uzmeš</b><small>Dajem ti alat i tri pitanja. Odluku donosiš ti.</small></div></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><div><b>Ako kupuješ kurs da bi odložio početak</b><small>Verovatno ih već imaš nekoliko. Ovaj neće biti drugačiji ako ne radiš.</small></div></li>
       </ul>
     </div>
@@ -863,37 +982,37 @@
   <!-- ============================================================
        PITANJA
        ============================================================ -->
-  <section class="blok" data-sekcija="14 cesta pitanja">
+  <section class="blok" data-sekcija="13 cesta pitanja">
     <div class="omot uzi">
       <h2 class="naslov">Česta pitanja</h2>
       <div class="faq">
         <details>
           <summary>Treba li mi publika da bih krenuo?</summary>
-          <p>Ne. Modul 05 je upravo o tome: prodajna stranica, mejlovi i prvi saobraćaj. Priručnik od 67.726 € se prodaje ljudima koji za mene nikad nisu čuli.</p>
+          <p>Ne. Prvi kurs sam prodao sa par hiljada pratilaca, a ebook od 67.726 € se prodaje ljudima koji za mene nikad nisu čuli: 90% kupaca dolazi sa Facebook reklama. Ako nemaš publiku, testiraš preko komentara kod konkurencije, Facebook Ad Library i stranice pre proizvoda uz 50 do 100 € reklame.</p>
+        </details>
+        <details>
+          <summary>Koliko para treba za reklame?</summary>
+          <p>Pogrešno pitanje. Ne izdvajaš budžet unapred i ne čekaš da se vrati. Kreneš sa malim iznosom, prodaja plaća sledeću reklamu i dižeš budžet dok se povrat ne spusti. Ako evro vraća pet, nema plafona.</p>
+        </details>
+        <details>
+          <summary>Nemam ideju. Šta da prodajem?</summary>
+          <p>Pare se ostavljaju u tri oblasti: zdravlje, novac i odnosi. Kroz četiri pitanja nađeš svoju: šta si već prošao, za šta te ljudi pitaju za savet, da li već plaćaju nekom drugom i da li problem gori ili može da čeka.</p>
+        </details>
+        <details>
+          <summary>Treba li mi firma da bih naplaćivao?</summary>
+          <p>Za test ne. Kreneš sa uplatom na račun ili PayPal, kurs držiš na YouTube unlisted ili Vimeu. Firmu i Stripe otvaraš kad proizvod krene da raste. Platforma ne prodaje, tema prodaje.</p>
         </details>
         <details>
           <summary>Koliko vremena mi treba nedeljno?</summary>
-          <p>Tri sata nedeljno. Cilj je prva prodaja za 30 dana.</p>
-        </details>
-        <details>
-          <summary>Gde stoji moj proizvod i kako se naplaćuje?</summary>
-          <p>Ebook na jednoj stranici sa dugmetom. Kurs na platformi. Membership u zajednici. Naplata preko servisa za kartice. Ceo tehnički deo se rešava za jedan dan i pokriven je u Modulu 05. Ljude ne zaustavlja tehnika, zaustavlja ih to što nemaju ponudu.</p>
+          <p>Tri sata nedeljno. Prva verzija proizvoda staje u 10 dana, prvih 10 kupaca stiže oko 2 nedelje od starta reklama.</p>
         </details>
         <details>
           <summary>Moram li da se snimam?</summary>
-          <p>Ne. Možeš bez kamere: tekst, glas, snimak ekrana. Ne možeš bez identiteta. Anoniman proizvod se prodaje samo uz budžet za reklame.</p>
-        </details>
-        <details>
-          <summary>Balkan ili globalno?</summary>
-          <p>Balkan je manje tržište i manja konkurencija, tvoj jezik, brže poverenje. Globalno je deset puta više kupaca i sto puta više konkurencije. Prvi proizvod pravi na jeziku na kom misliš. Ja sam 50.000 proizvoda prodao na srpskom.</p>
-        </details>
-        <details>
-          <summary>Koliko treba do prve prodaje?</summary>
-          <p>Prva prodaja u 30 dana, prvih 10 kupaca u 30 do 60 dana, ako radiš. Ne mogu da garantujem tvoj rezultat jer ne radim umesto tebe. Mogu da ti garantujem da ćeš za 30 dana znati da li ideja ima kupca.</p>
+          <p>Ne. Ebook je najbolji start upravo zato što ne moraš da se pokazuješ. Možeš i tekst, glas ili snimak ekrana.</p>
         </details>
         <details>
           <summary>Šta ako već imam proizvod koji se ne prodaje?</summary>
-          <p>Ako imaš upita a nema uplata, problem je u ponudi i ceni, to je Modul 04. Ako nemaš ni upite, problem je u tome kome se obraćaš, to je Modul 01.</p>
+          <p>Ako imaš upita a nema uplata, problem je u ponudi i ceni. Ako nemaš ni upite, problem je u tome kome se obraćaš. Oba rešavamo na live pozivima, na tvom slučaju.</p>
         </details>
         <details>
           <summary>Koliko dugo imam pristup?</summary>
@@ -904,16 +1023,12 @@
           <p>Plaćaš 270 € danas i još 270 € za mesec dana. Pristup dobijaš odmah, isti kao uz jednokratno plaćanje.</p>
         </details>
         <details>
-          <summary>Šta se dešava čim platim?</summary>
-          <p>Za minut stiže mejl sa pristupnim podacima i krećeš sa Modulom 01 isti dan.</p>
-        </details>
-        <details>
           <summary>Kako dobijam brze bonuse?</summary>
           <p>Ako si među prvih deset, javljamo ti se mejlom u roku od 48 sati sa pozivnicom za koktel i uputstvom za pregled funnela.</p>
         </details>
         <details>
-          <summary>Šta ako ne stignem da gledam odmah?</summary>
-          <p>Materijal te čeka. Cena ne čeka.</p>
+          <summary>Šta ako ne stignem da krenem odmah?</summary>
+          <p>Materijal te čeka 12 meseci. Cena i bonusi ne čekaju.</p>
         </details>
       </div>
       <p class="faq-kontakt">Imaš drugo pitanje? <a href="#" data-pitanja>Piši nam</a></p>
@@ -923,14 +1038,22 @@
   <!-- ============================================================
        KRAJ
        ============================================================ -->
-  <section class="blok kraj" data-sekcija="15 kraj (poslednji poziv)">
+  <section class="blok kraj" data-sekcija="14 kraj (poslednji poziv)">
     <div class="omot">
-      <h2 class="naslov">Između znanja i rada stoji <span class="nar">redosled</span></h2>
-      <p class="kraj-tekst">Realno, zatvorićeš ovu stranicu pun ideja i za tri dana se vratiti tamo gde si bio. Ne zato što si lenj, nego zato što se redosled najteže sklopi sam. InfoCash Metoda ti daje taj redosled.</p>
+      <h2 class="naslov">Sad znaš šta da radiš. <span class="nar">Hoćeš da radimo zajedno?</span></h2>
+      <p class="kraj-tekst">Problem je što ćeš to raditi sam i zaglaviti se na prvoj stvari koja nije bila u ovih 90 minuta. U akceleratoru ti radiš na svojoj ideji, a ja gledam šta radiš.</p>
+      <ul class="kraj-lista">
+        <li>InfoCash Akcelerator <span>500 €</span></li>
+        <li>AI Profit Lab · 12 meseci <span>450 €</span></li>
+        <li>3 grupna live poziva <span>500 €</span></li>
+        <li>AI Video Editor <span>200 €</span></li>
+        <li>Facebook Scale skill <span>300 €</span></li>
+        <li>Brzi bonusi za najbrže <span>do 1.150 €</span></li>
+      </ul>
       <div class="odbroj" data-odbroj aria-hidden="true"><div><b data-d>0</b><span>dana</span></div><div><b data-h>00</b><span>sati</span></div><div><b data-m>00</b><span>min</span></div><div><b data-s>00</b><span>sek</span></div></div>
       <p class="kraj-cena"><s class="zbir-stara">3.100 €</s> <b>497 €</b></p>
       <a class="dugme kraj-dugme" href="#" data-checkout data-plan="jednokratno">Upiši se za 497 €</a>
-      <p class="poverenje">Sigurno plaćanje karticom · Pristup odmah na mejl</p>
+      <p class="poverenje">Kartica, Google Pay ili Apple Pay · Pristup odmah na mejl</p>
       <p class="rate-link"><a href="#" data-checkout data-plan="rate">Ili plati u 2 rate po 270 €</a></p>
     </div>
   </section>
