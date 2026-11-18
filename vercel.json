@@ -2,6 +2,11 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/", "destination": "/ponuda-2", "permanent": false },
+    { "source": "/index", "destination": "/ponuda-2", "permanent": false },
+    { "source": "/index.html", "destination": "/ponuda-2", "permanent": false }
+  ],
   "headers": [
     {
       "source": "/studio",
