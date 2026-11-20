@@ -1027,7 +1027,7 @@
           <p>Materijal te čeka 12 meseci. Cena i bonusi ne čekaju.</p>
         </details>
       </div>
-      <p class="faq-kontakt">Imaš drugo pitanje? <a href="#" data-pitanja target="_blank" rel="noopener">Zakaži kratak poziv</a></p>
+      <p class="faq-kontakt">Imaš drugo pitanje? <a href="#" data-pitanja>Ostavi broj, Vladimir te zove</a></p>
     </div>
   </section>
 
@@ -1108,7 +1108,7 @@
   // ============================================================
   var CHECKOUT_JEDNOKRATNO = "https://buy.stripe.com/bJe7sM0HAarE8Fu9u75kk0l"; // link za 497 € jednokratno
   var CHECKOUT_RATE = "https://buy.stripe.com/9B69AU75YbvIf3ScGj5kk0m"; // link za 2 rate po 270 €
-  var LINK_PITANJA = "https://calendly.com/marko2000-dev/pitanja-o-infocash-metodi"; // Calendly: poziv sa Vladimirom
+  var LINK_PITANJA = "#";         // klik otvara popup za broj telefona (assets/js/izlaz.js)
   var ROK = "2026-11-23T00:00:00+01:00"; // kraj ponude: ponoć posle nedelje 22.11.
   var BRZI_BONUS_UKUPNO = 10;
   var BRZI_BONUS_PRODATO = 10;     // ručno povećavaj kako se mesta popunjavaju
@@ -1238,7 +1238,7 @@
   });
 })();
 </script>
-<!-- Popup pri izlasku: poziv za pitanja + rok do nedelje. data-poziv = link za zakazivanje. -->
-<script src="/assets/js/izlaz.js?v=1" data-poziv="https://calendly.com/marko2000-dev/pitanja-o-infocash-metodi" data-rok="2026-11-23T00:00:00+01:00" defer></script>
+<!-- Popup pri izlasku: ime i broj za poziv (stiže na /pozivi) + rok do nedelje. -->
+<script src="/assets/js/izlaz.js?v=2" data-rok="2026-11-23T00:00:00+01:00" defer></script>
 </body>
 </html>
