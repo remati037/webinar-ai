@@ -186,6 +186,8 @@
     .dugme:focus-visible { outline: 2px solid var(--tekst); outline-offset: 3px; }
     .dugme svg { width: 18px; height: 18px; }
     .isteklo-sve .dugme { pointer-events: none; background: #CFC6BB; }
+    /* Bez roka (ROK = ""): sklanjaju se svi tajmeri i tekstovi o roku. */
+    .bez-roka .rok-traka, .bez-roka .hitno, .bez-roka .kasa-rok, .bez-roka [data-odbroj], .bez-roka .traka-tajmer { display: none; }
 
     /* Sekcije */
     section.blok { padding: clamp(64px, 9vw, 104px) 0 0; }
@@ -1112,7 +1114,8 @@
   var CHECKOUT_JEDNOKRATNO = "https://buy.stripe.com/bJe7sM0HAarE8Fu9u75kk0l"; // link za 497 € jednokratno
   var CHECKOUT_RATE = "https://buy.stripe.com/9B69AU75YbvIf3ScGj5kk0m"; // link za 2 rate po 270 €
   var LINK_PITANJA = "#";         // klik otvara popup za broj telefona (assets/js/izlaz.js)
-  var ROK = "2026-11-23T00:00:00+01:00"; // kraj ponude: ponoć posle nedelje 22.11.
+  var ROK = "";                // bez roka: upis je otvoren samo za one koji otključaju lozinkom (middleware.js).
+                                // Za novi rok upiši datum, npr. "2026-12-01T00:00:00+01:00".
   var BRZI_BONUS_UKUPNO = 10;
   var BRZI_BONUS_PRODATO = 10;     // ručno povećavaj kako se mesta popunjavaju
 
@@ -1178,8 +1181,17 @@
       o.querySelector("[data-s]").textContent = dv(sek);
     });
   }
-  t = setInterval(tik, 1000);
-  tik();
+  if (ROK) {
+    t = setInterval(tik, 1000);
+    tik();
+  } else {
+    document.body.classList.add("bez-roka");
+    var poziv = document.querySelector(".poziv");
+    if (poziv) {
+      poziv.querySelector("h2").textContent = "Mesto u InfoCash Metodi je tvoje";
+      poziv.querySelector("p").textContent = "Upiši se danas i počni sa prvim modulom još večeras.";
+    }
+  }
 
   // Sticky traka za kupovinu: stalno dole, sklanja se samo dok su kasa ili kraj na ekranu
   var mob = document.querySelector("[data-mob-traka]");
@@ -1242,6 +1254,6 @@
 })();
 </script>
 <!-- Popup pri izlasku: ime i broj za poziv (stiže na /pozivi) + rok do nedelje. -->
-<script src="/assets/js/izlaz.js?v=2" data-rok="2026-11-23T00:00:00+01:00" defer></script>
+<script src="/assets/js/izlaz.js?v=3" data-rok="" defer></script>
 </body>
 </html>

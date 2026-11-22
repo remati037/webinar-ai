@@ -190,6 +190,8 @@
     .dugme.drugo { background: transparent; color: var(--tekst); border: 1px solid rgba(255,238,220,.25); box-shadow: none; }
     .dugme.drugo:hover { background: rgba(255,238,220,.06); }
     .isteklo-sve .dugme:not(.drugo) { pointer-events: none; background: #3a3530; color: var(--siva); box-shadow: none; }
+    .bez-roka .rok-traka { display: none; }
+    .bez-roka .kasa { top: 16px; }
 
     .poverenje { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; margin-top: 12px; font-size: 12.5px; color: var(--siva); }
     .poverenje span { display: inline-flex; align-items: center; gap: 6px; }
@@ -581,7 +583,8 @@
   var CHECKOUT_JEDNOKRATNO = "https://buy.stripe.com/bJe7sM0HAarE8Fu9u75kk0l"; // link za 497 € jednokratno
   var CHECKOUT_RATE = "https://buy.stripe.com/9B69AU75YbvIf3ScGj5kk0m"; // link za 2 rate po 270 €
   var LINK_PITANJA = "#";         // link za pitanja (mejl, WhatsApp, Calendly...)
-  var ROK = "2026-11-23T00:00:00+01:00"; // kraj ponude: ponoć posle nedelje 22.11.
+  var ROK = "";                // bez roka: upis je otvoren samo za one koji otključaju lozinkom (middleware.js).
+                                // Za novi rok upiši datum, npr. "2026-12-01T00:00:00+01:00".
   var BRZI_BONUS_UKUPNO = 10;
   var BRZI_BONUS_PRODATO = 0;     // ručno povećavaj kako se mesta popunjavaju
 
@@ -661,8 +664,12 @@
     var d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), sek = s % 60;
     if (rokEl) rokEl.textContent = (d > 0 ? d + "d " : "") + dv(h) + ":" + dv(m) + ":" + dv(sek);
   }
-  t = setInterval(tik, 1000);
-  tik();
+  if (ROK) {
+    t = setInterval(tik, 1000);
+    tik();
+  } else {
+    document.body.classList.add("bez-roka");
+  }
 
   // ---------- Traka na telefonu: kad kasa izađe iz ekrana ----------
   var mob = document.querySelector("[data-mob-traka]");

@@ -15,12 +15,14 @@
 (function () {
   var skript = document.currentScript;
   var API = "/api/poziv";
-  var ROK = (skript && skript.getAttribute("data-rok")) || "2026-11-23T00:00:00+01:00";
+  // data-rok="" znači bez roka: popup radi, ali bez odbrojavanja i teksta o roku.
+  var ROK = skript && skript.hasAttribute("data-rok") ? skript.getAttribute("data-rok") : "2026-11-23T00:00:00+01:00";
+  var BEZ_ROKA = !ROK;
   var KLJUC = "izlaz_popup_" + location.pathname;
   var MIN_MS = 8000;
 
   var kraj = new Date(ROK).getTime();
-  if (!(kraj > Date.now())) return;
+  if (!BEZ_ROKA && !(kraj > Date.now())) return;
 
   function procitaj(k) { try { return sessionStorage.getItem(k); } catch (e) { return null; } }
   function upisi(k, v) { try { sessionStorage.setItem(k, v); } catch (e) {} }
@@ -81,7 +83,8 @@
     "max-height:92vh;transform:translateY(100%)}",
     ".izl h2{font-size:23px}}",
     "@media (prefers-reduced-motion:reduce){.izl,.izl-kutija{transition:none}}",
-    "body.izl-zakljucan{overflow:hidden}"
+    "body.izl-zakljucan{overflow:hidden}",
+    BEZ_ROKA ? ".izl-rok{display:none}.izl-forma{margin-top:18px}" : ""
   ].join("");
   var stil = document.createElement("style");
   stil.textContent = css;
@@ -160,8 +163,10 @@
       upis.style.display = "none";
     }
 
-    tik();
-    satInterval = setInterval(tik, 1000);
+    if (!BEZ_ROKA) {
+      tik();
+      satInterval = setInterval(tik, 1000);
+    }
     prethodniFokus = document.activeElement;
     el.setAttribute("aria-hidden", "false");
     el.classList.add("otvoren");

@@ -178,6 +178,8 @@
     .dugme.drugo { background: var(--belo); color: var(--tekst); border: 1.5px solid var(--linija); }
     .dugme.drugo:hover { border-color: #CFC6BB; background: var(--belo); }
     .isteklo-sve .dugme:not(.drugo) { pointer-events: none; background: #CFC6BB; }
+    .bez-roka .rok-traka { display: none; }
+    .bez-roka .kasa { top: 16px; }
 
     .poverenje { margin-top: 10px; font-size: 13px; color: var(--siva); text-align: center; }
     .mesta { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--linija); font-size: 13.5px; color: var(--siva); }
@@ -499,7 +501,8 @@
   var CHECKOUT_JEDNOKRATNO = "https://buy.stripe.com/bJe7sM0HAarE8Fu9u75kk0l"; // link za 497 € jednokratno
   var CHECKOUT_RATE = "https://buy.stripe.com/9B69AU75YbvIf3ScGj5kk0m"; // link za 2 rate po 270 €
   var LINK_PITANJA = "#";         // klik otvara popup za broj telefona (assets/js/izlaz.js)
-  var ROK = "2026-11-23T00:00:00+01:00"; // kraj ponude: ponoć posle nedelje 22.11.
+  var ROK = "";                // bez roka: upis je otvoren samo za one koji otključaju lozinkom (middleware.js).
+                                // Za novi rok upiši datum, npr. "2026-12-01T00:00:00+01:00".
   var BRZI_BONUS_UKUPNO = 10;
   var BRZI_BONUS_PRODATO = 10;     // ručno povećavaj kako se mesta popunjavaju
 
@@ -558,8 +561,12 @@
     var d = Math.floor(s / 86400), h = Math.floor(s % 86400 / 3600), m = Math.floor(s % 3600 / 60), sek = s % 60;
     if (rokEl) rokEl.textContent = (d > 0 ? d + "d " : "") + dv(h) + ":" + dv(m) + ":" + dv(sek);
   }
-  t = setInterval(tik, 1000);
-  tik();
+  if (ROK) {
+    t = setInterval(tik, 1000);
+    tik();
+  } else {
+    document.body.classList.add("bez-roka");
+  }
 
   // Traka na telefonu: kad kasa i kraj nisu na ekranu
   var mob = document.querySelector("[data-mob-traka]");
@@ -622,6 +629,6 @@
 })();
 </script>
 <!-- Popup pri izlasku: ime i broj za poziv (stiže na /pozivi) + rok do nedelje. -->
-<script src="/assets/js/izlaz.js?v=2" data-rok="2026-11-23T00:00:00+01:00" defer></script>
+<script src="/assets/js/izlaz.js?v=3" data-rok="" defer></script>
 </body>
 </html>
