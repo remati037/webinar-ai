@@ -1,15 +1,32 @@
-// Vercel Routing Middleware. /snimak, /studio i /start su zakljucani sifrom.
-// /ponuda je otkljucana (javna). /start je privremeno iza sifre dok se ne pusti javno:
-// tada samo izbaci njegove putanje iz matcher-a.
-// /snimak i /studio: ista sifra kao za /ab i /analiza (AB_KLJUC na Vercelu).
-// /start: posebna sifra (PONUDA_KLJUC na Vercelu).
-// Pregledac sam otvara prozor za korisnicko ime i sifru: ime moze biti bilo sta,
-// bitna je samo sifra. Pokriva i /snimak.html da se ne bi zaobislo.
+// Vercel Routing Middleware.
+//
+// 1) Upis je zatvoren: sve javne stranice (/, /ponuda, /ponuda-2, /start, /uzivo, /hvala)
+//    umesto sadrzaja prikazuju /zakljucano (lista cekanja + "Imaš lozinku?").
+//    Ko unese tacnu lozinku (LOZINKA_UPISA na Vercelu) dobija kolacic preko
+//    /api/otkljucaj i vidi prave stranice 30 dana. Promena lozinke na Vercelu
+//    ponistava sve stare kolacice. Da se upis ponovo otvori za sve: izbaci
+//    te putanje iz matcher-a (ili obrisi ZAKLJUCANE).
+//
+// 2) /snimak i /studio su interni: pregledac trazi sifru (AB_KLJUC na Vercelu),
+//    ime moze biti bilo sta. Pokriva i .html da se ne bi zaobislo.
 
 export const config = {
-  matcher: ["/snimak", "/snimak/", "/snimak.html", "/studio", "/studio/", "/studio.html",
-    "/start", "/start/", "/start.html"],
+  matcher: [
+    "/", "/index", "/index.html",
+    "/ponuda", "/ponuda/", "/ponuda.html",
+    "/ponuda-2", "/ponuda-2/", "/ponuda-2.html",
+    "/start", "/start/", "/start.html",
+    "/uzivo", "/uzivo/", "/uzivo.html",
+    "/hvala", "/hvala/", "/hvala.html",
+    "/zakljucano", "/zakljucano.html",
+    "/snimak", "/snimak/", "/snimak.html",
+    "/studio", "/studio/", "/studio.html",
+  ],
 };
+
+const ZAKLJUCANE = /^\/(|index|ponuda|ponuda-2|start|uzivo|hvala)(\/|\.html)?$/;
+const STRANA_ZAKLJUCANO = /^\/zakljucano(\.html)?$/;
+const KOLACIC = "upis_otkljucan";
 
 function istiTekst(a, b) {
   if (a.length !== b.length) return false;
@@ -18,10 +35,56 @@ function istiTekst(a, b) {
   return razlika === 0;
 }
 
-export default function middleware(request) {
-  const putanja = new URL(request.url).pathname;
-  const ponuda = /^\/start(\/|\.html)?$/.test(putanja);
-  const tajna = ponuda ? process.env.PONUDA_KLJUC : process.env.AB_KLJUC;
+// Isti potpis pravi i api/otkljucaj.js (HMAC-SHA256 lozinkom, hex).
+async function potpis(lozinka) {
+  const kljuc = await crypto.subtle.importKey(
+    "raw", new TextEncoder().encode(lozinka), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]
+  );
+  const sig = await crypto.subtle.sign("HMAC", kljuc, new TextEncoder().encode("upis-otkljucan-v1"));
+  return [...new Uint8Array(sig)].map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+function kolacic(request, ime) {
+  const sve = request.headers.get("cookie") || "";
+  for (const deo of sve.split(";")) {
+    const i = deo.indexOf("=");
+    if (i > -1 && deo.slice(0, i).trim() === ime) return deo.slice(i + 1).trim();
+  }
+  return "";
+}
+
+async function otkljucan(request) {
+  const lozinka = process.env.LOZINKA_UPISA;
+  const imam = kolacic(request, KOLACIC);
+  if (!lozinka || !imam) return false;
+  return istiTekst(imam, await potpis(lozinka));
+}
+
+export default async function middleware(request) {
+  const url = new URL(request.url);
+  const putanja = url.pathname;
+
+  if (ZAKLJUCANE.test(putanja)) {
+    if (await otkljucan(request)) return; // pusti dalje na pravu stranicu
+    return new Response(null, {
+      headers: {
+        "x-middleware-rewrite": new URL("/zakljucano", url).toString(),
+        "Cache-Control": "no-store",
+      },
+    });
+  }
+
+  if (STRANA_ZAKLJUCANO.test(putanja)) {
+    // Ko je vec otkljucao, a otvori /zakljucano direktno, ide na ponudu.
+    if (await otkljucan(request)) return Response.redirect(new URL("/ponuda-2", url), 302);
+    return;
+  }
+
+  return internaSifra(request);
+}
+
+function internaSifra(request) {
+  const tajna = process.env.AB_KLJUC;
   if (!tajna) {
     return new Response("Stranica nije dostupna.", { status: 503 });
   }
@@ -38,9 +101,7 @@ export default function middleware(request) {
   return new Response("Potrebna je šifra.", {
     status: 401,
     headers: {
-      "WWW-Authenticate": ponuda
-        ? 'Basic realm="Ponuda", charset="UTF-8"'
-        : 'Basic realm="Interno", charset="UTF-8"',
+      "WWW-Authenticate": 'Basic realm="Interno", charset="UTF-8"',
       "Content-Type": "text/plain; charset=utf-8",
       "Cache-Control": "no-store",
       "X-Robots-Tag": "noindex, nofollow",

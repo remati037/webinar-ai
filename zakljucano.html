@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Upis je zatvoren · InfoCash Metoda</title>
+  <meta name="description" content="Upis u InfoCash Metodu je zatvoren. Prijavi se na listu čekanja i javićemo ti se čim se otvori mesto.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="sr_RS">
+  <meta property="og:site_name" content="Vladimir Stanković · AI Profit Lab">
+  <meta property="og:title" content="InfoCash Metoda: upis je zatvoren">
+  <meta property="og:description" content="Prijavi se na listu čekanja i javićemo ti se čim se otvori novi upis.">
+  <meta property="og:image" content="https://webinar.aiprofit.rs/assets/img/infocash-og.jpg">
+  <meta name="theme-color" content="#FAF8F5">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Zakljucan ekran. middleware.js ga prikazuje umesto /, /ponuda, /ponuda-2, /start, /uzivo i /hvala
+       dok upis ne bude otvoren. Lista cekanja ide na /api/lista-cekanja (pregled na /lista-cekanja),
+       lozinka na /api/otkljucaj (LOZINKA_UPISA na Vercelu). -->
+
+  <!-- POSTHOG (EU) -->
+  <script>
+  !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.crossOrigin="anonymous",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister unregister_for_session getFeatureFlag getFeatureFlagPayload isFeatureEnabled reloadFeatureFlags updateEarlyAccessFeatureEnrollment getEarlyAccessFeatures on onFeatureFlags onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep identify setPersonProperties group resetGroups setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags reset get_distinct_id getGroups get_session_id get_session_replay_url alias set_config startSessionRecording stopSessionRecording sessionRecordingStarted captureException loadToolbar get_property getSessionProperty createPersonProfile opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing clear_opt_in_out_capturing debug".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+  if (!/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) {
+    posthog.init('phc_y95YTLhWa5Uf2HmPMqE3TxHSPEaYChSHPgstD56x8CJX', {
+      api_host: 'https://eu.i.posthog.com',
+      person_profiles: 'identified_only',
+    });
+    posthog.register({ stranica: 'zakljucano', putanja: location.pathname });
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg: #FAF8F5;
+      --belo: #FFFFFF;
+      --tekst: #1C1916;
+      --siva: #6E665E;
+      --siva-svetla: #9A9188;
+      --linija: #E9E4DD;
+      --narandza: #E8601C;
+      --narandza-tamna: #CF5112;
+      --narandza-svetla: #FFF1E8;
+      --zelena: #1E8A4C;
+      --zelena-svetla: #E6F4EC;
+      --crvena: #C2361B;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { min-height: 100%; }
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 32px 16px;
+      background:
+        radial-gradient(900px 480px at 50% -10%, #FFE9DA 0%, rgba(255,233,218,0) 70%),
+        var(--bg);
+      color: var(--tekst);
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 16px; line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    .kutija {
+      width: 100%; max-width: 460px;
+      background: var(--belo);
+      border: 1px solid var(--linija);
+      border-radius: 24px;
+      padding: 36px 28px 28px;
+      box-shadow: 0 1px 2px rgba(28,25,22,.04), 0 24px 60px -20px rgba(28,25,22,.18);
+      text-align: center;
+    }
+    .brava {
+      width: 64px; height: 64px; margin: 0 auto 18px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      background: var(--narandza-svetla);
+      color: var(--narandza);
+    }
+    .brava svg { width: 28px; height: 28px; }
+    .nad {
+      display: inline-block; margin-bottom: 12px;
+      padding: 5px 12px; border-radius: 999px;
+      background: #FDECE7; color: var(--crvena);
+      font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+    }
+    h1 { font-size: clamp(24px, 6vw, 28px); line-height: 1.2; font-weight: 800; letter-spacing: -.02em; text-wrap: balance; }
+    .pod { margin-top: 10px; color: var(--siva); text-wrap: pretty; }
+
+    form { margin-top: 24px; text-align: left; }
+    .polje + .polje { margin-top: 14px; }
+    label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 600; }
+    input {
+      width: 100%;
+      padding: 14px 14px;
+      font: inherit; font-size: 16px; color: var(--tekst);
+      background: var(--belo);
+      border: 1.5px solid var(--linija); border-radius: 12px;
+      transition: border-color .15s, box-shadow .15s;
+      -webkit-appearance: none; appearance: none;
+    }
+    input::placeholder { color: #B8AFA5; }
+    input:focus { outline: none; border-color: var(--narandza); box-shadow: 0 0 0 4px rgba(232,96,28,.14); }
+    input[aria-invalid="true"] { border-color: var(--crvena); }
+    .zamka { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+    .dugme {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%; margin-top: 20px;
+      padding: 16px 20px;
+      font: inherit; font-size: 17px; font-weight: 700;
+      color: #fff; background: var(--narandza);
+      border: 0; border-radius: 12px; cursor: pointer;
+      transition: background .15s, transform .1s;
+    }
+    .dugme:hover { background: var(--narandza-tamna); }
+    .dugme:active { transform: scale(.99); }
+    .dugme:disabled { opacity: .7; cursor: wait; }
+    .dugme.tamno { background: var(--tekst); }
+    .dugme.tamno:hover { background: #000; }
+    .vrti { width: 18px; height: 18px; border: 2.5px solid rgba(255,255,255,.45); border-top-color: #fff; border-radius: 50%; animation: vrti .7s linear infinite; display: none; }
+    .dugme.salje .vrti { display: inline-block; }
+    @keyframes vrti { to { transform: rotate(360deg); } }
+
+    .greska { margin-top: 12px; font-size: 14px; color: var(--crvena); text-align: center; min-height: 0; }
+    .greska:empty { display: none; }
+    .napomena { margin-top: 12px; font-size: 13px; color: var(--siva-svetla); text-align: center; }
+
+    /* Uspeh */
+    .uspeh { margin-top: 24px; padding: 22px 18px; border-radius: 16px; background: var(--zelena-svetla); }
+    .uspeh .kvacica { width: 48px; height: 48px; margin: 0 auto 10px; display: grid; place-items: center; border-radius: 50%; background: var(--zelena); color: #fff; }
+    .uspeh .kvacica svg { width: 24px; height: 24px; }
+    .uspeh b { display: block; font-size: 18px; outline: none; }
+    .uspeh p { margin-top: 6px; color: #3B5A47; font-size: 15px; }
+    .uspeh button { margin-top: 12px; padding: 0; border: 0; background: none; font: inherit; font-size: 14px; color: var(--zelena); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+
+    /* Lozinka */
+    .razdelnik { margin-top: 26px; padding-top: 20px; border-top: 1px solid var(--linija); }
+    .link-lozinka {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border: 0; border-radius: 10px;
+      background: none; color: var(--siva);
+      font: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
+      transition: color .15s, background .15s;
+    }
+    .link-lozinka:hover { color: var(--tekst); background: var(--bg); }
+    .link-lozinka svg { width: 16px; height: 16px; transition: transform .2s; }
+    .link-lozinka[aria-expanded="true"] svg { transform: rotate(180deg); }
+    .lozinka-blok { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .25s ease; }
+    .lozinka-blok.otvoren { grid-template-rows: 1fr; }
+    .lozinka-blok > div { overflow: hidden; }
+    .lozinka-blok form { margin-top: 12px; padding: 2px; }
+    .lozinka-red { position: relative; }
+    .lozinka-red input { padding-right: 84px; }
+    .prikazi {
+      position: absolute; top: 50%; right: 8px; transform: translateY(-50%);
+      padding: 6px 10px; border: 0; border-radius: 8px;
+      background: var(--bg); color: var(--siva);
+      font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+    }
+    .prikazi:hover { color: var(--tekst); }
+    .lozinka-blok .dugme { margin-top: 12px; }
+    .tresi { animation: tresi .35s; }
+    @keyframes tresi { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+
+    .potpis { margin-top: 20px; font-size: 13px; color: var(--siva-svetla); }
+
+    @media (max-width: 420px) {
+      .kutija { padding: 30px 20px 22px; border-radius: 20px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+<main class="kutija">
+  <div class="brava" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+  </div>
+  <span class="nad">Upis je zatvoren</span>
+  <h1>Sva mesta u InfoCash Metodi su popunjena</h1>
+  <p class="pod">Prijavi se na listu čekanja. Javićemo ti se čim se otvori novi upis ili oslobodi neko mesto.</p>
+
+  <form id="forma-lista" novalidate>
+    <div class="polje">
+      <label for="ime">Ime</label>
+      <input id="ime" name="ime" type="text" autocomplete="given-name" placeholder="Tvoje ime" maxlength="60" required>
+    </div>
+    <div class="polje">
+      <label for="email">Email</label>
+      <input id="email" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="ime@primer.com" maxlength="160" required>
+    </div>
+    <div class="polje">
+      <label for="telefon">Broj telefona</label>
+      <input id="telefon" name="telefon" type="tel" inputmode="tel" autocomplete="tel" placeholder="06x xxx xxxx" maxlength="20" required>
+    </div>
+    <div class="zamka" aria-hidden="true"><label>Ne popunjavaj <input name="zamka" tabindex="-1" autocomplete="off"></label></div>
+    <button class="dugme" type="submit"><span class="vrti" aria-hidden="true"></span><span class="tekst">Prijavi me na listu čekanja</span></button>
+    <p class="greska" id="greska-lista" role="alert"></p>
+    <p class="napomena">Bez spama. Javljamo se samo kad ima mesta.</p>
+  </form>
+
+  <div class="uspeh" id="uspeh" hidden>
+    <div class="kvacica" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <b id="uspeh-naslov" tabindex="-1">Na listi si!</b>
+    <p>Čim se otvori mesto, javljamo ti se na mejl ili telefon. Ti ne moraš ništa više da radiš.</p>
+    <button type="button" id="promeni">Promeni podatke</button>
+  </div>
+
+  <div class="razdelnik">
+    <button class="link-lozinka" type="button" id="otvori-lozinku" aria-expanded="false" aria-controls="lozinka-blok">
+      Imaš lozinku?
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+    <div class="lozinka-blok" id="lozinka-blok">
+      <div>
+        <form id="forma-lozinka" novalidate>
+          <label for="lozinka">Lozinka</label>
+          <div class="lozinka-red">
+            <input id="lozinka" name="lozinka" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="Upiši lozinku koju si dobio" maxlength="200" tabindex="-1">
+            <button class="prikazi" type="button" id="prikazi" tabindex="-1">Prikaži</button>
+          </div>
+          <button class="dugme tamno" type="submit" tabindex="-1"><span class="vrti" aria-hidden="true"></span><span class="tekst">Otključaj stranicu</span></button>
+          <p class="greska" id="greska-lozinka" role="alert"></p>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <p class="potpis">Vladimir Stanković · AI Profit Lab</p>
+</main>
+
+<script>
+(function () {
+  var KLJUC = "lista_cekanja_ime";
+
+  function salji(ime, svojstva) {
+    if (window.posthog && typeof window.posthog.capture === "function") window.posthog.capture(ime, svojstva || {});
+  }
+  function procitaj() { try { return localStorage.getItem(KLJUC); } catch (e) { return null; } }
+  function zapamti(v) { try { if (v) localStorage.setItem(KLJUC, v); else localStorage.removeItem(KLJUC); } catch (e) {} }
+
+  function posalji(url, podaci) {
+    return fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      credentials: "same-origin",
+      body: JSON.stringify(podaci)
+    }).then(function (r) {
+      return r.json().catch(function () { return { ok: false, poruka: "Nešto nije u redu. Pokušaj ponovo." }; });
+    });
+  }
+
+  function zauzmi(dugme, da) {
+    dugme.disabled = da;
+    dugme.classList.toggle("salje", da);
+  }
+
+  // ---------- lista čekanja ----------
+  var forma = document.getElementById("forma-lista");
+  var greska = document.getElementById("greska-lista");
+  var uspeh = document.getElementById("uspeh");
+
+  function prikaziUspeh(ime, fokus) {
+    forma.hidden = true;
+    uspeh.hidden = false;
+    document.getElementById("uspeh-naslov").textContent = ime ? "Na listi si, " + ime + "!" : "Na listi si!";
+    if (fokus) document.getElementById("uspeh-naslov").focus();
+  }
+
+  var vecPrijavljen = procitaj();
+  if (vecPrijavljen) prikaziUspeh(vecPrijavljen, false);
+
+  document.getElementById("promeni").addEventListener("click", function () {
+    uspeh.hidden = true;
+    forma.hidden = false;
+    forma.ime.focus();
+  });
+
+  function oznaci(polje, poruka) {
+    polje.setAttribute("aria-invalid", "true");
+    greska.textContent = poruka;
+    polje.focus();
+  }
+  forma.addEventListener("input", function (e) {
+    if (e.target.getAttribute("aria-invalid")) e.target.removeAttribute("aria-invalid");
+    if (greska.textContent) greska.textContent = "";
+  });
+
+  forma.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var ime = forma.ime.value.trim();
+    var email = forma.email.value.trim();
+    var telefon = forma.telefon.value.trim();
+    if (!ime) return oznaci(forma.ime, "Upiši svoje ime.");
+    if (!/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(email)) return oznaci(forma.email, "Proveri email adresu, nešto nedostaje.");
+    if (telefon.replace(/\D/g, "").length < 8) return oznaci(forma.telefon, "Upiši ceo broj telefona.");
+
+    var dugme = forma.querySelector(".dugme");
+    zauzmi(dugme, true);
+    greska.textContent = "";
+    posalji("/api/lista-cekanja", {
+      ime: ime, email: email, telefon: telefon,
+      stranica: location.pathname.replace(/\.html$/, "") || "/",
+      zamka: forma.zamka.value
+    }).then(function (d) {
+      zauzmi(dugme, false);
+      if (!d.ok) { greska.textContent = d.poruka || "Nešto nije u redu. Pokušaj ponovo."; return; }
+      zapamti(ime);
+      salji("lista_cekanja_prijava");
+      prikaziUspeh(ime, true);
+    }).catch(function () {
+      zauzmi(dugme, false);
+      greska.textContent = "Nema veze sa internetom. Proveri pa pokušaj ponovo.";
+    });
+  });
+
+  // ---------- lozinka ----------
+  var otvori = document.getElementById("otvori-lozinku");
+  var blok = document.getElementById("lozinka-blok");
+  var formaL = document.getElementById("forma-lozinka");
+  var polje = document.getElementById("lozinka");
+  var greskaL = document.getElementById("greska-lozinka");
+  var prikazi = document.getElementById("prikazi");
+  var fokusabilni = blok.querySelectorAll("input, button");
+
+  function postaviOtvoreno(da) {
+    otvori.setAttribute("aria-expanded", da ? "true" : "false");
+    blok.classList.toggle("otvoren", da);
+    for (var i = 0; i < fokusabilni.length; i++) fokusabilni[i].tabIndex = da ? 0 : -1;
+    if (da) {
+      setTimeout(function () { polje.focus(); }, 60);
+      salji("lozinka_otvoreno");
+    }
+  }
+  otvori.addEventListener("click", function () {
+    postaviOtvoreno(otvori.getAttribute("aria-expanded") !== "true");
+  });
+  if (location.hash === "#lozinka") postaviOtvoreno(true);
+
+  prikazi.addEventListener("click", function () {
+    var skriveno = polje.type === "password";
+    polje.type = skriveno ? "text" : "password";
+    prikazi.textContent = skriveno ? "Sakrij" : "Prikaži";
+    polje.focus();
+  });
+  polje.addEventListener("input", function () {
+    polje.removeAttribute("aria-invalid");
+    greskaL.textContent = "";
+  });
+
+  formaL.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var lozinka = polje.value.trim();
+    if (!lozinka) { polje.setAttribute("aria-invalid", "true"); greskaL.textContent = "Upiši lozinku."; polje.focus(); return; }
+    var dugme = formaL.querySelector(".dugme");
+    zauzmi(dugme, true);
+    greskaL.textContent = "";
+    posalji("/api/otkljucaj", { lozinka: lozinka }).then(function (d) {
+      if (!d.ok) {
+        zauzmi(dugme, false);
+        greskaL.textContent = d.poruka || "Lozinka nije tačna.";
+        polje.setAttribute("aria-invalid", "true");
+        polje.classList.remove("tresi"); void polje.offsetWidth; polje.classList.add("tresi");
+        polje.select();
+        return;
+      }
+      salji("lozinka_otkljucano");
+      dugme.querySelector(".tekst").textContent = "Otključano, otvaram stranicu…";
+      var naZakljucano = /^\/zakljucano(\.html)?$/.test(location.pathname);
+      location.replace(naZakljucano ? "/ponuda-2" : location.pathname + location.search);
+    }).catch(function () {
+      zauzmi(dugme, false);
+      greskaL.textContent = "Nema veze sa internetom. Proveri pa pokušaj ponovo.";
+    });
+  });
+})();
+</script>
+</body>
+</html>

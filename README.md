@@ -10,7 +10,9 @@ nekoliko Vercel serverless funkcija i Neon Postgres baza za prijave i referale.
 .
 ├── index.html                  # landing stranica
 ├── hvala.html                  # licna stranica: referal link + tabela prijava
-├── middleware.js               # sifra za /snimak (isti AB_KLJUC kao /ab i /analiza)
+├── middleware.js               # zakljucan upis (/zakljucano + LOZINKA_UPISA) i sifra za /snimak, /studio
+├── zakljucano.html             # ekran "upis je zatvoren": lista cekanja + "Imaš lozinku?"
+├── lista-cekanja.html          # /lista-cekanja: ko je na listi cekanja (kljuc AB_KLJUC)
 ├── snimak.html                 # /snimak: snimak vebinara + ponuda (zakljucano sifrom AB_KLJUC, vidi middleware.js)
 ├── api/
 │   ├── prijava.js              # POST: upis u bazu + slanje u MailerLite

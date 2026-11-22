@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Lista čekanja</title>
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <!-- Ko se prijavio na listu cekanja sa zakljucanog ekrana (/zakljucano). Podaci: /api/lista-cekanja,
+       kljuc AB_KLJUC sa Vercela (isti kao za /ab i /pozivi). Kljuc se pamti u ovom browseru. -->
+  <style>
+    :root {
+      --bg: #0A0908; --bg-2: #120F0C; --line: rgba(255, 238, 220, 0.1);
+      --text: #F2EBE1; --muted: #A89E93; --dim: #6F665D;
+      --orange: #F26A1F; --ok: #5BD68A; --rose: #FF5A4E;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; padding: 32px 16px 64px; }
+    .wrap { max-width: 760px; margin: 0 auto; }
+    h1 { font-size: 26px; }
+    .pod { color: var(--muted); margin-top: 4px; }
+    .kljuc { margin-top: 24px; display: flex; gap: 8px; flex-wrap: wrap; }
+    input, button { font: inherit; border-radius: 8px; border: 1px solid var(--line); background: var(--bg-2); color: var(--text); padding: 10px 12px; }
+    input { flex: 1; min-width: 200px; }
+    button { background: var(--orange); color: #140A04; border: 0; font-weight: 700; cursor: pointer; }
+    .greska { margin-top: 16px; color: var(--rose); }
+    .zbir { margin-top: 24px; color: var(--muted); }
+    .zbir b { color: var(--text); }
+    .filter { margin-top: 12px; display: flex; gap: 8px; align-items: center; color: var(--muted); font-size: 14px; }
+    .filter input { flex: none; min-width: 0; width: 18px; height: 18px; accent-color: var(--orange); }
+    ul { list-style: none; margin-top: 16px; display: grid; gap: 10px; }
+    li { display: flex; gap: 14px; align-items: center; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--bg-2); }
+    li.kontaktiran { opacity: .5; }
+    .info { flex: 1; min-width: 0; }
+    .ime { font-weight: 700; font-size: 17px; }
+    .meta { color: var(--dim); font-size: 13px; margin-top: 2px; }
+    .tel { display: inline-block; margin-top: 4px; color: var(--orange); font-weight: 700; font-size: 17px; text-decoration: none; font-variant-numeric: tabular-nums; }
+    label.oznaka { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 12px; color: var(--muted); cursor: pointer; }
+    label.oznaka input { flex: none; min-width: 0; width: 26px; height: 26px; accent-color: var(--ok); cursor: pointer; }
+    .mail { display: block; margin-top: 2px; color: var(--muted); text-decoration: none; word-break: break-all; }
+    .mail:hover { color: var(--text); }
+    .prazno { margin-top: 24px; color: var(--muted); }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Lista čekanja</h1>
+  <p class="pod">Prijavili su se na zaključanom ekranu dok je upis zatvoren. Kad se otvori mesto, javi im se i označi da su kontaktirani.</p>
+
+  <form class="kljuc" id="kljuc-forma">
+    <input id="kljuc" type="password" placeholder="AB_KLJUC sa Vercela" autocomplete="current-password">
+    <button type="submit">Prikaži</button>
+  </form>
+  <p class="greska" id="greska" hidden></p>
+
+  <div id="sadrzaj" hidden>
+    <p class="zbir" id="zbir"></p>
+    <label class="filter"><input type="checkbox" id="sakrij"> Sakrij one koje sam već kontaktirao</label>
+    <ul id="lista"></ul>
+    <p class="prazno" id="prazno" hidden>Još niko nije na listi.</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  var K = "ab_kljuc";
+  var polje = document.getElementById("kljuc");
+  var greskaEl = document.getElementById("greska");
+  var sakrij = document.getElementById("sakrij");
+  var podaci = [];
+  try { polje.value = localStorage.getItem(K) || ""; } catch (e) {}
+  try { sakrij.checked = localStorage.getItem("lista_sakrij") === "1"; } catch (e) {}
+
+  function prikaziGresku(p) { greskaEl.textContent = p; greskaEl.hidden = !p; }
+  function esc(s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) { return "&#" + c.charCodeAt(0) + ";"; }); }
+  function vreme(iso) {
+    var d = new Date(iso);
+    return d.toLocaleString("sr-Latn-RS", { weekday: "short", day: "numeric", month: "numeric", hour: "2-digit", minute: "2-digit" });
+  }
+  function lepTelefon(t) {
+    var m = /^\+381(\d{2})(\d+)$/.exec(t);
+    return m ? "0" + m[1] + " " + m[2].slice(0, 3) + " " + m[2].slice(3) : t;
+  }
+
+  function nacrtaj() {
+    var lista = document.getElementById("lista");
+    var ceka = podaci.filter(function (p) { return !p.kontaktiran; }).length;
+    document.getElementById("zbir").innerHTML = "Ukupno <b>" + podaci.length + "</b> · čeka <b>" + ceka + "</b>";
+    var vidljivi = podaci.filter(function (p) { return !(sakrij.checked && p.kontaktiran); });
+    document.getElementById("prazno").hidden = vidljivi.length > 0;
+    lista.innerHTML = vidljivi.map(function (p) {
+      return '<li class="' + (p.kontaktiran ? "kontaktiran" : "") + '">' +
+        '<div class="info"><div class="ime">' + esc(p.ime) + '</div>' +
+        '<a class="tel" href="tel:' + esc(p.telefon) + '">' + esc(lepTelefon(p.telefon)) + '</a>' +
+        '<a class="mail" href="mailto:' + esc(p.email) + '">' + esc(p.email) + '</a>' +
+        '<div class="meta">' + esc(vreme(p.kreirano)) + (p.stranica ? " · " + esc(p.stranica) : "") + (p.uredjaj ? " · " + esc(p.uredjaj) : "") + '</div></div>' +
+        '<label class="oznaka"><input type="checkbox" data-id="' + p.id + '"' + (p.kontaktiran ? " checked" : "") + '>kontaktiran</label>' +
+        '</li>';
+    }).join("");
+  }
+
+  function ucitaj() {
+    var k = polje.value.trim();
+    if (!k) return;
+    fetch("/api/lista-cekanja", { headers: { Accept: "application/json", "X-AB-Kljuc": k } })
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (!d.ok) throw new Error(d.poruka || "Greška.");
+        try { localStorage.setItem(K, k); } catch (e) {}
+        prikaziGresku("");
+        podaci = d.lista || [];
+        document.getElementById("sadrzaj").hidden = false;
+        nacrtaj();
+      })
+      .catch(function (e) { prikaziGresku(e.message); });
+  }
+
+  document.getElementById("kljuc-forma").addEventListener("submit", function (e) { e.preventDefault(); ucitaj(); });
+  sakrij.addEventListener("change", function () {
+    try { localStorage.setItem("lista_sakrij", sakrij.checked ? "1" : "0"); } catch (e) {}
+    nacrtaj();
+  });
+  document.getElementById("lista").addEventListener("change", function (e) {
+    var c = e.target;
+    if (!c.matches("input[data-id]")) return;
+    var id = Number(c.getAttribute("data-id"));
+    var p = podaci.filter(function (x) { return x.id == id; })[0];
+    if (p) p.kontaktiran = c.checked;
+    nacrtaj();
+    fetch("/api/lista-cekanja", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", "X-AB-Kljuc": polje.value.trim() },
+      body: JSON.stringify({ id: id, kontaktiran: c.checked })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (!d.ok) { prikaziGresku(d.poruka || "Nije sačuvano."); ucitaj(); }
+    }).catch(function () { prikaziGresku("Nije sačuvano. Proveri internet."); ucitaj(); });
+  });
+
+  if (polje.value) ucitaj();
+  setInterval(function () { if (polje.value && !document.hidden) ucitaj(); }, 60000);
+})();
+</script>
+</body>
+</html>
