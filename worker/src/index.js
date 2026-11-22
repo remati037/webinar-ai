@@ -622,6 +622,17 @@ export class Soba extends DurableObject {
       return;
     }
 
+    if (m.t === "glasovi_detalji") {
+      // Samo citanje: ko je sta glasao u svakoj anketi (za izvoz).
+      const ankete = this.sql.exec("SELECT id, pitanje, opcije, ts FROM ankete ORDER BY id").toArray()
+        .map((a) => ({ ...a, opcije: JSON.parse(a.opcije) }));
+      const glasovi = this.sql.exec(
+        "SELECT g.anketa, g.opcija, g.uid, u.ime, u.email FROM glasovi g LEFT JOIN ucesnici u ON u.uid = g.uid ORDER BY g.anketa, g.opcija"
+      ).toArray();
+      this.posalji(ws, { t: "glasovi_detalji", ankete, glasovi });
+      return;
+    }
+
     if (m.t === "procitano") {
       this.sql.exec("UPDATE ucesnici SET neprocitano = 0 WHERE uid = ?", m.uid);
       this.studiju({ t: "procitano", uid: m.uid });

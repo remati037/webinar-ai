@@ -16,3 +16,6 @@ worker/.hls/
 worker/.wrangler/
 worker/.dev.vars
 .studio-kljuc.txt
+
+# Izvoz poruka (lični podaci, ne ide u git ni na sajt)
+izvoz/

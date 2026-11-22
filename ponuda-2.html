@@ -21,7 +21,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- META PIXEL. ID 539402290072454. PageView + InitiateCheckout na klik. -->
+  <!-- META PIXEL. ID 539402290072454. PageView ovde, ViewContent i InitiateCheckout preko assets/js/meta.js. -->
   <script>
   !function(f,b,e,v,n,t,s)
   {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -560,6 +560,9 @@
       html { scroll-behavior: auto; }
     }
   </style>
+  <!-- META CONVERSIONS API. ViewContent i InitiateCheckout idu i pikselu i na /api/meta
+       sa istim eventID-jem. PageView salje samo piksel gore. Vidi assets/js/meta.js. -->
+  <script src="assets/js/meta.js?v=1" async></script>
 </head>
 <body>
 <noscript><img height="1" width="1" style="display:none"
@@ -1131,8 +1134,8 @@
           valuta: "EUR",
         });
       }
-      if (typeof window.fbq !== "function") return;
-      window.fbq("track", "InitiateCheckout", {
+      if (typeof window.metaDogadjaj !== "function") return;
+      window.metaDogadjaj("InitiateCheckout", {
         content_name: "InfoCash Metoda",
         value: PLANOVI[a.getAttribute("data-plan")].vrednost,
         currency: "EUR",

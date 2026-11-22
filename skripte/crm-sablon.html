@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zvanje posle vebinara</title>
+<style>
+:root{
+  --bg:#f6f5f2;--panel:#fff;--ink:#1c1b19;--muted:#6f6b64;--line:#e4e1da;--soft:#f0eee9;
+  --accent:#2f5cff;--accent-ink:#fff;--ok:#1f8a4c;--warn:#b86e00;--bad:#c23b31;--hot:#e5484d;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#141414;--panel:#1c1c1c;--ink:#ecebe8;--muted:#9a968e;--line:#2c2b29;--soft:#242422;
+  --accent:#6b8bff;--accent-ink:#0b0b0b;--ok:#3fbf73;--warn:#e0a03a;--bad:#ef6a60;--hot:#ff6b6f;
+}}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif}
+button,input,textarea,select{font:inherit;color:inherit}
+.app{display:grid;grid-template-rows:auto 1fr;height:100vh}
+header{background:var(--panel);border-bottom:1px solid var(--line);padding:10px 16px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+header h1{font-size:15px;margin:0;font-weight:650}
+.stat{color:var(--muted);font-size:13px}
+.stat b{color:var(--ink)}
+.spacer{flex:1}
+.btn{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:8px;padding:6px 10px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block}
+.btn:hover{background:var(--soft)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+main{display:grid;grid-template-columns:minmax(320px,420px) 1fr;min-height:0}
+.levo{border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0;background:var(--panel)}
+.filteri{padding:10px 12px;border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:8px}
+.filteri input[type=search]{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.tabovi,.cipovi{display:flex;flex-wrap:wrap;gap:6px}
+.tab,.cip{border:1px solid var(--line);background:transparent;border-radius:999px;padding:3px 10px;cursor:pointer;font-size:12.5px}
+.tab.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.cip.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tab span{opacity:.65;margin-left:4px}
+.anketa-red{align-items:center}
+.anketa-red .lbl{font-size:12px;color:var(--muted);margin-right:2px}
+.cip span{opacity:.65;margin-left:4px}
+.lista{overflow:auto;flex:1}
+.red{padding:9px 12px;border-bottom:1px solid var(--line);cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 8px}
+.red:hover{background:var(--soft)}
+.red.on{background:var(--soft);box-shadow:inset 3px 0 0 var(--accent)}
+.red .ime{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.red .sub{grid-column:1/-1;color:var(--muted);font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.oznake{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.o{font-size:11px;padding:1px 6px;border-radius:5px;background:var(--soft);color:var(--muted);white-space:nowrap}
+.o.hot{background:color-mix(in srgb,var(--hot) 16%,transparent);color:var(--hot);font-weight:600}
+.o.ok{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+.o.warn{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
+.o.bad{background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad)}
+.o.acc{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
+.vise{padding:12px;text-align:center}
+.desno{overflow:auto;min-height:0}
+.detalj{max-width:860px;padding:20px 24px 60px}
+.prazno{color:var(--muted);padding:40px 24px}
+.glava{display:flex;flex-wrap:wrap;align-items:flex-start;gap:8px 16px;margin-bottom:14px}
+.glava h2{margin:0;font-size:22px}
+.glava .kontakt{color:var(--muted)}
+.akcije{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 18px}
+.akcije a{text-decoration:none}
+.statusi{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:6px;margin-bottom:12px}
+.st{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:8px;cursor:pointer;text-align:left}
+.st kbd{float:right;opacity:.5;font-size:11px}
+.st.on{border-color:var(--accent);box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 35%,transparent);font-weight:600}
+.kartica{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:12px}
+.kartica h3{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.kartica.istaknuta{border-color:color-mix(in srgb,var(--hot) 45%,var(--line))}
+dl{display:grid;grid-template-columns:max-content 1fr;gap:4px 14px;margin:0}
+dt{color:var(--muted)}
+dd{margin:0;overflow-wrap:anywhere}
+textarea{width:100%;min-height:90px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg);resize:vertical}
+.polje{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.polje input{border:1px solid var(--line);border-radius:8px;padding:6px 8px;background:var(--bg)}
+.poruka{padding:6px 0;border-bottom:1px dashed var(--line)}
+.poruka:last-child{border:0}
+.poruka time{color:var(--muted);font-size:12px;margin-right:8px}
+.log{color:var(--muted);font-size:13px}
+.log div{padding:2px 0}
+.sacuvano{color:var(--ok);font-size:12px;opacity:0;transition:opacity .3s}
+.sacuvano.vidi{opacity:1}
+.upozorenje{background:color-mix(in srgb,var(--bad) 14%,var(--panel));color:var(--bad);padding:8px 16px;border-bottom:1px solid var(--line);display:none}
+.nazad{display:none}
+@media (max-width:820px){
+  main{grid-template-columns:1fr}
+  .desno{display:none}
+  body.detalj-otvoren .levo{display:none}
+  body.detalj-otvoren .desno{display:block}
+  .nazad{display:inline-block}
+  .detalj{padding:14px 16px 60px}
+  header{padding:10px 16px}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <div>
+    <div class="upozorenje" id="upozorenje">Browser ne dozvoljava čuvanje. Beleške se neće sačuvati. Otvori fajl u Chrome-u ili Safariju, ne u privatnom prozoru.</div>
+    <header>
+      <h1>Zvanje posle vebinara</h1>
+      <span class="stat" id="danas"></span>
+      <span class="spacer"></span>
+      <button class="btn" id="izvozCsv" title="Spisak sa statusima i beleškama, za Excel">Izvezi CSV</button>
+      <button class="btn" id="izvozJson" title="Rezervna kopija beleški">Sačuvaj kopiju</button>
+      <label class="btn" title="Vrati beleške iz kopije">Učitaj kopiju<input type="file" id="uvoz" accept=".json" hidden></label>
+    </header>
+  </div>
+  <main>
+    <section class="levo">
+      <div class="filteri">
+        <input type="search" id="trazi" placeholder="Traži ime, mejl, telefon, proizvod, poruku...">
+        <div class="tabovi" id="tabovi"></div>
+        <div class="cipovi" id="cipovi"></div>
+        <div class="cipovi anketa-red" id="anketaFilter"></div>
+      </div>
+      <div class="lista" id="lista"></div>
+    </section>
+    <section class="desno" id="desno"><div class="prazno">Izaberi kontakt sa leve strane. Prečice: <b>J</b>/<b>K</b> sledeći i prethodni, <b>1</b> do <b>6</b> status, <b>/</b> pretraga.</div></section>
+  </main>
+</div>
+
+<script>
+const PODACI = /*PODACI*/null;
+const K = PODACI.kontakti;
+const KLJUC = "crm-vebinar-" + PODACI.vebinar;
+
+// ---------- cuvanje ----------
+let stanje = {};
+let mozeCuvanje = true;
+try { stanje = JSON.parse(localStorage.getItem(KLJUC) || "{}"); localStorage.setItem(KLJUC + "-test", "1"); }
+catch (e) { mozeCuvanje = false; document.getElementById("upozorenje").style.display = "block"; }
+function sacuvaj() {
+  if (!mozeCuvanje) return;
+  try { localStorage.setItem(KLJUC, JSON.stringify(stanje)); } catch (e) { document.getElementById("upozorenje").style.display = "block"; }
+}
+const s = (id) => (stanje[id] ||= { status: "", beleska: "", sledeci: "", log: [] });
+const st = (id) => stanje[id] || {};
+
+// ---------- statusi ----------
+const STATUSI = [
+  { k: "nijeJavio", t: "Nije se javio", c: "warn" },
+  { k: "kasnije", t: "Pozovi kasnije", c: "acc" },
+  { k: "zainteresovan", t: "Zainteresovan", c: "ok" },
+  { k: "kupio", t: "Kupio", c: "ok" },
+  { k: "neZanima", t: "Ne zanima", c: "bad" },
+  { k: "pogresan", t: "Pogrešan broj", c: "bad" },
+];
+const ZAVRSENO = new Set(["kupio", "neZanima", "pogresan"]);
+const CEKA = new Set(["nijeJavio", "kasnije"]); // vracaju se u "Za zvanje" kad dodje termin
+const nazivStatusa = (k) => STATUSI.find((x) => x.k === k)?.t || "Nije zvan";
+
+// ---------- pomocne ----------
+const h = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+function intl(t) {
+  const raw = String(t || "").trim();
+  const d = raw.replace(/\D/g, "");
+  if (d.length < 8) return "";
+  if (raw.startsWith("+")) return "+" + d;
+  if (d.startsWith("00")) return "+" + d.slice(2);
+  if (d.startsWith("0")) return "+381" + d.slice(1);
+  if (d.length <= 9) return "+381" + d;
+  return "+" + d;
+}
+const sad = () => new Date();
+const danasStr = () => sad().toISOString().slice(0, 10);
+const lepoVreme = (iso) => { const d = new Date(iso); return d.toLocaleString("sr-RS", { day: "numeric", month: "numeric", hour: "2-digit", minute: "2-digit" }); };
+function dospelo(x) { const v = st(x.id).sledeci; return !v || new Date(v) <= sad(); }
+
+// ---------- filteri ----------
+const TABOVI = [
+  { k: "zvati", t: "Za zvanje", f: (x) => { const a = st(x.id).status; return !a || (CEKA.has(a) && dospelo(x)); } },
+  { k: "zakazano", t: "Zakazano", f: (x) => CEKA.has(st(x.id).status) && !dospelo(x) },
+  { k: "zainteresovan", t: "Zainteresovani", f: (x) => st(x.id).status === "zainteresovan" },
+  { k: "zavrseno", t: "Završeno", f: (x) => ZAVRSENO.has(st(x.id).status) },
+  { k: "svi", t: "Svi", f: () => true },
+];
+const CIPOVI = [
+  { k: "spisak", t: "Sa spiska", f: (x) => !!x.spisak },
+  { k: "chat", t: "Pisali u chatu", f: (x) => x.poruke.length > 0 },
+  { k: "uzivo", t: "Bili uživo", f: (x) => x.uzivo },
+  { k: "kupac", t: "Ranije kupci", f: (x) => x.kupac },
+  { k: "neuspelo", t: "Neuspelo plaćanje", f: (x) => x.neuspelo > 0 },
+  { k: "tel", t: "Ima telefon", f: (x) => !!intl(x.tel) },
+];
+const ANKETA = [
+  { k: "", t: "Svi" },
+  { k: "ima", t: "Ima publiku", f: (x) => x.publika === "ima" },
+  { k: "nema", t: "Nema publiku", f: (x) => x.publika === "nema" },
+  { k: "nijeGlasao", t: "Nije glasao", f: (x) => !x.publika },
+];
+let anketa = "";
+let tab = "zvati";
+let cipovi = new Set(["tel"]);
+let upit = "";
+let izabran = null;
+let prikazano = 200;
+let filtrirani = [];
+
+function pretraga(x) {
+  if (!upit) return true;
+  const z = st(x.id);
+  const tekst = [x.ime, x.email, x.tel, x.proizvodi, x.izvor, x.spisak?.pisao, z.beleska, ...x.poruke.map((p) => p.t)].join(" ").toLowerCase();
+  const cifre = upit.replace(/\D/g, "");
+  return upit.toLowerCase().split(/\s+/).every((r) => tekst.includes(r)) ||
+    (cifre.length >= 4 && String(x.tel).replace(/\D/g, "").includes(cifre));
+}
+const anketaOk = (x, k = anketa) => !k || ANKETA.find((a) => a.k === k).f(x);
+const bezAnkete = (x) => [...cipovi].every((k) => CIPOVI.find((c) => c.k === k).f(x)) && pretraga(x);
+function osnovniFilter(x) { return bezAnkete(x) && anketaOk(x); }
+
+// ---------- prikaz liste ----------
+function oznake(x) {
+  const o = [];
+  if (x.spisak) o.push(`<span class="o hot">${h(x.spisak.grupa)}</span>`);
+  const a = st(x.id).status;
+  if (a) o.push(`<span class="o ${STATUSI.find((z) => z.k === a)?.c}">${h(nazivStatusa(a))}</span>`);
+  if (x.poruke.length) o.push(`<span class="o acc">chat ${x.poruke.length}</span>`);
+  if (x.kupac) o.push(`<span class="o ok">kupac ${x.eur} €</span>`);
+  if (x.neuspelo) o.push(`<span class="o warn">palo plaćanje</span>`);
+  if (x.publika === "ima") o.push(`<span class="o ok">ima publiku</span>`);
+  if (x.publika === "nema") o.push(`<span class="o">nema publiku</span>`);
+  if (x.uzivo) o.push(`<span class="o">uživo</span>`);
+  return o.join("");
+}
+function podnaslov(x) {
+  const z = st(x.id);
+  if (CEKA.has(z.status) && z.sledeci) return "Zvati: " + lepoVreme(z.sledeci) + (z.beleska ? " · " + z.beleska : "");
+  if (z.beleska) return z.beleska;
+  if (x.spisak) return x.spisak.pisao;
+  if (x.poruke.length) return "„" + x.poruke[0].t + "“";
+  if (x.proizvodi) return x.proizvodi;
+  return [x.tel, x.izvor].filter(Boolean).join(" · ");
+}
+function crtajListu() {
+  const osnovni = K.filter(osnovniFilter);
+  const t = TABOVI.find((x) => x.k === tab);
+  filtrirani = osnovni.filter(t.f);
+  if (tab === "zakazano") filtrirani.sort((a, b) => (st(a.id).sledeci > st(b.id).sledeci ? 1 : -1));
+
+  document.getElementById("tabovi").innerHTML = TABOVI.map((x) =>
+    `<button class="tab ${x.k === tab ? "on" : ""}" data-tab="${x.k}">${x.t}<span>${osnovni.filter(x.f).length}</span></button>`).join("");
+  document.getElementById("cipovi").innerHTML = CIPOVI.map((x) =>
+    `<button class="cip ${cipovi.has(x.k) ? "on" : ""}" data-cip="${x.k}">${x.t}</button>`).join("");
+  const zaAnketu = K.filter((x) => bezAnkete(x) && t.f(x));
+  document.getElementById("anketaFilter").innerHTML = `<span class="lbl">Anketa „Da li već imaš publiku?":</span>` + ANKETA.map((a) =>
+    `<button class="cip ${a.k === anketa ? "on" : ""}" data-anketa="${a.k}">${a.t}<span>${zaAnketu.filter((x) => anketaOk(x, a.k)).length}</span></button>`).join("");
+
+  const deo = filtrirani.slice(0, prikazano);
+  document.getElementById("lista").innerHTML = deo.map((x) => `
+    <div class="red ${izabran === x.id ? "on" : ""}" data-id="${h(x.id)}">
+      <div class="ime">${h(x.ime || x.email || x.tel)}</div>
+      <div class="oznake">${oznake(x)}</div>
+      <div class="sub">${h(podnaslov(x))}</div>
+    </div>`).join("") +
+    (filtrirani.length > prikazano ? `<div class="vise"><button class="btn" id="jos">Prikaži još (${filtrirani.length - prikazano})</button></div>` : "") +
+    (!filtrirani.length ? `<div class="prazno">Nema nikoga u ovom prikazu.</div>` : "");
+  crtajStatistiku();
+}
+function crtajStatistiku() {
+  const d = danasStr();
+  let pozivi = 0, razgovori = 0, kupili = 0;
+  for (const [id, z] of Object.entries(stanje)) {
+    const danas = (z.log || []).filter((l) => l.t.slice(0, 10) === d && l.s);
+    pozivi += danas.length;
+    razgovori += danas.filter((l) => ["zainteresovan", "kupio", "neZanima", "kasnije"].includes(l.s)).length;
+    kupili += danas.filter((l) => l.s === "kupio").length;
+  }
+  document.getElementById("danas").innerHTML = `Danas: <b>${pozivi}</b> poziva · <b>${razgovori}</b> razgovora · <b>${kupili}</b> kupilo`;
+}
+
+// ---------- detalj ----------
+function red(k, v) { return v || v === 0 ? `<dt>${k}</dt><dd>${h(v)}</dd>` : ""; }
+function crtajDetalj() {
+  const x = K.find((k) => k.id === izabran);
+  const el = document.getElementById("desno");
+  if (!x) { el.innerHTML = `<div class="prazno">Izaberi kontakt.</div>`; return; }
+  const z = st(x.id);
+  const broj = intl(x.tel);
+  const wa = broj ? "https://wa.me/" + broj.replace("+", "") : "";
+  el.innerHTML = `<div class="detalj">
+    <button class="btn nazad" id="nazad">← Nazad na listu</button>
+    <div class="glava">
+      <div>
+        <h2>${h(x.ime || "(bez imena)")}</h2>
+        <div class="kontakt">${h(x.tel || "nema telefona")} · ${h(x.email)}</div>
+      </div>
+      <span class="spacer"></span>
+      <div class="oznake">${oznake(x)}</div>
+    </div>
+    <div class="akcije">
+      ${broj ? `<a class="btn primary" href="tel:${h(broj)}">Pozovi ${h(broj)}</a>` : ""}
+      ${wa ? `<a class="btn" href="${h(wa)}" target="_blank" rel="noopener">WhatsApp</a>` : ""}
+      ${broj ? `<button class="btn" id="kopiraj">Kopiraj broj</button>` : ""}
+      ${x.email ? `<a class="btn" href="mailto:${h(x.email)}">Mejl</a>` : ""}
+      <span class="spacer"></span>
+      <button class="btn" id="sledeci">Sledeći →</button>
+    </div>
+
+    <div class="statusi">${STATUSI.map((t, i) => `<button class="st ${z.status === t.k ? "on" : ""}" data-st="${t.k}">${t.t}<kbd>${i + 1}</kbd></button>`).join("")}</div>
+
+    <div class="kartica">
+      <h3>Beleška <span class="sacuvano" id="sacuvano">sačuvano</span></h3>
+      <textarea id="beleska" placeholder="Šta je rekao, šta ga koči, šta si obećao...">${h(z.beleska)}</textarea>
+      <div class="polje">
+        <label for="sledeciPoziv">Sledeći poziv:</label>
+        <input type="datetime-local" id="sledeciPoziv" value="${h(z.sledeci)}">
+        <button class="btn" data-za="2">za 2 sata</button>
+        <button class="btn" data-za="sutra">sutra 10h</button>
+        ${z.sledeci ? `<button class="btn" id="obrisiTermin">obriši</button>` : ""}
+      </div>
+    </div>
+
+    ${x.spisak ? `<div class="kartica istaknuta">
+      <h3>Sa spiska za zvanje · grupa ${h(x.spisak.grupa)}</h3>
+      <div style="color:var(--muted);font-size:13px;margin-bottom:6px">${h(x.spisak.naziv)}</div>
+      <dl>${red("Pisao/la", x.spisak.pisao)}${red("Šta da kažeš", x.spisak.reci)}${red("Telefon sa spiska", x.spisak.telNapomena)}</dl>
+    </div>` : ""}
+
+    ${x.poruke.length ? `<div class="kartica">
+      <h3>Poruke iz chata (${x.poruke.length})</h3>
+      ${x.poruke.map((p) => `<div class="poruka"><time>${h(p.v)}</time>${h(p.t)}</div>`).join("")}
+    </div>` : ""}
+
+    <div class="kartica">
+      <h3>Kupovine (HubSpot)</h3>
+      ${x.kupac ? `<dl>
+        ${red("Ukupno", "≈ " + x.eur + " € u " + x.brKup + " kupovin" + (x.brKup === 1 ? "i" : "a"))}
+        ${red("AI Profit Lab", x.apl)}
+        ${red("RFM (novac/učestalost/skorašnjost)", x.rfm)}
+      </dl>
+      <div style="margin-top:10px">${(x.kupovine || []).map((k) => {
+        const [d, ...ostalo] = k.split(" · ");
+        const iznos = ostalo.pop();
+        return `<div class="poruka"><time>${h(d)}</time>${h(ostalo.join(" · "))} <span style="color:var(--muted)">· ${h(iznos)}</span></div>`;
+      }).join("")}</div>` :`<div class="log">${x.hs ? "U HubSpotu je, ali nema plaćenih kupovina." : "Nije u HubSpotu. Nije ranije kupovao u prodavnici."}</div>`}
+      ${x.neuspelo ? `<dl style="margin-top:8px">${red("Palo plaćanje", x.neuspelo + "×, " + x.neuspeloSta)}</dl>` : ""}
+    </div>
+
+    <div class="kartica">
+      <h3>Vebinar</h3>
+      <dl>
+        ${red("Prijava", x.prijava)}
+        ${red("Bio uživo", x.uzivo ? "da" : "ne")}
+        ${red("Anketa: imaš publiku?", x.publikaOdgovor || "nije glasao")}
+        ${red("Izvor", x.izvor)}
+        ${red("Zemlja", x.zemlja)}
+        ${red("Grad", x.grad)}
+        ${red("HubSpot", x.hs ? "nađen po " + x.hs : "")}
+      </dl>
+    </div>
+
+    ${(z.log || []).length ? `<div class="kartica"><h3>Istorija</h3><div class="log">
+      ${z.log.slice().reverse().map((l) => `<div>${lepoVreme(l.t)} · ${h(l.s ? nazivStatusa(l.s) : l.n)}</div>`).join("")}
+    </div></div>` : ""}
+  </div>`;
+}
+
+// ---------- akcije ----------
+function postaviStatus(k) {
+  const z = s(izabran);
+  z.status = z.status === k ? "" : k;
+  z.log.push({ t: sad().toISOString(), s: z.status || "", n: z.status ? "" : "status poništen" });
+  if (k === "nijeJavio" && z.status && !z.sledeci) {
+    const d = new Date(Date.now() + 2 * 3600e3);
+    z.sledeci = lokalno(d);
+  }
+  if (ZAVRSENO.has(z.status)) z.sledeci = "";
+  sacuvaj(); crtajListu(); crtajDetalj();
+}
+function lokalno(d) { const p = (n) => String(n).padStart(2, "0"); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`; }
+function izaberi(id) {
+  izabran = id;
+  document.body.classList.add("detalj-otvoren");
+  crtajDetalj();
+  document.querySelectorAll(".red").forEach((r) => r.classList.toggle("on", r.dataset.id === id));
+  document.querySelector(`.red[data-id="${CSS.escape(id)}"]`)?.scrollIntoView({ block: "nearest" });
+  document.getElementById("desno").scrollTop = 0;
+}
+function pomeri(korak) {
+  if (!filtrirani.length) return;
+  const i = filtrirani.findIndex((x) => x.id === izabran);
+  const n = filtrirani[Math.max(0, Math.min(filtrirani.length - 1, i + korak))];
+  if (n) izaberi(n.id);
+}
+
+document.addEventListener("click", (e) => {
+  const t = e.target.closest("[data-tab],[data-cip],[data-anketa],.red,[data-st],#jos,#sledeci,#kopiraj,#nazad,[data-za],#obrisiTermin");
+  if (!t) return;
+  if (t.dataset.tab) { tab = t.dataset.tab; prikazano = 200; crtajListu(); }
+  else if (t.dataset.cip) { cipovi.has(t.dataset.cip) ? cipovi.delete(t.dataset.cip) : cipovi.add(t.dataset.cip); prikazano = 200; crtajListu(); }
+  else if (t.dataset.anketa !== undefined) { anketa = t.dataset.anketa; prikazano = 200; crtajListu(); }
+  else if (t.classList.contains("red")) izaberi(t.dataset.id);
+  else if (t.dataset.st) postaviStatus(t.dataset.st);
+  else if (t.id === "jos") { prikazano += 200; crtajListu(); }
+  else if (t.id === "sledeci") pomeri(1);
+  else if (t.id === "nazad") document.body.classList.remove("detalj-otvoren");
+  else if (t.id === "kopiraj") { const x = K.find((k) => k.id === izabran); navigator.clipboard?.writeText(intl(x.tel)); t.textContent = "Kopirano"; }
+  else if (t.dataset.za) {
+    const d = t.dataset.za === "2" ? new Date(Date.now() + 2 * 3600e3) : (() => { const x = new Date(); x.setDate(x.getDate() + 1); x.setHours(10, 0, 0, 0); return x; })();
+    const z = s(izabran); z.sledeci = lokalno(d); if (!z.status || z.status === "nijeJavio") z.status = z.status || "kasnije";
+    sacuvaj(); crtajListu(); crtajDetalj();
+  }
+  else if (t.id === "obrisiTermin") { s(izabran).sledeci = ""; sacuvaj(); crtajListu(); crtajDetalj(); }
+});
+
+let tajmer;
+document.addEventListener("input", (e) => {
+  if (e.target.id === "trazi") { upit = e.target.value.trim(); prikazano = 200; crtajListu(); return; }
+  if (e.target.id === "beleska") {
+    s(izabran).beleska = e.target.value;
+    clearTimeout(tajmer);
+    tajmer = setTimeout(() => { sacuvaj(); const el = document.getElementById("sacuvano"); el?.classList.add("vidi"); setTimeout(() => el?.classList.remove("vidi"), 900); crtajListu(); }, 500);
+  }
+});
+document.addEventListener("change", (e) => {
+  if (e.target.id === "sledeciPoziv") {
+    const z = s(izabran); z.sledeci = e.target.value;
+    if (z.sledeci && !z.status) z.status = "kasnije";
+    sacuvaj(); crtajListu(); crtajDetalj();
+  }
+});
+document.addEventListener("keydown", (e) => {
+  if (e.target.matches("input,textarea")) { if (e.key === "Escape") e.target.blur(); return; }
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+  if (e.key === "j" || e.key === "ArrowDown") { e.preventDefault(); pomeri(1); }
+  else if (e.key === "k" || e.key === "ArrowUp") { e.preventDefault(); pomeri(-1); }
+  else if (e.key === "/") { e.preventDefault(); document.getElementById("trazi").focus(); }
+  else if (/^[1-6]$/.test(e.key) && izabran) postaviStatus(STATUSI[+e.key - 1].k);
+});
+
+// ---------- izvoz / uvoz ----------
+function preuzmi(ime, sadrzaj, tip) {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([sadrzaj], { type: tip }));
+  a.download = ime; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+document.getElementById("izvozJson").onclick = () =>
+  preuzmi(`crm-beleske-${danasStr()}.json`, JSON.stringify(stanje, null, 1), "application/json");
+document.getElementById("izvozCsv").onclick = () => {
+  const q = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const redovi = [["Ime", "Telefon", "Mejl", "Status", "Beleška", "Sledeći poziv", "Broj poziva", "Grupa sa spiska", "Kupac ranije", "Ukupno EUR", "Publika (anketa)"]];
+  for (const x of K) {
+    const z = stanje[x.id]; if (!z) continue;
+    redovi.push([x.ime, intl(x.tel) || x.tel, x.email, nazivStatusa(z.status), z.beleska, z.sledeci, (z.log || []).filter((l) => l.s).length, x.spisak?.grupa || "", x.kupac ? "da" : "ne", x.eur, x.publikaOdgovor || ""]);
+  }
+  preuzmi(`zvanje-${danasStr()}.csv`, "﻿" + redovi.map((r) => r.map(q).join(",")).join("\n"), "text/csv");
+};
+document.getElementById("uvoz").onchange = async (e) => {
+  const f = e.target.files[0]; if (!f) return;
+  try {
+    const novo = JSON.parse(await f.text());
+    if (!confirm(`Učitati beleške za ${Object.keys(novo).length} kontakata? Postojeće beleške za iste kontakte biće zamenjene.`)) return;
+    Object.assign(stanje, novo); sacuvaj(); crtajListu(); crtajDetalj();
+  } catch (err) { alert("Fajl nije ispravna kopija beleški."); }
+  e.target.value = "";
+};
+
+crtajListu();
+setInterval(() => { if (tab === "zvati" || tab === "zakazano") crtajListu(); }, 60000);
+</script>
+</body>
+</html>
