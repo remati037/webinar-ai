@@ -1,6 +1,7 @@
 // Vercel Routing Middleware.
 //
-// 1) Upis je zatvoren: sve javne stranice (/, /ponuda, /ponuda-2, /start, /uzivo, /hvala)
+// 1) Prodajne strane (/, /ponuda, /ponuda-2, /start, /hvala) su ponovo otvorene za sve.
+//    Zakljucan je jos samo /uzivo:
 //    umesto sadrzaja prikazuju /zakljucano (lista cekanja + "Imaš lozinku?").
 //    Ko unese tacnu lozinku (LOZINKA_UPISA na Vercelu) dobija kolacic preko
 //    /api/otkljucaj i vidi prave stranice 30 dana. Promena lozinke na Vercelu
@@ -12,19 +13,14 @@
 
 export const config = {
   matcher: [
-    "/", "/index", "/index.html",
-    "/ponuda", "/ponuda/", "/ponuda.html",
-    "/ponuda-2", "/ponuda-2/", "/ponuda-2.html",
-    "/start", "/start/", "/start.html",
     "/uzivo", "/uzivo/", "/uzivo.html",
-    "/hvala", "/hvala/", "/hvala.html",
     "/zakljucano", "/zakljucano.html",
     "/snimak", "/snimak/", "/snimak.html",
     "/studio", "/studio/", "/studio.html",
   ],
 };
 
-const ZAKLJUCANE = /^\/(|index|ponuda|ponuda-2|start|uzivo|hvala)(\/|\.html)?$/;
+const ZAKLJUCANE = /^\/(uzivo)(\/|\.html)?$/;
 const STRANA_ZAKLJUCANO = /^\/zakljucano(\.html)?$/;
 const KOLACIC = "upis_otkljucan";
 
